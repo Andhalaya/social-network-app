@@ -1,4 +1,4 @@
-import { Button, TextField } from "@mui/material";
+import { FormLabel, TextField } from "@mui/material";
 import { useState } from "react";
 
 function Form () {
@@ -8,7 +8,6 @@ function Form () {
         email: "",
         password: ""
     });
-
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -23,33 +22,35 @@ function Form () {
         console.log("Submitted form with data:", formData);
     };
 
+    const { fullName, userName, email, password } = formData;
+
     return (
         <form onSubmit={handleFormSubmit}>
+            <FormLabel>Full Name</FormLabel>
            <TextField 
-            label="Full Name"
             onChange={handleChange}
-            value={firstName}
+            value={fullName}
             name="fullName"
            />
+           <FormLabel>User Name</FormLabel>
            <TextField 
-            label="User Name"
             onChange={handleChange}
-            value={firstName}
+            value={userName}
             name="userName"
            />
+           <FormLabel>Email</FormLabel>
            <TextField 
-            label="email"
             onChange={handleChange}
             value={email}
             name="email"
            />
+           <FormLabel>Password</FormLabel>
            <TextField 
-            label="password"
             onChange={handleChange}
             value={password}
             name="password"
            />
-            <Button type="submit"/>
+            <button type="submit">SIGN UP</button>
         </form>
     )
 }
