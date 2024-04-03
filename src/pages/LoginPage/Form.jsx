@@ -1,4 +1,4 @@
-import { FormLabel, TextField } from "@mui/material";
+import { TextField } from "@mui/material";
 import { useState } from "react";
 
 function Form () {
@@ -26,26 +26,26 @@ function Form () {
 
     return (
         <form onSubmit={handleFormSubmit}>
-            <FormLabel>Full Name</FormLabel>
-           <TextField 
+           <label>FULL NAME</label>
+           <input 
             onChange={handleChange}
             value={fullName}
             name="fullName"
            />
-           <FormLabel>User Name</FormLabel>
-           <TextField 
+           <label>USER NAME</label>
+           <input 
             onChange={handleChange}
             value={userName}
             name="userName"
            />
-           <FormLabel>Email</FormLabel>
-           <TextField 
+           <label>EMAIL</label>
+           <input 
             onChange={handleChange}
             value={email}
             name="email"
            />
-           <FormLabel>Password</FormLabel>
-           <TextField 
+           <label>PASSWORD</label>
+           <input
             onChange={handleChange}
             value={password}
             name="password"
