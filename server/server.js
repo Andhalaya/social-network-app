@@ -1,6 +1,12 @@
-const express = require('require')
+const express = require('express')
 const app = express();
 const PORT = 3005;
+const authRoutes = require('./src/routes/authRoutes')
+const {dbConnection} = require('./src/config/db')
+const bodyParser = require('body-parser');
+const cors = require('cors')
+const session = require('express-session')
+const {hashedSecret} = require('./src/crypto/config');
 
 require ('dotenv').config();
 
@@ -12,7 +18,16 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+app.use(
+    session({
+      secret: hashedSecret,
+      resave: false,
+      saveUninitialized: true,
+      cookie: { secure: false }
+    })
+  );
 
-app.use('/api', projectRoutes); 
+
+app.use('/auth', authRoutes); 
 
 app.listen(PORT, () => console.log(`Server started on http://localhost:${PORT}`))

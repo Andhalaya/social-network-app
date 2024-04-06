@@ -1,21 +1,23 @@
-import jwt from "jsonwebtoken";
+const jwt = require('jsonwebtoken');
+const {secret} = require('../crypto/config')
 
-export const verifyToken = async (req, res, next) => {
-  try {
-    let token = req.header("Authorization");
-
-    if (!token) {
-      return res.status(403).send("Access Denied");
-    }
-
-    if (token.startsWith("Bearer ")) {
-      token = token.slice(7, token.length).trimLeft();
-    }
-
-    const verified = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = verified;
-    next();
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+function generateToken(user) {
+    return jwt.sign({user: user.id}, secret, {expiresIn: '1h'})
   }
-};
+  
+function verifyToken(req, res, next) {
+    const token = req.session.token;
+    if(!token) {
+      return res.status(401).json({mensaje: 'token no generado'})
+    }
+  
+    jwt.verify(token, secret, (err, decoded) => {
+      if(err) {
+        return res.status(401).json({mensaje: 'token invalido'})
+      }
+      req.user = decoded.user;
+      next()
+    })
+  }
+
+module.exports = {generateToken, verifyToken}
