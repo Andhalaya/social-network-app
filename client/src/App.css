@@ -1,0 +1,249 @@
+
+.loginPage{
+  height: 911px;
+  display: flex;
+  background: linear-gradient(to bottom, #3048e7f7, #271839);
+  color: #ffffff;
+}
+
+.container{
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+}
+
+.section{
+  display: flex;
+  padding-left: 100px;
+  margin-top: 70px;
+  width: 80%;
+  gap: 50px;
+  align-items: center;
+  text-align: center;
+}
+
+.section button{
+  background-color: transparent;
+  border: 1px solid #00FFC2;
+  color: #00FFC2;
+  margin-top: 20px;
+  padding: 15px 50px;
+  font-weight: 600;
+}
+
+.section button:hover{
+  background-color: #00FFC2;
+  color: #2e1039;
+  cursor: pointer;
+}
+
+.loginPage img{
+  border-radius: 20px;
+  box-shadow: 9px 10px 5px -3px rgba(8, 8, 8, 0.411);
+}
+
+.loginPage h1{
+  font-size: 64px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.loginPage h2{
+  font-size: 36px;
+  font-weight: 300;
+  font-family: 'poppins';
+  margin: 0;
+}
+
+.loginPage h3{
+  margin: 0;
+  
+}
+
+span{
+  color: #00FFC2;
+  font-weight: 500;
+}
+
+.form{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #00000082;
+  height: 100%;
+  width: 30%;
+}
+
+.form form{
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  gap: 20px;
+}
+
+.formTitle{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin-bottom: 40px;
+  font-family: 'Roboto mono';
+}
+
+.formTitle h2, h3{
+  font-family: 'Roboto mono';
+  font-weight: 600;
+  
+}
+
+.form button{
+  background-color: #FDAFFF;
+  color: #250054;
+  border: none;
+  font-weight: 800;
+  padding: 10px;
+  margin-top: 20px;
+}
+
+.form button:hover{
+  background-color: transparent;
+  border: 1px solid #FDAFFF;
+  color: #FDAFFF;
+  box-shadow: 0px 0px 28px 1px #00FFC2;
+  cursor: pointer;
+}
+
+.form input{
+  background-color: transparent;
+  border: 1px solid #00d0ff;
+  background-color: #006eff13;
+  height: 30px;
+  color: white;
+}
+
+.form label{
+  color: #FDAFFF;
+}
+
+/*--------------------- HOME-------------------- */
+.home{
+  height: 911px;
+  display: flex;
+  justify-content: space-between;
+  padding: 50px;
+}
+
+.header{
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 30px;
+}
+
+.logo{
+  background: linear-gradient(to left, #9c64ba, #3E8BFF);
+  padding: 10px 25px;
+  border-radius: 20px;
+  color: #ffffff;
+  box-shadow: 3px 3px 5px  rgba(52, 52, 52, 0.411);
+}
+
+.box{
+  width: 500px;
+  height: 500px;
+  background-color: #ffffff;
+  border-radius: 15px;
+}
+
+.switchBtn{
+  width: 75px;
+  height: 37px;
+  background-color: #bebebe ;
+  border-radius: 30px;
+  display: flex;
+}
+
+.moon, .sun{
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 2px;
+  box-shadow: 3px 3px 5px  rgba(43, 43, 43, 0.411);
+  margin: 0;
+}
+
+.moon.dark{
+  background-color: #1e00ff;
+  color: white;
+}
+
+.sun{
+  color: rgb(255, 140, 0);
+}
+
+.switchButton {
+  position: relative;
+  width: 75px;
+  height: 35px;
+  background-color: #bebebe ;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 1s ease; 
+}
+
+.circle {
+  position: absolute;
+  width: 35px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #bebebe; 
+}
+
+.switchButton.dark .circle {
+  left: 50px; 
+  background-color: #bebebe ; 
+  transition: left 0.5s ease;
+}
+
+.switchButton .circle {
+  transition: left 0.5s ease;
+}
+
+.box.dark{
+  background-color: #0c1036;
+}
+
+.home.light{
+  background: linear-gradient(to bottom, #3048e7f7, #271839);
+}
+
+.home.dark{
+  background: linear-gradient(to bottom, #171f55f7, #170e22);
+}
+
+.header.light{
+  background-color: #ffffff;
+  
+}
+
+.nav{
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.icon{
+  color: #909090;
+}
+
+.icon.dark{
+  color: #ffffff;
+}
+
+.header.dark{
+  background-color: #0d1134;
+  color: white;
+  
+}
