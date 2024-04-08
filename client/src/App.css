@@ -127,11 +127,32 @@ span{
 }
 
 /*--------------------- HOME-------------------- */
-.home{
-  height: 911px;
+.inline-right{
   display: flex;
+  align-items: center;
+  justify-content: right;
+}
+
+.inline-left{
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}
+
+.space-between{
+  display: flex;
+  align-items: center;
   justify-content: space-between;
-  padding: 50px;
+}
+
+.column{
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0px;
+}
+
+.home p, h4{
+  margin: 0px;
 }
 
 .header{
@@ -151,10 +172,11 @@ span{
 }
 
 .box{
-  width: 500px;
-  height: 500px;
   background-color: #ffffff;
   border-radius: 15px;
+  padding: 20px;
+  font-family: 'Poppins';
+  line-height: 1.8;
 }
 
 .switchBtn{
@@ -186,7 +208,7 @@ span{
   position: relative;
   width: 75px;
   height: 35px;
-  background-color: #bebebe ;
+  background-color: #EDEDED ;
   border-radius: 30px;
   display: flex;
   align-items: center;
@@ -213,20 +235,36 @@ span{
 }
 
 .box.dark{
-  background-color: #0c1036;
-}
-
-.home.light{
-  background: linear-gradient(to bottom, #3048e7f7, #271839);
+  background-color: #161a43;
+  color: #c9c9c9;
 }
 
 .home.dark{
   background: linear-gradient(to bottom, #171f55f7, #170e22);
+  font-weight: 200;
+}
+
+.home-container {
+  display: grid;
+  grid-auto-rows: auto 1fr;
+  height: 100vh;
+}
+
+.home {
+  display: flex;
+  justify-content: space-around;
+  background: linear-gradient(to bottom, #3048e7f7, #271839);
+  background-size: cover; 
+  background-position: center; 
+  height: 771px; 
+  overflow-y: scroll;
+  padding: 40px;
+  font-size: 0.875rem;
+  flex-wrap: wrap; 
 }
 
 .header.light{
   background-color: #ffffff;
-  
 }
 
 .nav{
@@ -246,5 +284,38 @@ span{
 .header.dark{
   background-color: #0d1134;
   color: white;
+  
+}
+
+/* ------------------Feed--------------*/
+
+.search-box{
+  background-color: #EDEDED;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.search-box input{
+  background-color: transparent;
+  border: none;
+  height: 20px;
+  text-decoration: none;
+  margin-left: 15px;
+}
+
+input:focus{
+  outline: none;
+}
+
+/* ---------------Post---------------- */
+
+.share-btn{
+  background-color: #008cff;
+  color: white;
+  padding: 10px 25px;
+  border: none;
+  border-radius: 30px;
+  font-size: 16px;
   
 }

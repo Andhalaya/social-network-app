@@ -15,6 +15,7 @@ function Form() {
     const [registrationSuccess, setRegistrationSuccess] = useState(false);
     const [formData, setFormData] = useState(initialForm);
     const [errors, setErrors] = useState();
+    const [invalidCredentials, setInvalidCredentials] = useState(false);
     const navigation = useNavigate();
 
     const handleChange = (e) => {
@@ -38,21 +39,26 @@ function Form() {
                 setErrors(error.response.data.errors);
             }
         } else if (pageType === "login") {
-            const response = await axios.post("http://localhost:3023/auth/login", formData);
-            console.log("Response:", response.data);
-            navigation("/home")
-            
+            try{
+                const response = await axios.post("http://localhost:3023/auth/login", formData);
+                console.log("Response:", response.data);
+                navigation("/home")
+            } catch (error) {  
+                setInvalidCredentials(true); 
+            }
         }
     };
 
     const handleLoginClick = () => {
         setPageType("login");
+        setErrors();
         setRegistrationSuccess(false);
         setFormData(initialForm);
     };
 
     const handleRegisterClick = () => {
         setPageType("register");
+        setErrors();
         setRegistrationSuccess(false);
     };
 
@@ -71,7 +77,13 @@ function Form() {
                         </Alert>
                     )}
             </div>
-
+            <div>
+               {invalidCredentials &&(
+                  <Alert variant="filled" severity="error">
+                  Invalid credentials.
+                </Alert>
+               )} 
+            </div>
             <form onSubmit={handleFormSubmit}>
                 {pageType === "register" && (
                     <>
