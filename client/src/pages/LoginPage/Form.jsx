@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import Alert from '@mui/material/Alert';
+import { useNavigate } from "react-router-dom";
 
 const initialForm = {
     fullName: "",
@@ -10,10 +11,11 @@ const initialForm = {
 }
 
 function Form() {
-    const [pageType, setPageType] = useState("register");
+    const [pageType, setPageType] = useState("login");
     const [registrationSuccess, setRegistrationSuccess] = useState(false);
     const [formData, setFormData] = useState(initialForm);
     const [errors, setErrors] = useState();
+    const navigation = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -29,20 +31,24 @@ function Form() {
             try {
                 const response = await axios.post("http://localhost:3023/auth/register", formData);
                 console.log("Response:", response.data);
-                setFormData(initialForm)
+                setFormData(initialForm);
                 setErrors();
                 setRegistrationSuccess(true);
-
             } catch (error) {
-                setErrors(err.response.data.errors);
+                setErrors(error.response.data.errors);
             }
         } else if (pageType === "login") {
-            console.log("Login form submitted with data:", formData);
+            const response = await axios.post("http://localhost:3023/auth/login", formData);
+            console.log("Response:", response.data);
+            navigation("/home")
+            
         }
     };
+
     const handleLoginClick = () => {
         setPageType("login");
         setRegistrationSuccess(false);
+        setFormData(initialForm);
     };
 
     const handleRegisterClick = () => {
@@ -52,56 +58,67 @@ function Form() {
 
     return (
         <>
-            {registrationSuccess && <Alert variant="filled" severity="success">
-                Successfully registered.
-            </Alert>}
+            <div>
+                {errors
+                    ? errors.map((error) => (
+                        <li key={error.msg}>
+                            {error.msg}
+                        </li>
+                    ))
+                    : registrationSuccess && (
+                        <Alert variant="filled" severity="success">
+                            This is a filled success Alert.
+                        </Alert>
+                    )}
+            </div>
 
             <form onSubmit={handleFormSubmit}>
-                <label>FULL NAME</label>
-                <input
-                    onChange={handleChange}
-                    value={formData.fullName}
-                    name="fullName"
-                />
-                <label>USER NAME</label>
-                <input
-                    onChange={handleChange}
-                    value={formData.userName}
-                    name="userName"
-                />
-                {pageType === "login" && (
+                {pageType === "register" && (
                     <>
-                        <label>EMAIL</label>
+                        <label>FULL NAME</label>
                         <input
                             onChange={handleChange}
-                            value={formData.email}
-                            name="email"
+                            value={formData.fullName}
+                            name="fullName"
                         />
-                        <label>PASSWORD</label>
+                        <label>USER NAME</label>
                         <input
                             onChange={handleChange}
-                            value={formData.password}
-                            name="password"
-                            type="password"
+                            value={formData.userName}
+                            name="userName"
                         />
                     </>
                 )}
+                <label>EMAIL</label>
+                <input
+                    onChange={handleChange}
+                    value={formData.email}
+                    name="email"
+                />
+                <label>PASSWORD</label>
+                <input
+                    onChange={handleChange}
+                    value={formData.password}
+                    name="password"
+                    type="password"
+                />
                 <button type="submit">
-                    {pageType === "register" ? "Login" : "Register"}
+                    {pageType === "login" ? "Login" : "Register"}
                 </button>
                 <p onClick={pageType === "login" ? handleRegisterClick : handleLoginClick}>
                     {pageType === "login" ? (
                         <>
-                            Already have an account? Login <span style={{ cursor: 'pointer' }}>here</span>.
-                        </>
-                    ) : ( 
-                        <>
                             Don't have an account? Register <span style={{ cursor: 'pointer' }}>here</span>.
                         </>
-                       
+                    ) : (
+                        <>
+                            Already have an account? Login <span style={{ cursor: 'pointer' }}>here</span>.
+                        </>
                     )}
                 </p>
             </form>
+
+
         </>
     )
 }

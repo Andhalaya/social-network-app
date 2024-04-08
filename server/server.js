@@ -20,12 +20,12 @@ app.use(bodyParser.json());
 
 // app.use(
 //     session({
-//       secret: hashedSecret,
-//       resave: false,
-//       saveUninitialized: true,
-//       cookie: { secure: false }
-//     })
-//   );
+//         secret: hashedSecret,
+//         resave: false,
+//         saveUninitialized: true,
+//         cookie: { secure: false }
+//  })
+// );
 
 
 app.use('/auth', authRoutes); 
