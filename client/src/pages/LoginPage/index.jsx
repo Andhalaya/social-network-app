@@ -30,7 +30,6 @@ function LoginPage () {
                     <h3><span>it's free!</span></h3>
                 </div>
                <Form />
-               <p>Already have an account? Then <span style={{cursor: 'pointer'}}>login</span></p>
             </div>
         </div>
     )

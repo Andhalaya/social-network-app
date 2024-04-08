@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express();
-const PORT = 3005;
+const PORT = 3023;
 const authRoutes = require('./src/routes/authRoutes')
 const {dbConnection} = require('./src/config/db')
 const bodyParser = require('body-parser');
@@ -18,14 +18,14 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use(
-    session({
-      secret: hashedSecret,
-      resave: false,
-      saveUninitialized: true,
-      cookie: { secure: false }
-    })
-  );
+// app.use(
+//     session({
+//       secret: hashedSecret,
+//       resave: false,
+//       saveUninitialized: true,
+//       cookie: { secure: false }
+//     })
+//   );
 
 
 app.use('/auth', authRoutes); 
