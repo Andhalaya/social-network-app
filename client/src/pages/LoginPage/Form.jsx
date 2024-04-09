@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import Alert from '@mui/material/Alert';
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthProvider"; 
 
 const initialForm = {
     fullName: "",
@@ -17,6 +18,7 @@ function Form() {
     const [errors, setErrors] = useState();
     const [invalidCredentials, setInvalidCredentials] = useState(false);
     const navigation = useNavigate();
+    const { login } = useAuth(); // Access the login method from AuthContext
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -39,12 +41,13 @@ function Form() {
                 setErrors(error.response.data.errors);
             }
         } else if (pageType === "login") {
-            try{
+            try {
                 const response = await axios.post("http://localhost:3023/auth/login", formData);
                 console.log("Response:", response.data);
-                navigation("/home")
-            } catch (error) {  
-                setInvalidCredentials(true); 
+                login(response.data.token); // Pass the token to the login function
+                navigation("/home");
+            } catch (error) {
+                setInvalidCredentials(true);
             }
         }
     };
@@ -73,7 +76,7 @@ function Form() {
                     ))
                     : registrationSuccess && (
                         <Alert variant="filled" severity="success">
-                            This is a filled success Alert.
+                            Registration successful!
                         </Alert>
                     )}
             </div>
@@ -129,8 +132,6 @@ function Form() {
                     )}
                 </p>
             </form>
-
-
         </>
     )
 }

@@ -6,18 +6,22 @@ function generateToken(user) {
   }
   
 function verifyToken(req, res, next) {
-    const token = req.session.token;
-    if(!token) {
-      return res.status(401).json({mensaje: 'token no generado'})
+  
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return res.status(401).json({ message: 'Token not provided' });
     }
+    const token = authHeader.split(' ')[1];
   
     jwt.verify(token, secret, (err, decoded) => {
-      if(err) {
-        return res.status(401).json({mensaje: 'token invalido'})
-      }
-      req.user = decoded.user;
-      next()
-    })
+        if (err) {
+            return res.status(401).json({ message: 'Invalid token' });
+        }
+
+        req.user = decoded.user;
+
+        next();
+    });
   }
 
 module.exports = {generateToken, verifyToken}

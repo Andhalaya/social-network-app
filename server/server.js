@@ -2,11 +2,13 @@ const express = require('express')
 const app = express();
 const PORT = 3023;
 const authRoutes = require('./src/routes/authRoutes')
-const postsRoutes = require('./src/routes/postsRoutes')
+const postRoutes = require('./src/routes/postsRoutes')
+const userRoutes = require('./src/routes/userRoutes')
 const {dbConnection} = require('./src/config/db')
 const bodyParser = require('body-parser');
 const cors = require('cors')
-
+// const session = require('express-session')
+// const {hashedSecret} = require('./src/crypto/config');
 
 require ('dotenv').config();
 
@@ -29,6 +31,7 @@ app.use(bodyParser.json());
 
 
 app.use('/auth', authRoutes);
-app.use('/posts', postsRoutes) 
+app.use('/posts', postRoutes);
+app.use('/users', userRoutes) 
 
 app.listen(PORT, () => console.log(`Server started on http://localhost:${PORT}`))

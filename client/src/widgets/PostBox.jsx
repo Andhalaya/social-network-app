@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { useTheme } from "../theme";
+import { useTheme } from "../context/theme";
 import { Divider} from "@mui/material";
 import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternateOutlined';
 import FormatAlignLeftOutlinedIcon from '@mui/icons-material/FormatAlignLeftOutlined';
@@ -32,8 +32,8 @@ function PostBox() {
 
     const handleFormSubmit = async () => {
         try {
-            const response = await axios.post("http://localhost:3023/posts", formData);
-            console.log("Response:", response.data);
+            // const response = await axios.post("http://localhost:3023/posts", formData);
+            console.log("formdata:", formData);
             
         } catch (error) {
             console.error("Error:", error);

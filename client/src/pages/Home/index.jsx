@@ -1,7 +1,7 @@
 import Header from "../../components/Header";
 import UserBox from "../../widgets/UserBox";
 import FeedBox from "../../widgets/FeedBox"
-import { useTheme } from "../../theme";
+import { useTheme } from "../../context/theme";
 
 function Home () {
     const { theme } = useTheme();

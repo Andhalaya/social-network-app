@@ -1,4 +1,4 @@
-import { useTheme } from "../theme";
+import { useTheme } from "../context/theme";
 import { IconButton } from "@mui/material";
 import LinkSharpIcon from '@mui/icons-material/LinkSharp';
 import ThumbUpAltRoundedIcon from '@mui/icons-material/ThumbUpAltRounded';

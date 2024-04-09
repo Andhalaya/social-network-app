@@ -1,8 +1,18 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import Form from "./Form";
-
+import { useAuth } from '../../context/AuthProvider';
+import { useNavigate } from "react-router";
 
 function LoginPage() {
+    const navigate = useNavigate();
+    const {isLoggedIn} = useAuth();
+
+    useEffect(() => {
+        if (isLoggedIn) {
+        
+          navigate('/home');
+        }
+      }, [isLoggedIn, navigate]);
 
     return (
         <div className="loginPage">

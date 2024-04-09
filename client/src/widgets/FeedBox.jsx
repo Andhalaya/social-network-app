@@ -1,4 +1,4 @@
-import { useTheme } from "../theme";
+import { useTheme } from "../context/theme";
 import { Divider, IconButton } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import Post from "../components/Post";
