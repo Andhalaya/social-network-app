@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const postSchema = mongoose.Schema({
-    userId:{
+    user:{
         type: mongoose.Schema.Types.ObjectId, ref: 'User',
         required: true,
     },
@@ -15,7 +15,7 @@ const postSchema = mongoose.Schema({
     picturePath: {
         type: String
     },
-    codeSnipet: {
+    codeSnippet: {
         type: String
     },
     link: {
@@ -29,7 +29,7 @@ const postSchema = mongoose.Schema({
         type: Array,
         default: []
     } 
-}, {timeStamps: true})
+}, {timestamps: true})
 
 const Post = mongoose.model('Post', postSchema);
 

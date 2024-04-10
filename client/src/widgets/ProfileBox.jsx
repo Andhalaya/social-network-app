@@ -58,13 +58,13 @@ function ProfileBox() {
                             <img src="" alt="" />
                             <h5>Modern</h5>
                             <p>As Uber works through a huge amount of internal management turmoil.</p>
-                            <button>View project</button>
+                            <button className="share-btn">View project</button>
                         </div>
                         <div>
                             <img src="" alt="" />
                             <h5>Modern</h5>
                             <p>As Uber works through a huge amount of internal management turmoil.</p>
-                            <button>View project</button>
+                            <button className="share-btn">View project</button>
                         </div>
                     </div>
                 </div>

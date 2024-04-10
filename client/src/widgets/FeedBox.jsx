@@ -19,14 +19,8 @@ function FeedBox () {
                     </IconButton>
                 </div>
            </div>
-           <div>
            <Divider/>
            <Post/>
-           <Divider/>
-           <Post/>
-           <Divider/>
-           <Post/>
-           </div>
         </div>
         </div>
     )

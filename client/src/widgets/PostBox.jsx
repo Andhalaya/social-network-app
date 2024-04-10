@@ -6,12 +6,15 @@ import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternate
 import FormatAlignLeftOutlinedIcon from '@mui/icons-material/FormatAlignLeftOutlined';
 import CodeRoundedIcon from '@mui/icons-material/CodeRounded';
 import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined';
+import {useAuth} from '../context/AuthProvider';
 
 function PostBox() {
     const { theme } = useTheme();
+    const {user, token} = useAuth();
     const [activeFields, setActiveFields] = useState([]);
     const [formData, setFormData] = useState({
-        thought: "",
+        user: user._id,
+        title: "",
         description: "",
         image: null,
         codeSnippet: "",
@@ -32,8 +35,10 @@ function PostBox() {
 
     const handleFormSubmit = async () => {
         try {
-            // const response = await axios.post("http://localhost:3023/posts", formData);
-            console.log("formdata:", formData);
+            await axios.post("http://localhost:3023/posts", formData,
+              {headers: {
+                Authorization: `Bearer ${token}`}
+            });
             
         } catch (error) {
             console.error("Error:", error);
@@ -57,8 +62,8 @@ function PostBox() {
                         <input
                             type="text"
                             placeholder="Write a thought..."
-                            value={formData.thought}
-                            onChange={(e) => handleChange("thought", e.target.value)}
+                            value={formData.title}
+                            onChange={(e) => handleChange("title", e.target.value)}
                         />
                     </div>
                 </div>

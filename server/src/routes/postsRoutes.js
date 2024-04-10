@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const {getPosts} = require('../controllers/PostController')
+const {getPosts, createPost} = require('../controllers/PostController')
+const {verifyToken} = require('../middlewares/authMiddleware')
 
-router.get('/', getPosts )
+router.get('/', verifyToken, getPosts )
+router.post('/', verifyToken, createPost)
 
-module.exports = router
+module.exports = router;
