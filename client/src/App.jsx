@@ -5,6 +5,7 @@ import { AuthProvider } from './context/AuthProvider'
 import ProtectedRoute from './components/ProtectedRoute';
 import LoginPage from './pages/LoginPage/index'
 import Home from './pages/Home/index'
+import Profile from './pages/Profile/index'
 
 function App() {
   return (
@@ -27,6 +28,7 @@ const AppContent = () => {
         <Route path='/' element={<LoginPage />} />
         <Route element={<ProtectedRoute />} >
           <Route path='/home' element={<Home />} />
+          <Route path='/profile' element={<Profile />} />
         </Route>
       </Routes>
     </div>  

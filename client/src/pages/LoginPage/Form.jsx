@@ -18,8 +18,7 @@ function Form() {
     const [errors, setErrors] = useState();
     const [invalidCredentials, setInvalidCredentials] = useState(false);
     const navigation = useNavigate();
-    const { login } = useAuth(); // Access the login method from AuthContext
-
+    const { login } = useAuth(); 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({
@@ -44,7 +43,8 @@ function Form() {
             try {
                 const response = await axios.post("http://localhost:3023/auth/login", formData);
                 console.log("Response:", response.data);
-                login(response.data.token); // Pass the token to the login function
+                localStorage.setItem('token', response.data.token)
+                login(response.data.token); 
                 navigation("/home");
             } catch (error) {
                 setInvalidCredentials(true);

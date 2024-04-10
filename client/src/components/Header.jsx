@@ -6,6 +6,7 @@ import MarkChatUnreadOutlinedIcon from '@mui/icons-material/MarkChatUnreadOutlin
 import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 import LightMode from '@mui/icons-material/LightMode';
 import {useState} from 'react';
+import { useNavigate} from 'react-router'
 import { useAuth } from '../context/AuthProvider';
 
 function Header () {
@@ -14,6 +15,7 @@ function Header () {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const { logout } = useAuth();
+    const navigate = useNavigate();
 
     const handleClose = () => {
         setAnchorEl(null);
@@ -25,7 +27,7 @@ function Header () {
 
     return (
         <nav className={`header ${theme}`}>
-            <div className="logo">LazyCoder</div>
+            <div className="logo" onClick={() =>{navigate('/home')}}>LazyCoder</div>
             <div className="nav">
                 <IconButton 
                     onClick={(e) => { setAnchorEl(e.currentTarget)}} 
@@ -54,7 +56,7 @@ function Header () {
                 <IconButton>
                     < MarkChatUnreadOutlinedIcon className={`icon ${theme}`}/>
                 </IconButton>
-                <IconButton>
+                <IconButton onClick={() =>{navigate('/profile')}}>
                     <PersonRoundedIcon className={`icon ${theme}`}/>
                 </IconButton>
                 <div className={`switchButton ${theme}`}>

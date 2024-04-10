@@ -169,6 +169,7 @@ span{
   border-radius: 20px;
   color: #ffffff;
   box-shadow: 3px 3px 5px  rgba(52, 52, 52, 0.411);
+  cursor: pointer;
 }
 
 .box{
@@ -317,5 +318,21 @@ input:focus{
   border: none;
   border-radius: 30px;
   font-size: 16px;
-  
+  cursor: pointer;
+}
+
+/* ---------------Profile---------------- */
+
+.profile-background img{
+  border-radius: 30px;
+  position: relative;
+  display: flex;
+}
+
+.box .profile{
+  position: relative;
+  margin-top: -60px;
+  display: flex;
+  flex-direction: column;
+  overflow-wrap: break-word;
 }

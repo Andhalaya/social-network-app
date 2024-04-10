@@ -5,45 +5,51 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [token, setToken] = useState(localStorage.getItem("token"));
 
   useEffect(() => {
     const checkToken = async () => {
-      const token = localStorage.getItem('token');
       if (token) {
         try {
-            const response = await axios.get("http://localhost:3023/users/me", {
-                headers: {
-                  Authorization: `Bearer ${token}`
-                }
-              });
-          if (response.data.valid) {
+          const response = await axios.get("http://localhost:3023/users/me", {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          });
+          if (response.data.user) {
             setIsLoggedIn(true);
-            
+            setUser(response.data.user);
           } else {
             setIsLoggedIn(false);
+            setUser(null);
           }
         } catch (error) {
           console.error("Error validating token:", error);
           setIsLoggedIn(false);
+          setUser(null);
         }
       } else {
         setIsLoggedIn(false);
+        setUser(null);
       }
       setLoading(false);
     };
 
     checkToken();
-  }, []);
+  }, [token]);
 
-  const login = (token) => {
-    localStorage.setItem('token', token);
-    setIsLoggedIn(true);
+  const login = (newToken) => {
+    localStorage.setItem('token', newToken);
+    setToken(newToken);
   };
 
   const logout = () => {
     localStorage.removeItem('token');
     setIsLoggedIn(false);
+    setUser(null);
+    setToken(null);
   };
 
   if (loading) {
@@ -51,7 +57,7 @@ export const AuthProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn, user, login, logout, token }}>
       {children}
     </AuthContext.Provider>
   );

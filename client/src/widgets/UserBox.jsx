@@ -4,9 +4,11 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import WorkOutlineOutlinedIcon from '@mui/icons-material/WorkOutlineOutlined';
 import ThumbUpAltRoundedIcon from '@mui/icons-material/ThumbUpAltRounded';
 import ChatBubbleOutlineRoundedIcon from '@mui/icons-material/ChatBubbleOutlineRounded';
+import { useAuth } from '../context/AuthProvider';
 
 function UserBox () {
     const { theme } = useTheme();
+    const { user } = useAuth();
     return (
         <div className={`box ${theme}`} style={{height:'600px'}}>
             <div className="inline-left" style={{gap: 15}}>
@@ -14,8 +16,8 @@ function UserBox () {
                     <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="name"  style={{borderRadius:40, width:"70px"}}/>
                 </div>
                 <div>
-                    <h4>@superLady</h4>
-                    <h6>Leonie Nguyen</h6>
+                    <h4>{`@${user.userName}`}</h4>
+                    <h6>{user.fullName}</h6>
                     <p>0 followers</p>
                     <p>0 following</p> 
                 </div>
