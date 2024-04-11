@@ -12,12 +12,16 @@ exports.getPosts = async (req, res) => {
 
 exports.createPost = async (req, res) => {
     try{
+        const uploadedFile = req.file;
+        const filePath = uploadedFile
+            ? '/uploads/' + uploadedFile.filename
+            : '';
         
         const newPost = new Post({ 
             user: req.body.user,
             title: req.body.title, 
             description: req.body.description, 
-            picturePath: req.body.picturePath, 
+            picturePath: filePath, 
             codeSnippet: req.body.codeSnippet, 
             link: req.body.link
         })

@@ -13,7 +13,7 @@ function UserBox () {
         <div className={`box ${theme}`} style={{height:'600px'}}>
             <div className="inline-left" style={{gap: 15}}>
                 <div>
-                    <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="name"  style={{borderRadius:40, width:"70px"}}/>
+                    <img src={user.profilePicture} alt="name"  style={{borderRadius:40, width:"70px"}}/>
                 </div>
                 <div>
                     <h4>{`@${user.userName}`}</h4>
@@ -25,13 +25,13 @@ function UserBox () {
             </div>
             <Divider />
             <div className="column">
-                <div className="inline-left">
+                <div className="inline-left" style={{gap:'15px', margin:'5px 0px'}}>
                     <LocationOnIcon className={`icon ${theme}`}/>
-                    <p>Somewhere out there, CA</p>
+                    <p> {user.location}</p>
                 </div>
-                <div className="inline-left"> 
+                <div className="inline-left" style={{gap:'15px'}}> 
                     <WorkOutlineOutlinedIcon className={`icon ${theme}`}/>
-                    <p>Somewhere out there, CA</p> 
+                    <p> {user.occupation}</p> 
                 </div>
             </div>
             <Divider />
@@ -78,7 +78,7 @@ function UserBox () {
                 </div>
             </div>
             <Divider />
-            <div>
+            <div style={{margin:'10px 0px'}}>
                 <h4>Links</h4>
                 <p>github.com/myprofile</p>
                 <p>github.com/myprofile</p>

@@ -5,6 +5,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import MarkChatUnreadOutlinedIcon from '@mui/icons-material/MarkChatUnreadOutlined';
 import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 import LightMode from '@mui/icons-material/LightMode';
+import Brightness2Icon from '@mui/icons-material/Brightness2';
 import {useState} from 'react';
 import { useNavigate} from 'react-router'
 import { useAuth } from '../context/AuthProvider';

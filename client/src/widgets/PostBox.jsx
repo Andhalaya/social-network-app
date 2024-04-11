@@ -1,25 +1,32 @@
 import { useState } from "react";
 import axios from "axios";
 import { useTheme } from "../context/theme";
-import { Divider} from "@mui/material";
+import { Divider, IconButton } from "@mui/material";
 import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternateOutlined';
 import FormatAlignLeftOutlinedIcon from '@mui/icons-material/FormatAlignLeftOutlined';
 import CodeRoundedIcon from '@mui/icons-material/CodeRounded';
 import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined';
-import {useAuth} from '../context/AuthProvider';
+import { EditOutlined, DeleteOutlined } from "@mui/icons-material";
+import Dropzone from "react-dropzone";
+import { useAuth } from '../context/AuthProvider';
 
-function PostBox() {
+
+function PostBox({ fetchPosts }) {
+
     const { theme } = useTheme();
-    const {user, token} = useAuth();
+    const { user, token } = useAuth();
+    const [image, setImage] = useState(null);
+    const [imageURL, setImageURL] = useState(null);
     const [activeFields, setActiveFields] = useState([]);
-    const [formData, setFormData] = useState({
+    const initialState = {
         user: user._id,
         title: "",
         description: "",
         image: null,
         codeSnippet: "",
         link: ""
-    });
+    }
+    const [formData, setFormData] = useState(initialState);
 
     const handleToggleField = (fieldName) => {
         if (activeFields.includes(fieldName)) {
@@ -35,14 +42,23 @@ function PostBox() {
 
     const handleFormSubmit = async () => {
         try {
+            if (image) {
+                formData.append("picture", image);
+                formData.append("picturePath", image.name);
+            }
+
             await axios.post("http://localhost:3023/posts", formData,
-              {headers: {
-                Authorization: `Bearer ${token}`}
-            });
-            
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+            fetchPosts();
+            setFormData(initialState)
+
         } catch (error) {
             console.error("Error:", error);
-            
+
         }
     };
 
@@ -53,17 +69,27 @@ function PostBox() {
         });
     };
 
+    const handleImageChange = (acceptedFiles) => {
+        const file = acceptedFiles[0];
+        setImage(file);
+
+        const reader = new FileReader();
+        reader.onload = (e) => setImageURL(e.target.result);
+        reader.readAsDataURL(file);
+    };
+
     return (
         <div className={`box ${theme}`} style={{ maxWidth: '900px' }}>
             <div className="space-between" style={{ marginBottom: '10px' }}>
                 <div className="inline-left" style={{ gap: '20px' }}>
-                    <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="name" style={{ borderRadius: 40, width: "40px" }} />
+                    <img src={user.profilePicture} alt="name" style={{ borderRadius: 40, width: "40px" }} />
                     <div className="search-box" style={{ height: '35px', width: '500px' }}>
                         <input
                             type="text"
                             placeholder="Write a thought..."
                             value={formData.title}
                             onChange={(e) => handleChange("title", e.target.value)}
+                            style={{ width: '100%' }}
                         />
                     </div>
                 </div>
@@ -73,24 +99,24 @@ function PostBox() {
             </div>
             <Divider />
             <div className="inline-left" style={{ gap: '20px', marginTop: '10px' }}>
-                <div className="inline-left" style={{ gap: '5px' }} onClick={() => handleToggleField("image")}>
+                <div className="inline-left" style={{ gap: '5px', cursor: 'pointer' }} onClick={() => handleToggleField("image")}>
                     <AddPhotoAlternateOutlinedIcon />
                     <p>Add image</p>
                 </div>
-                <div className="inline-left" style={{ gap: '5px' }} onClick={() => handleToggleField("description")}>
+                <div className="inline-left" style={{ gap: '5px', cursor: 'pointer' }} onClick={() => handleToggleField("description")}>
                     <FormatAlignLeftOutlinedIcon />
                     <p>Add description</p>
                 </div>
-                <div className="inline-left" style={{ gap: '5px' }} onClick={() => handleToggleField("codeSnippet")}>
+                <div className="inline-left" style={{ gap: '5px', cursor: 'pointer' }} onClick={() => handleToggleField("codeSnippet")}>
                     <CodeRoundedIcon />
                     <p>Add code snippet</p>
                 </div>
-                <div className="inline-left" style={{ gap: '5px' }} onClick={() => handleToggleField("link")}>
+                <div className="inline-left" style={{ gap: '5px', cursor: 'pointer' }} onClick={() => handleToggleField("link")}>
                     <LinkOutlinedIcon />
                     <p>Add link</p>
                 </div>
             </div>
-            <div className="column" style={{ gap: '10px', width: '500px' }}>
+            <div className="column" style={{ gap: '10px', width: '100%' }}>
                 {isFieldActive("description") && (
                     <textarea
                         placeholder="Enter description"
@@ -99,11 +125,33 @@ function PostBox() {
                     />
                 )}
                 {isFieldActive("image") && (
-                    <input
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => handleChange("image", e.target.files[0])}
-                    />
+                    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+                        <Dropzone
+                            acceptedFiles=".jpg,.jpeg,.png"
+                            multiple={false}
+                            onDrop={handleImageChange}
+
+                        >
+                            {({ getRootProps, getInputProps }) => (
+                                    <div {...getRootProps()} >
+                                        <input {...getInputProps()} />
+                                        {!image ? (
+                                            <p className="dropzone">Add Image Here</p>
+                                        ) : (
+                                            <div className="column">
+                                                {imageURL && <img src={imageURL} alt="Preview" style={{ maxWidth: "600px" }} />}
+                                                <div className="inline-left">
+                                                  <p>{image.name}</p>
+                                                    <IconButton onClick={() => { setImage(null); setImageURL(null); }}>
+                                                        <DeleteOutlined />
+                                                    </IconButton>  
+                                                </div> 
+                                            </div>
+                                        )}
+                                    </div>
+                            )}
+                        </Dropzone>
+                    </div>
                 )}
                 {isFieldActive("codeSnippet") && (
                     <textarea

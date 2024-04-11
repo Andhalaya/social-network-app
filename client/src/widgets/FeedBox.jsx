@@ -3,12 +3,32 @@ import { Divider, IconButton } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import Post from "../components/Post";
 import PostBox from "./PostBox";
+import { useState, useEffect } from "react";
+import {useAuth} from '../context/AuthProvider'
+import axios from 'axios';
 
 function FeedBox () {
     const { theme } = useTheme();
+    const {token} = useAuth();
+    const [posts, setPosts] = useState([]);
+
+    useEffect(() => {
+        fetchPosts(); 
+    }, []);
+
+    const fetchPosts = async () => {
+        try {
+            const res = await axios.get('http://localhost:3023/posts', 
+            {headers: { Authorization: `Bearer ${token}`} })
+            console.log(res.data)
+            setPosts(res.data);
+        } catch (error) {
+            console.error("Error fetching posts:", error);
+        }
+    };
     return (
         <div style={{display:'flex', flexDirection:'column', gap:'20px'}}>
-        <PostBox />
+        <PostBox fetchPosts={fetchPosts}/>
         <div className={`box ${theme}`} style={{maxWidth:'900px'}}>
            <div className="space-between" style={{marginBottom:'10px'}}>
                 <h3 style={{fontWeight:'400'}}>Posts</h3>
@@ -20,7 +40,11 @@ function FeedBox () {
                 </div>
            </div>
            <Divider/>
-           <Post/>
+           <div style={{display:'flex', flexDirection:'column-reverse'}}>
+            {posts.map(post => (
+                        <Post key={post._id} post={post} />
+                    ))}
+            </div>
         </div>
         </div>
     )

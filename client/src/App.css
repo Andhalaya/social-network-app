@@ -236,12 +236,11 @@ span{
 }
 
 .box.dark{
-  background-color: #161a43;
+  background-color: #0e1136;
   color: #c9c9c9;
 }
 
 .home.dark{
-  background: linear-gradient(to bottom, #171f55f7, #170e22);
   font-weight: 200;
 }
 
@@ -253,7 +252,8 @@ span{
 
 .home {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  gap: 50px;
   background: linear-gradient(to bottom, #3048e7f7, #271839);
   background-size: cover; 
   background-position: center; 
@@ -319,6 +319,22 @@ input:focus{
   border-radius: 30px;
   font-size: 16px;
   cursor: pointer;
+}
+
+.dropzone{
+ 
+ width: 500px;
+ height: 300px; 
+ background-color: #EDEDED;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+
+.dropzone:hover{
+  cursor: pointer;
+  
+  border: 1px solid #a3a3a3;
 }
 
 /* ---------------Profile---------------- */

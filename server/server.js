@@ -6,9 +6,10 @@ const postRoutes = require('./src/routes/postsRoutes')
 const userRoutes = require('./src/routes/userRoutes')
 const {dbConnection} = require('./src/config/db')
 const bodyParser = require('body-parser');
+
+const path = require('path')
 const cors = require('cors')
-// const session = require('express-session')
-// const {hashedSecret} = require('./src/crypto/config');
+
 
 require ('dotenv').config();
 
@@ -20,15 +21,7 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// app.use(
-//     session({
-//         secret: hashedSecret,
-//         resave: false,
-//         saveUninitialized: true,
-//         cookie: { secure: false }
-//  })
-// );
-
+app.use(express.static('public'));
 
 app.use('/auth', authRoutes);
 app.use('/posts', postRoutes);
