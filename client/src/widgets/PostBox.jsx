@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useTheme } from "../context/theme";
 import { Divider, IconButton } from "@mui/material";
@@ -6,13 +6,11 @@ import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternate
 import FormatAlignLeftOutlinedIcon from '@mui/icons-material/FormatAlignLeftOutlined';
 import CodeRoundedIcon from '@mui/icons-material/CodeRounded';
 import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined';
-import { EditOutlined, DeleteOutlined } from "@mui/icons-material";
+import { DeleteOutlined } from "@mui/icons-material";
 import Dropzone from "react-dropzone";
 import { useAuth } from '../context/AuthProvider';
 
-
 function PostBox({ fetchPosts }) {
-
     const { theme } = useTheme();
     const { user, token } = useAuth();
     const [image, setImage] = useState(null);
@@ -22,10 +20,9 @@ function PostBox({ fetchPosts }) {
         user: user._id,
         title: "",
         description: "",
-        image: null,
         codeSnippet: "",
         link: ""
-    }
+    };
     const [formData, setFormData] = useState(initialState);
 
     const handleToggleField = (fieldName) => {
@@ -42,23 +39,27 @@ function PostBox({ fetchPosts }) {
 
     const handleFormSubmit = async () => {
         try {
-            if (image) {
-                formData.append("picture", image);
-                formData.append("picturePath", image.name);
-            }
+            const formDataToSend = new FormData();
+            formDataToSend.append("user", formData.user);
+            formDataToSend.append("title", formData.title);
+            formDataToSend.append("description", formData.description);
+            formDataToSend.append("codeSnippet", formData.codeSnippet);
+            formDataToSend.append("link", formData.link);
+            formDataToSend.append("image", image);
 
-            await axios.post("http://localhost:3023/posts", formData,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
+            await axios.post("http://localhost:3023/posts", formDataToSend, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
             fetchPosts();
-            setFormData(initialState)
-
+            setFormData(initialState);
+            setImage(null);
+            setImageURL(null);
+            setActiveFields([]);
         } catch (error) {
             console.error("Error:", error);
-
         }
     };
 
@@ -89,6 +90,7 @@ function PostBox({ fetchPosts }) {
                             placeholder="Write a thought..."
                             value={formData.title}
                             onChange={(e) => handleChange("title", e.target.value)}
+                            className="roboto-font"
                             style={{ width: '100%' }}
                         />
                     </div>
@@ -130,25 +132,24 @@ function PostBox({ fetchPosts }) {
                             acceptedFiles=".jpg,.jpeg,.png"
                             multiple={false}
                             onDrop={handleImageChange}
-
                         >
                             {({ getRootProps, getInputProps }) => (
-                                    <div {...getRootProps()} >
-                                        <input {...getInputProps()} />
-                                        {!image ? (
-                                            <p className="dropzone">Add Image Here</p>
-                                        ) : (
-                                            <div className="column">
-                                                {imageURL && <img src={imageURL} alt="Preview" style={{ maxWidth: "600px" }} />}
-                                                <div className="inline-left">
-                                                  <p>{image.name}</p>
-                                                    <IconButton onClick={() => { setImage(null); setImageURL(null); }}>
-                                                        <DeleteOutlined />
-                                                    </IconButton>  
-                                                </div> 
+                                <div {...getRootProps()} >
+                                    <input {...getInputProps()} />
+                                    {!image ? (
+                                        <p className="dropzone">Add Image Here</p>
+                                    ) : (
+                                        <div className="column">
+                                            {imageURL && <img src={imageURL} alt="Preview" style={{ maxWidth: "600px" }} />}
+                                            <div className="inline-left">
+                                                <p>{image.name}</p>
+                                                <IconButton onClick={() => { setImage(null); setImageURL(null); }}>
+                                                    <DeleteOutlined />
+                                                </IconButton>
                                             </div>
-                                        )}
-                                    </div>
+                                        </div>
+                                    )}
+                                </div>
                             )}
                         </Dropzone>
                     </div>

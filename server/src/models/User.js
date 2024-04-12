@@ -31,6 +31,7 @@ const UserSchema = new mongoose.Schema(
             type: Array,
             default: [],
         },
+        posts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
         location: String,
         occupation: String,
     },

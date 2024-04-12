@@ -19,14 +19,3 @@ export const ThemeProvider = ({ children }) => {
   );
 };
 
-export const theme = createTheme({
-    components:{
-        MuiIconButton: {
-            styleOverrides:{
-                root:{
-                    color: '#ffffff'
-                }
-            }
-        }
-    }
-})

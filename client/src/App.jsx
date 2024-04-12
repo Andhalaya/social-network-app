@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes, Navigate} from 'react-router-dom'
 import './App.css'
 import { ThemeProvider, useTheme } from './context/theme'
-import { AuthProvider } from './context/AuthProvider'
+import { AuthProvider, useAuth } from './context/AuthProvider'
 import ProtectedRoute from './components/ProtectedRoute';
 import LoginPage from './pages/LoginPage/index'
 import Home from './pages/Home/index'
@@ -20,7 +20,8 @@ function App() {
 }
 
 const AppContent = () => {
-  const { theme } = useTheme(); 
+  const { theme } = useTheme();
+  const {user} = useAuth();
 
   return (
     <div className={`App ${theme}`}>
@@ -29,6 +30,7 @@ const AppContent = () => {
         <Route element={<ProtectedRoute />} >
           <Route path='/home' element={<Home />} />
           <Route path='/profile' element={<Profile />} />
+          <Route path='/profile/:user' element={<Profile />} />
         </Route>
       </Routes>
     </div>  

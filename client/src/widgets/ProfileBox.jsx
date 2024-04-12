@@ -13,8 +13,8 @@ function ProfileBox() {
             </div>
             <div className={`box ${theme} profile`} >
                 <div className="space-between">
-                    <div className="inline-left">
-                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="name" style={{ borderRadius: 40, width: "70px" }} />
+                    <div className="inline-left" style={{gap:'5px'}}>
+                        <img src={user.profilePicture} alt="name" style={{ borderRadius: 40, width: "70px" }} />
                         <div>
                             <h4>{`@${user.userName}`}</h4>
                             <h6>{user.fullName}</h6>
@@ -22,15 +22,13 @@ function ProfileBox() {
                     </div>
                     <p>0 followers</p>
                     <p>0 following</p>
-                    
-                    
                 </div>
                 <div className="space-between" style={{flexWrap:'wrap'}}>
                     <div>
                         <h4>Settings</h4>
                         <div className="column">
                             <h5>Account</h5>
-                            <p>Email settings: sdfsdfsdf</p>
+                            <button className="share-btn" > Delete user </button>
                             <p>Email settings: sdfsdfsdf</p>
                             <p>Email settings</p>
                             <h5>Application</h5>
@@ -42,11 +40,11 @@ function ProfileBox() {
                     <div>
                         <h4>Profile Information</h4>
                         <p style={{maxWidth:'600px'}}>Hi, I’m Alec Thompson, Decisions: If you can’t decide, the answer is no. If two equally difficult paths, choose the one more painful in the short term (pain avoidance is creating an illusion of equality).</p>
-                        <h5>Full Name: </h5>
-                        <h5>Username: </h5>
-                        <h5>Email: </h5>
-                        <h5>Location: </h5>
-                        <h5>Links: </h5>
+                        <h5>Full Name: </h5>{user.fullName}
+                        <h5>Email: </h5>{user.email}
+                        <h5>Location: </h5>{user.location}
+                        <h5>Occupation: </h5>{user.location}
+                        <h5>GitHub: </h5>
                     </div>
 
                 </div>
@@ -68,6 +66,7 @@ function ProfileBox() {
                         </div>
                     </div>
                 </div>
+                
             </div>
         </div>
     )

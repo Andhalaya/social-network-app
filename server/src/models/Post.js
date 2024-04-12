@@ -12,7 +12,7 @@ const postSchema = mongoose.Schema({
     description: {
         type: String
     },
-    picturePath: {
+    image: {
         type: String
     },
     codeSnippet: {
@@ -22,9 +22,9 @@ const postSchema = mongoose.Schema({
         type: String
     },
     likes: {
-        type: Map,
-        of: Boolean,
-    },
+        type: Array, 
+        default: [],  
+      },
     comments:{
         type: Array,
         default: []

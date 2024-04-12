@@ -2,8 +2,15 @@
 .loginPage{
   height: 911px;
   display: flex;
+  flex-wrap: wrap;
   background: linear-gradient(to bottom, #3048e7f7, #271839);
   color: #ffffff;
+}
+
+a{
+  color: #006eff;
+  text-decoration: none;
+  font-weight: 500;
 }
 
 .container{
@@ -127,6 +134,18 @@ span{
 }
 
 /*--------------------- HOME-------------------- */
+.home::-webkit-scrollbar {
+  overflow: hidden;
+}
+
+.home p{
+  color:rgb(35, 35, 35)
+}
+
+.home .dark p{
+  color: rgb(230, 230, 230);
+}
+
 .inline-right{
   display: flex;
   align-items: center;
@@ -278,6 +297,14 @@ span{
   color: #909090;
 }
 
+.roboto-font{
+  font-family: 'Roboto mono';
+}
+
+.version2{
+  width: 5px;
+}
+
 .icon.dark{
   color: #ffffff;
 }
@@ -295,6 +322,7 @@ span{
   border-radius: 30px;
   display: flex;
   align-items: center;
+  padding: 5px;
 }
 
 .search-box input{
