@@ -20,6 +20,7 @@ function Post({ post, updatePostLikes }) {
     const [liked, setLiked] = useState(false);
     const [comment, setComment] = useState('');
     const [comments, setComments] = useState(post.comments || []);
+    const [showComments, setShowComments] = useState(false);
 
     useEffect(() => {
         
@@ -41,6 +42,22 @@ function Post({ post, updatePostLikes }) {
             updatePostLikes(post._id, updatedLikes);
         } catch (error) {
             console.error("Error liking post:", error);
+        }
+    };
+
+    const handleComment = async () => {
+        try {
+            const response = await axios.patch(`http://localhost:3023/posts/${post._id}/comment`, { userId: user._id, comment }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            const updatedComments = response.data.comments;
+
+            setComments(updatedComments);
+            setComment('');
+        } catch (error) {
+            console.error("Error commenting:", error);
         }
     };
 
@@ -91,38 +108,42 @@ function Post({ post, updatePostLikes }) {
                             {liked ? <ThumbUpAltRoundedIcon className={`icon ${theme}`} style={{width:'20px', color: '#008cff'}}/> : <ThumbUpAltRoundedIcon className={`icon ${theme}`} style={{width:'20px'}}/>}
                         </div>
                     </div>
-                    <div className="inline-left" style={{ gap: '10px' }}>
+                    <div className="inline-left" style={{ gap: '10px', cursor:'pointer' }} onClick={() => setShowComments(!showComments)}>
                         <p>{comments.length}</p>
                         <ChatBubbleOutlineRoundedIcon className={`icon ${theme}`} style={{ width: '20px' }} />
                     </div>
                 </div>
             </div>
-            <div style={{backgroundColor:'#EDEDED', padding:'15px', borderRadius:'10px', marginBottom:'10px'}}>
-            <h5>Comments</h5>
-            <Divider/>
-                <div style={{marginTop:'10px'}}>
-                    {comments.map((comment, index) => (
-                        <div key={index} style={{marginBottom: '10px'}}>
-                            
-                            <div className="inline-left" style={{gap:'10px'}}>
-                                <p style={{fontWeight:'500'}}>{comment.user}</p>
-                                ({calculateTimeAgo(comment.time)})
-                            </div>
-                            <p>{comment.comment}</p>
+            {showComments && (
+                <div style={{backgroundColor:'#EDEDED', padding:'15px', borderRadius:'10px', marginBottom:'10px'}}>
+                    <h5>Comments</h5>
+                    <Divider/>
+                        <div style={{marginTop:'10px'}}>
+                            {comments.map((comment, index) => (
+                                <div key={index} style={{marginBottom: '10px'}}>
+                                    <div className="inline-left" style={{gap:'10px', marginBottom: '5px'}}>
+                                        <img src={comment.profilePicture} alt="name" style={{ borderRadius: 40, width: "25px" }} />
+                                        <div className="inline-left" style={{gap:'10px'}}>
+                                            <p style={{fontWeight:'500'}}>{comment.user}</p>
+                                            ({calculateTimeAgo(comment.time)})
+                                        </div>  
+                                    </div>
+                                    
+                                    <p style={{marginLeft: '35px'}}>{comment.comment}</p>
+                                </div>
+                            ))}
                         </div>
-                    ))}
+                        <div style={{ margin: '10px 0px' }}>
+                            <input
+                                value={comment}
+                                onChange={(e) => setComment(e.target.value)} 
+                            ></input>
+                            <Button variant="contained" color="primary" onClick={handleComment}>Comentar</Button>
+                        </div>
+                    <Divider />
                 </div>
-                <div style={{ margin: '10px 0px' }}>
-                    <input
-                        
-                        value={comment}
-                        onChange={(e) => setComment(e.target.value)}
-                        
-                    ></input>
-                    <Button variant="contained" color="primary" >Comentar</Button>
-                </div>
-            </div>
-            <Divider />
+            )}
+            
         </div>
     )
 }
