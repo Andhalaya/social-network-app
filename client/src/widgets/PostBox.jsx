@@ -92,6 +92,22 @@ function PostBox({ fetchPosts }) {
         reader.readAsDataURL(file);
     };
 
+    const modules = {
+        toolbar: [
+            [{ 'header': [1, 2, false] }],
+            ['bold', 'italic', 'underline', 'strike'],
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+            [{ 'align': [] }],
+            [{ 'color': [] }, { 'background': [] }],
+            ['link', 'image', 'code-block'], 
+            ['clean']
+        ]
+    };
+    const formats = [
+        'header', 'bold', 'italic', 'underline', 'strike', 'blockquote',
+        'list', 'bullet', 'indent', 'link', 'image', 'code-block'
+    ];
+
     return (
         <div className={`box ${theme}`} style={{ maxWidth: '900px' }}>
             <div className="space-between" style={{ marginBottom: '10px' }}>
@@ -162,6 +178,8 @@ function PostBox({ fetchPosts }) {
                 {isFieldActive("description") && (
                     <ReactQuill
                         theme="snow"
+                        modules={modules}
+                        formats={formats}
                         value={formData.description}
                         onChange={(value) => handleChange("description", value)}
                     />

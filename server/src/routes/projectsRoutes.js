@@ -6,7 +6,7 @@ const upload = require('../config/multer')
 
 router.get('/', verifyToken, getProjects );
 router.post('/', verifyToken, upload.single('image'), createProject);
-router.get('/:projectId', getProjectById);
+router.get('/:projectId',verifyToken, getProjectById);
 
 
 module.exports = router;

@@ -10,6 +10,8 @@ import { useState, useEffect } from "react";
 import axios from 'axios'
 import { useAuth } from "../context/AuthProvider";
 import { API_DOMAIN } from "../utils/api-domain";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 function calculateTimeAgo(timestamp) {
     return moment(timestamp).fromNow();
@@ -61,6 +63,21 @@ function Post({ post, updatePostLikes }) {
             console.error("Error commenting:", error);
         }
     };
+    const modules = {
+        toolbar: [
+            [{ 'header': [1, 2, false] }],
+            ['bold', 'italic', 'underline', 'strike'],
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+            [{ 'align': [] }],
+            [{ 'color': [] }, { 'background': [] }],
+            ['link', 'image', 'code-block'], 
+            ['clean']
+        ]
+    };
+    const formats = [
+        'header', 'bold', 'italic', 'underline', 'strike', 'blockquote',
+        'list', 'bullet', 'indent', 'link', 'image', 'code-block'
+    ];
 
     return (
         <div key={post._id} style={{ margin: '10px ' }}>
@@ -137,11 +154,20 @@ function Post({ post, updatePostLikes }) {
                         )}
                     </div>
                     <div style={{ margin: '10px 0px' }}>
-                        <input
-                            value={comment}
-                            onChange={(e) => setComment(e.target.value)}
-                        ></input>
-                        <Button variant="contained" color="primary" onClick={handleComment}>Comentar</Button>
+                    <ReactQuill
+                        theme="snow"
+                        modules={modules}
+                        formats={formats}
+                        value={comment}
+                        onChange={(e) => setComment(e.target.value)}
+                    />
+                    <div style={{width:'100%', display:'flex', justifyContent:'right', marginTop:'20px'}}>
+                     <Button variant="contained" color="primary" onClick={handleComment}>
+                        <img src="src\assets\icons8-send-24.png" />
+                        Comment
+                    </Button>   
+                    </div>
+                    
                     </div>
                     <Divider />
                 </div>
