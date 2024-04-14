@@ -57,7 +57,7 @@ function Header () {
                 <IconButton>
                     < MarkChatUnreadOutlinedIcon className={`icon ${theme}`}/>
                 </IconButton>
-                <IconButton onClick={() =>{navigate('/profile')}}>
+                <IconButton onClick={() =>{navigate('/my-profile')}}>
                     <PersonRoundedIcon className={`icon ${theme}`}/>
                 </IconButton>
                 <div className={`switchButton ${theme}`}>

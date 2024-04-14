@@ -1,11 +1,12 @@
 import { useTheme } from "../context/theme";
-import { Divider, IconButton } from "@mui/material";
+import { Divider } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import Post from "../components/Post";
 import PostBox from "./PostBox";
 import { useState, useEffect } from "react";
 import { useAuth } from '../context/AuthProvider';
 import axios from 'axios';
+import { API_DOMAIN } from "../utils/api-domain";
 
 function FeedBox() {
     const { theme } = useTheme();
@@ -19,9 +20,8 @@ function FeedBox() {
 
     const fetchPosts = async () => {
         try {
-            const res = await axios.get('http://localhost:3023/posts',
+            const res = await axios.get(`${API_DOMAIN}/posts`,
                 { headers: { Authorization: `Bearer ${token}` } })
-            console.log(res.data)
             setPosts(res.data);
         } catch (error) {
             console.error("Error fetching posts:", error);

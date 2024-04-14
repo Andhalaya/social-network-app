@@ -1,5 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_DOMAIN } from '../utils/api-domain';
+
 
 const AuthContext = createContext();
 
@@ -13,7 +15,7 @@ export const AuthProvider = ({ children }) => {
     const checkToken = async () => {
       if (token) {
         try {
-          const response = await axios.get("http://localhost:3023/users/me", {
+          const response = await axios.get(`${API_DOMAIN}/users/me`, {
             headers: {
               Authorization: `Bearer ${token}`
             }

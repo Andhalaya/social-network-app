@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import React, { useState} from "react";
 import axios from "axios";
 import { useTheme } from "../context/theme";
-import { Divider, IconButton } from "@mui/material";
+import { Divider, IconButton, Snackbar, Menu, MenuItem } from "@mui/material";
 import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternateOutlined';
 import FormatAlignLeftOutlinedIcon from '@mui/icons-material/FormatAlignLeftOutlined';
 import CodeRoundedIcon from '@mui/icons-material/CodeRounded';
 import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { DeleteOutlined } from "@mui/icons-material";
 import Dropzone from "react-dropzone";
 import { useAuth } from '../context/AuthProvider';
+import { API_DOMAIN } from "../utils/api-domain";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 function PostBox({ fetchPosts }) {
     const { theme } = useTheme();
@@ -16,6 +20,8 @@ function PostBox({ fetchPosts }) {
     const [image, setImage] = useState(null);
     const [imageURL, setImageURL] = useState(null);
     const [activeFields, setActiveFields] = useState([]);
+    const [openSnackbar, setOpenSnackbar] = useState(false);
+    const [anchorEl, setAnchorEl] = useState(null);
     const initialState = {
         user: user._id,
         title: "",
@@ -37,30 +43,37 @@ function PostBox({ fetchPosts }) {
         return activeFields.includes(fieldName);
     };
 
-    const handleFormSubmit = async () => {
-        try {
-            const formDataToSend = new FormData();
-            formDataToSend.append("user", formData.user);
-            formDataToSend.append("title", formData.title);
-            formDataToSend.append("description", formData.description);
-            formDataToSend.append("codeSnippet", formData.codeSnippet);
-            formDataToSend.append("link", formData.link);
-            formDataToSend.append("image", image);
-
-            await axios.post("http://localhost:3023/posts", formDataToSend, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-
-            fetchPosts();
-            setFormData(initialState);
-            setImage(null);
-            setImageURL(null);
-            setActiveFields([]);
-        } catch (error) {
-            console.error("Error:", error);
+    const handleFormSubmit = async (url) => {
+        if (!formData.title) {
+            setOpenSnackbar(true);
+        } else {
+            try {
+                const formDataToSend = new FormData();
+                formDataToSend.append("user", formData.user);
+                formDataToSend.append("title", formData.title);
+                formDataToSend.append("description", formData.description);
+                formDataToSend.append("codeSnippet", formData.codeSnippet);
+                formDataToSend.append("link", formData.link);
+                formDataToSend.append("image", image);
+    
+                await axios.post(url, formDataToSend, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                fetchPosts();
+                setFormData(initialState);
+                setImage(null);
+                setImageURL(null);
+                setActiveFields([]);
+            } catch (error) {
+                console.error("Error:", error);
+            }
         }
+    };
+
+    const handleMenuClose = () => {
+        setAnchorEl(null);
     };
 
     const handleChange = (fieldName, value) => {
@@ -95,9 +108,36 @@ function PostBox({ fetchPosts }) {
                         />
                     </div>
                 </div>
-                <button className="share-btn" onClick={handleFormSubmit}>
-                    share
-                </button>
+                <div>
+                    <button className="share-btn" onClick={(e) => {setAnchorEl(e.currentTarget)}}>
+                        share
+                        <KeyboardArrowDownIcon /> 
+                    </button>
+                    <Menu
+                        anchorEl={anchorEl}
+                        open={Boolean(anchorEl)}
+                        onClose={handleMenuClose}
+                    >
+                        <MenuItem onClick={() => { handleFormSubmit(`${API_DOMAIN}/posts`); handleMenuClose(); }}>Share as Post</MenuItem>
+                        <MenuItem onClick={() => { handleFormSubmit(`${API_DOMAIN}/projects`); handleMenuClose(); }}>Share as Project</MenuItem>
+                    </Menu>
+                </div>
+                <Snackbar 
+                    open={openSnackbar}
+                    autoHideDuration={3000}
+                    onClose={(e) => {
+                        setOpenSnackbar(false);
+                    }}
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'right'
+                    }}
+                    transformorigin={{
+                        vertical: 'bottom',
+                        horizontal: 'right'
+                    }}
+                    message="Please add a tittle before sharing"
+                />
             </div>
             <Divider />
             <div className="inline-left" style={{ gap: '20px', marginTop: '10px' }}>
@@ -120,10 +160,10 @@ function PostBox({ fetchPosts }) {
             </div>
             <div className="column" style={{ gap: '10px', width: '100%' }}>
                 {isFieldActive("description") && (
-                    <textarea
-                        placeholder="Enter description"
+                    <ReactQuill
+                        theme="snow"
                         value={formData.description}
-                        onChange={(e) => handleChange("description", e.target.value)}
+                        onChange={(value) => handleChange("description", value)}
                     />
                 )}
                 {isFieldActive("image") && (

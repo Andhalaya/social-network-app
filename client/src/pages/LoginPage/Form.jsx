@@ -2,7 +2,8 @@ import { useState } from "react";
 import axios from "axios";
 import Alert from '@mui/material/Alert';
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthProvider"; 
+import { useAuth } from "../../context/AuthProvider";
+import {API_DOMAIN} from "../../utils/api-domain" 
 
 const initialForm = {
     fullName: "",
@@ -31,7 +32,7 @@ function Form() {
         e.preventDefault();
         if (pageType === "register") {
             try {
-                const response = await axios.post("http://localhost:3023/auth/register", formData);
+                const response = await axios.post(`${API_DOMAIN}/auth/register`, formData);
                 console.log("Response:", response.data);
                 setFormData(initialForm);
                 setErrors();
@@ -41,7 +42,7 @@ function Form() {
             }
         } else if (pageType === "login") {
             try {
-                const response = await axios.post("http://localhost:3023/auth/login", formData);
+                const response = await axios.post(`${API_DOMAIN}/auth/login`, formData);
                 console.log("Response:", response.data);
                 localStorage.setItem('token', response.data.token)
                 login(response.data.token); 

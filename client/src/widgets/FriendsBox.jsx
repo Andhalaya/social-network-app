@@ -4,6 +4,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { useAuth } from '../context/AuthProvider';
 import { useState, useEffect } from "react";
 import axios from 'axios';
+import { API_DOMAIN } from "../utils/api-domain";
 
 function FriendsBox() {
     const { theme } = useTheme();
@@ -17,7 +18,7 @@ function FriendsBox() {
 
     const fetchUsers = async () => {
         try {
-            const res = await axios.get('http://localhost:3023/users',
+            const res = await axios.get(`${API_DOMAIN}/users`,
                 { headers: { Authorization: `Bearer ${token}` } });
             setUsers(res.data);
         } catch (error) {

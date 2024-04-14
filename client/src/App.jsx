@@ -6,6 +6,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import LoginPage from './pages/LoginPage/index'
 import Home from './pages/Home/index'
 import Profile from './pages/Profile/index'
+import Project from './pages/Project/index'
 
 function App() {
   return (
@@ -21,7 +22,6 @@ function App() {
 
 const AppContent = () => {
   const { theme } = useTheme();
-  const {user} = useAuth();
 
   return (
     <div className={`App ${theme}`}>
@@ -29,8 +29,8 @@ const AppContent = () => {
         <Route path='/' element={<LoginPage />} />
         <Route element={<ProtectedRoute />} >
           <Route path='/home' element={<Home />} />
-          <Route path='/profile' element={<Profile />} />
-          <Route path='/profile/:user' element={<Profile />} />
+          <Route path='/my-profile' element={<Profile />} />
+          <Route path='/projects/:projectId'element={<Project />} />
         </Route>
       </Routes>
     </div>  
