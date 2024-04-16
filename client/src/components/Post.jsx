@@ -134,7 +134,7 @@ function Post({ post, updatePostLikes }) {
             </div>
             <Divider />
             {showComments && (
-                <div style={{ backgroundColor: '#EDEDED', padding: '15px', borderRadius: '10px', marginBottom: '10px' }}>
+                <div style={{ backgroundColor: '#EDEDED', padding: '15px', borderRadius: '10px', marginBottom: '10px', marginTop: '10px' }}>
                     <h5>Comments</h5>
                     <Divider />
                     <div style={{ marginTop: '10px' }}>
@@ -148,18 +148,22 @@ function Post({ post, updatePostLikes }) {
                                             ({calculateTimeAgo(comment.time)})
                                         </div>
                                     </div>
-                                    <p style={{ marginLeft: '35px' }}>{comment.comment}</p>
+                                    <div dangerouslySetInnerHTML={{ __html: comment.comment }} />
                                 </div>
                             ))
                         )}
                     </div>
-                    <div style={{ margin: '10px 0px' }}>
+                    <div style={{ margin: '20px 0px' }}>
+                        <div className="inline-left" style={{ gap: '10px', marginBottom: '10px' }}>
+                        <img src={user.profilePicture} alt="name" style={{ borderRadius: 40, width: "25px" }} />
+                        <p style={{ fontWeight: '500' }}>{user.fullName}</p>  
+                        </div>
                     <ReactQuill
                         theme="snow"
                         modules={modules}
                         formats={formats}
                         value={comment}
-                        onChange={(e) => setComment(e.target.value)}
+                        onChange={(value) => setComment(value)}
                     />
                     <div style={{width:'100%', display:'flex', justifyContent:'right', marginTop:'20px'}}>
                      <Button variant="contained" color="primary" onClick={handleComment}>
@@ -169,7 +173,6 @@ function Post({ post, updatePostLikes }) {
                     </div>
                     
                     </div>
-                    <Divider />
                 </div>
             )}
 

@@ -44,7 +44,8 @@ function PostBox({ fetchPosts }) {
     };
 
     const handleFormSubmit = async (url) => {
-        if (!formData.title) {
+        
+        if (!formData.title && !formData.description && !formData.codeSnippet && !formData.link && !image) {
             setOpenSnackbar(true);
         } else {
             try {
@@ -152,7 +153,7 @@ function PostBox({ fetchPosts }) {
                         vertical: 'bottom',
                         horizontal: 'right'
                     }}
-                    message="Please add a tittle before sharing"
+                    message="Please add some content before sharing"
                 />
             </div>
             <Divider />

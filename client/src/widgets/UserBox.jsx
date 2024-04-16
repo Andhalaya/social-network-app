@@ -29,11 +29,11 @@ function UserBox() {
             <div className="column">
                 <div className="inline-left" style={{ gap: '15px', margin: '5px 0px' }}>
                     <LocationOnIcon className={`icon ${theme}`} />
-                    <p> {user.location ? user.location : <Link to="/profile">add location</Link>}</p>
+                    <p> {user.location ? user.location : <Link to="/my-profile">add location</Link>}</p>
                 </div>
                 <div className="inline-left" style={{ gap: '15px' }}>
                     <WorkOutlineOutlinedIcon className={`icon ${theme}`} />
-                    <p> {user.occupation ? user.occupation : <Link to="/profile">add occupation</Link>}</p>
+                    <p> {user.occupation ? user.occupation : <Link to="/my-profile">add occupation</Link>}</p>
                 </div>
             </div>
             <Divider />

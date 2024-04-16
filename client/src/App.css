@@ -11,6 +11,7 @@ a{
   color: #006eff;
   text-decoration: none;
   font-weight: 500;
+  cursor: pointer;
 }
 
 .container{
@@ -191,6 +192,11 @@ a{
   cursor: pointer;
 }
 
+.logo.dark{
+  background: linear-gradient(to left, #430f5f, #0052ce);
+  
+}
+
 .box{
   background-color: #ffffff;
   border-radius: 15px;
@@ -255,12 +261,9 @@ a{
 }
 
 .box.dark{
-  background-color: #0e1136;
+  background-color: #1e1e1e;
   color: #c9c9c9;
-}
-
-.home.dark{
-  font-weight: 200;
+  
 }
 
 .home-container {
@@ -281,6 +284,19 @@ a{
   padding: 40px;
   font-size: 0.875rem;
   flex-wrap: wrap; 
+}
+
+.home.dark{
+  background: linear-gradient(to bottom, #121212, #121212);
+  font-weight: 200;
+}
+
+.box.dark h4{
+  color:#c397f8
+}
+
+.box.dark h5{
+  color:#c397f8
 }
 
 .header.light{
@@ -310,11 +326,18 @@ a{
 }
 
 .header.dark{
-  background-color: #0d1134;
+  background-color: #8967df;
   color: white;
   
 }
 
+.ql-toolbar.ql-snow {
+  background-color: rgb(186, 186, 186);
+}
+
+.ql-container.ql-snow{
+  background-color: white;
+}
 /* ------------------Feed--------------*/
 
 .search-box{
@@ -383,3 +406,4 @@ input:focus{
   flex-direction: column;
   overflow-wrap: break-word;
 }
+

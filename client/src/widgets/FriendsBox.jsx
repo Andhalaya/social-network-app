@@ -8,7 +8,7 @@ import { API_DOMAIN } from "../utils/api-domain";
 
 function FriendsBox() {
     const { theme } = useTheme();
-    const { token } = useAuth();
+    const { token, user } = useAuth();
     const [users, setUsers] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
 
@@ -28,6 +28,20 @@ function FriendsBox() {
 
     const handleSearch = (event) => {
         setSearchTerm(event.target.value);
+    };
+
+    const toggleFollow = async (userId) => {
+        try {
+            const res = await axios.patch(
+                `${API_DOMAIN}/users/follow/${userId}`,
+                null,
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+            console.log(res.data)
+            fetchUsers();
+        } catch (error) {
+            console.error("Error toggling follow:", error);
+        }
     };
 
     const filteredUsers = users.filter(user =>
@@ -51,17 +65,19 @@ function FriendsBox() {
                     </div>
                 </div>
 
-                {filteredUsers.map(user => (
-                    <div className="space-between" style={{ gap: 45, alignItems:'start' }} key={user._id}>
+                {filteredUsers.map(filteredUser => (
+                    <div className="space-between" style={{ gap: 45, alignItems:'start' }} key={filteredUser._id}>
                         <div className="inline-left" style={{ gap: 10, alignItems:'start' }}>
-                            <img src={user.profilePicture} alt="name" style={{ borderRadius: 40, width: "40px" }} />
+                            <img src={filteredUser.profilePicture} alt="name" style={{ borderRadius: 40, width: "40px" }} />
                             <div style={{marginTop: '-5px'}}>
-                                <h4>{`@${user.userName}`}</h4>
-                                <h6 style={{ fontWeight: '400', fontSize: '12px' }}>{user.fullName}</h6>
-                                <h6 style={{ fontWeight: '400', fontSize: '12px' }}>{user.occupation}</h6>
+                                <h4>{`@${filteredUser.userName}`}</h4>
+                                <h6 style={{ fontWeight: '400', fontSize: '12px' }}>{filteredUser.fullName}</h6>
+                                <h6 style={{ fontWeight: '400', fontSize: '12px' }}>{filteredUser.occupation}</h6>
                             </div>
                         </div>
-                        <button className="follow-btn">- unfollow</button>
+                       
+                        <button onClick={() => toggleFollow(filteredUser._id)}>Follow/Unfollow</button>
+                        
                     </div>
                 ))}
             </div>
