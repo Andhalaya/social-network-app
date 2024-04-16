@@ -30,15 +30,20 @@ function FriendsBox() {
         setSearchTerm(event.target.value);
     };
 
-    const toggleFollow = async (userId) => {
+    const toggleFollow = async (filteredUser) => {
         try {
             const res = await axios.patch(
-                `${API_DOMAIN}/users/follow/${userId}`,
-                null,
+                `${API_DOMAIN}/users/follow/${filteredUser._id}`,
+                {userId: user._id},
                 { headers: { Authorization: `Bearer ${token}` } }
             );
-            console.log(res.data)
-            fetchUsers();
+            const updatedUsers = users.map(u => {
+                if (u._id === filteredUser._id) {
+                    return { ...u, isFriend: !u.isFriend };
+                }
+                return u;
+            });
+            setUsers(updatedUsers);
         } catch (error) {
             console.error("Error toggling follow:", error);
         }
@@ -75,9 +80,9 @@ function FriendsBox() {
                                 <h6 style={{ fontWeight: '400', fontSize: '12px' }}>{filteredUser.occupation}</h6>
                             </div>
                         </div>
-                       
-                        <button onClick={() => toggleFollow(filteredUser._id)}>Follow/Unfollow</button>
-                        
+                        <button onClick={() => toggleFollow(filteredUser)}>
+                            {user.friends.includes(filteredUser._id) ? 'Unfollow' : 'Follow'}
+                        </button>
                     </div>
                 ))}
             </div>

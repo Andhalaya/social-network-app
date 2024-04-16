@@ -67,37 +67,33 @@ exports.editProfile = async (req, res) => {
     }
 }
 
-exports.follow = async (req, res) => {
+exports.toggleFriend = async (req, res) => {
+    const { userId } = req.body;
+    const { friendId } = req.params;
+
     try {
-        const friendId = req.params.id;
-        const currentUserId = req.user._id; 
-
-        if (!friendId) {
-            return res.status(400).json({ message: "Friend ID is required" });
-        }
-
-        const user = await User.findOne(currentUserId);
-
+    
+        const user = await User.findById(userId);
         if (!user) {
-            return res.status(404).json({ message: "Current user not found" });
+            return res.status(404).json({ error: 'Usuario no encontrado' });
         }
-
-        const isFollowing = user.friends.includes(friendId);
-
-        if (isFollowing) {
-            user.friends = user.friends.filter(id => id !== friendId);
-        } else {
+        const index = user.friends.indexOf(friendId);
+        if (index === -1) {
+  
             user.friends.push(friendId);
+        } else {
+           
+            user.friends.splice(index, 1);
         }
-
         await user.save();
 
-        res.json({ message: isFollowing ? "Unfollowed successfully" : "Followed successfully", user: user });
+        return res.status(200).json({ user: user });
     } catch (error) {
-        console.error('Error toggling follow:', error);
-        res.status(500).json({ message: 'Internal server error' });
+        console.error('Error al agregar/quitar amigo:', error);
+        return res.status(500).json({ error: 'Error interno del servidor' });
     }
 };
+
 
 
 
