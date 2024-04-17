@@ -64,7 +64,7 @@ function ProfileBox() {
     return (
         <div>
             <div className='profile-background'>
-                <img src="src\assets\1517636940967.jpeg" alt="" />
+                <img src="1517636940967.jpeg" alt="" />
             </div>
             <div className={`box ${theme} profile`} >
                 <div className="space-between">
@@ -135,7 +135,6 @@ function ProfileBox() {
                                 <button className="share-btn">
                                     <Link to={`/projects/${project._id}`} style={{ color: 'white' }}>view project</Link>
                                 </button>
-
                             </div>
                         ))}
                     </div>
