@@ -30,7 +30,7 @@ function LoginPage() {
                         <button>START SHARING</button>
                     </div>
 
-                    <img src="src\assets\loginImage.jpg" alt="devImage" width={400} />
+                    <img src="/loginImage.jpg" alt="devImage" width={400} />
 
                 </div>
             </div>
