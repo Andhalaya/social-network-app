@@ -9,9 +9,10 @@ import SaveIcon from '@mui/icons-material/Save';
 
 function ProfileBox() {
     const { theme } = useTheme();
-    const { token, user } = useAuth();
+    const { token, user, setUser } = useAuth();
     const [projects, setProjects] = useState([]);
     const [editable, setEditable] = useState(false);
+    const [selectedImage, setSelectedImage] = useState(null);
     const [formData, setFormData] = useState({
         id: user._id,
         fullName: user.fullName,
@@ -27,21 +28,47 @@ function ProfileBox() {
     };
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value
-        });
+        const { name, value, files } = e.target;
+        if (name === 'profilePicture') {
+            setSelectedImage(files[0]);
+            setFormData({
+                ...formData,
+                [name]: files[0] 
+            });
+        } else {
+            setFormData({
+                ...formData,
+                [name]: value
+            });
+        }
     };
 
     const handleSave = async () => {
         try {
-            await axios.patch(`${API_DOMAIN}/users/profile`, formData, {
+            const formDataToSend = new FormData();
+            formDataToSend.append('id', formData.id);
+            formDataToSend.append('fullName', formData.fullName);
+            formDataToSend.append('userName', formData.userName);
+            formDataToSend.append('email', formData.email);
+            formDataToSend.append('location', formData.location);
+            formDataToSend.append('occupation', formData.occupation);
+            formDataToSend.append('github', formData.github);
+            if (selectedImage) {
+                formDataToSend.append('profilePicture', selectedImage);
+            } 
+    
+            const response = await axios.patch(`${API_DOMAIN}/users/profile`, formDataToSend, {
                 headers: {
-                    Authorization: `Bearer ${token}`
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'multipart/form-data'
                 }
             });
             setEditable(false);
+            console.log(response)
+            setUser(prevUser => ({
+                ...prevUser,
+                profilePicture: response.data.profilePicture
+            }));
         } catch (error) {
             console.error('Error updating profile:', error);
         }
@@ -69,7 +96,7 @@ function ProfileBox() {
             <div className={`box ${theme} profile`} >
                 <div className="space-between">
                     <div className="inline-left" style={{ gap: '5px' }}>
-                        <img src={user.profilePicture} alt="name" style={{ borderRadius: 40, width: "70px" }} />
+                        <img src={`${API_DOMAIN}/${user.profilePicture}`} alt="name" style={{ borderRadius: 40, width: "70px" }} />
                         <div>
                             <h4>{`@${user.userName}`}</h4>
                             <h6>{user.fullName}</h6>
@@ -78,7 +105,7 @@ function ProfileBox() {
                     <p>0 followers</p>
                     <p>0 following</p>
                 </div>
-                <div style={{ display: 'flex', justifyContent:'space-between', margin:' 20px', flexWrap: 'wrap' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', margin: ' 20px', flexWrap: 'wrap' }}>
                     <div>
                         <h4>Settings</h4>
                         <div className="column">
@@ -120,6 +147,12 @@ function ProfileBox() {
                                 <p><strong>GitHub:</strong></p>
                                 {editable ? <input type="text" name="github" value={formData.github} onChange={handleChange} /> : <a>{formData.github}</a>}
                             </div>
+                            {editable &&
+                                <div>
+                                    <p><strong>Change Profile Picture</strong></p>
+                                    <input type="file" name="profilePicture" onChange={handleChange} />
+                                </div>
+                            }
                         </div>
                     </div>
 
