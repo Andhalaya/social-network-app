@@ -28,7 +28,10 @@ function Header () {
 
     return (
         <nav className={`header ${theme}`}>
-            <div className={`logo ${theme}`} onClick={() =>{navigate('/home')}}>LazyCoder</div>
+            <div className={`logo ${theme}`} onClick={() =>{navigate('/home')}}>
+                <img src="\public\logo3.png" alt="" width='50px'/>
+                LazyCoder
+            </div>
             <div className="nav">
                 <IconButton 
                     onClick={(e) => { setAnchorEl(e.currentTarget)}} 

@@ -75,7 +75,7 @@ exports.toggleFriend = async (req, res) => {
     
         const user = await User.findById(userId);
         if (!user) {
-            return res.status(404).json({ error: 'Usuario no encontrado' });
+            return res.status(404).json({ error: 'Usuario not found' });
         }
         const index = user.friends.indexOf(friendId);
         if (index === -1) {
@@ -89,8 +89,8 @@ exports.toggleFriend = async (req, res) => {
 
         return res.status(200).json({ user: user });
     } catch (error) {
-        console.error('Error al agregar/quitar amigo:', error);
-        return res.status(500).json({ error: 'Error interno del servidor' });
+        console.error('Error following/unfollowing friend:', error);
+        return res.status(500).json({ error: 'Internal Server Error' });
     }
 };
 

@@ -185,11 +185,13 @@ a{
 
 .logo{
   background: linear-gradient(to left, #9c64ba, #3E8BFF);
-  padding: 10px 25px;
+  padding: 5px 15px;
   border-radius: 20px;
   color: #ffffff;
   box-shadow: 3px 3px 5px  rgba(52, 52, 52, 0.411);
   cursor: pointer;
+  display: flex;
+  align-items: center;
 }
 
 .logo.dark{

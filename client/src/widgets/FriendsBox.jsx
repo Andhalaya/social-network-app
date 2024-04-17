@@ -1,5 +1,4 @@
 import { useTheme } from "../context/theme";
-import { Divider, IconButton } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import { useAuth } from '../context/AuthProvider';
 import { useState, useEffect } from "react";
@@ -30,6 +29,10 @@ function FriendsBox() {
         setSearchTerm(event.target.value);
     };
 
+    const filteredUsers = users.filter(u => 
+        u._id !== user._id && u.userName.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     const toggleFollow = async (filteredUser) => {
         try {
             const res = await axios.patch(
@@ -37,22 +40,15 @@ function FriendsBox() {
                 {userId: user._id},
                 { headers: { Authorization: `Bearer ${token}` } }
             );
-            const updatedUsers = users.map(u => {
-                if (u._id === filteredUser._id) {
-                    return { ...u, isFriend: !u.isFriend };
-                }
-                return u;
-            });
-            setUsers(updatedUsers);
+            console.log(res.data)
+            
         } catch (error) {
             console.error("Error toggling follow:", error);
         }
     };
 
-    const filteredUsers = users.filter(user =>
-        user.userName.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-
+   
+   
     return (
         <div className={`box ${theme}`} style={{ height: '600px', padding: '20px' }}>
             <div className="column" style={{ gap: 15, margin: '0' }}>
