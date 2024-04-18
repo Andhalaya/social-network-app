@@ -12,6 +12,7 @@ function ProfileBox() {
     const { token, user, setUser } = useAuth();
     const [projects, setProjects] = useState([]);
     const [editable, setEditable] = useState(false);
+    const [isImage, setIsImage] = useState(false)
     const [selectedImage, setSelectedImage] = useState(null);
     const [formData, setFormData] = useState({
         id: user._id,
@@ -22,29 +23,26 @@ function ProfileBox() {
         occupation: user.occupation,
         github: user.github
     });
+    const [formDataChanged, setFormDataChanged] = useState(false);
 
     const handleToggleEdit = () => {
         setEditable((prevEditable) => !prevEditable);
+        setIsImage(true);
     };
 
     const handleChange = (e) => {
-        const { name, value, files } = e.target;
-        if (name === 'profilePicture') {
-            setSelectedImage(files[0]);
-            setFormData({
-                ...formData,
-                [name]: files[0] 
-            });
-        } else {
-            setFormData({
-                ...formData,
-                [name]: value
-            });
-        }
+        const { name, value } = e.target;
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value
+        }));
+        setFormDataChanged(true);
     };
 
     const handleSave = async () => {
         try {
+            if (!formDataChanged) return; // No se envían cambios si no se ha modificado nada
+
             const formDataToSend = new FormData();
             formDataToSend.append('id', formData.id);
             formDataToSend.append('fullName', formData.fullName);
@@ -55,20 +53,21 @@ function ProfileBox() {
             formDataToSend.append('github', formData.github);
             if (selectedImage) {
                 formDataToSend.append('profilePicture', selectedImage);
-            } 
-    
+            }
+
             const response = await axios.patch(`${API_DOMAIN}/users/profile`, formDataToSend, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     'Content-Type': 'multipart/form-data'
                 }
             });
+
+            setFormDataChanged(false); // Se resetea la bandera de cambios
             setEditable(false);
-            console.log(response)
-            setUser(prevUser => ({
-                ...prevUser,
-                profilePicture: response.data.profilePicture
-            }));
+            setIsImage(false);
+
+            // Actualizar datos de la página después de recibir la respuesta del servidor
+            setUser(response.data.user); // Actualizar datos de usuario en el contexto
         } catch (error) {
             console.error('Error updating profile:', error);
         }
@@ -79,7 +78,6 @@ function ProfileBox() {
             try {
                 const res = await axios.get(`${API_DOMAIN}/projects`,
                     { headers: { Authorization: `Bearer ${token}` } });
-                console.log(res.data)
                 setProjects(res.data)
             } catch (error) {
                 console.error("Error fetching projects:", error);
@@ -96,7 +94,14 @@ function ProfileBox() {
             <div className={`box ${theme} profile`} >
                 <div className="space-between">
                     <div className="inline-left" style={{ gap: '5px' }}>
-                        <img src={`${API_DOMAIN}/${user.profilePicture}`} alt="name" style={{ borderRadius: 40, width: "70px" }} />
+                        <div className="picture">
+                            <div className="picture-image">
+                                <img src={`${API_DOMAIN}/${user.profilePicture}`} alt="name" style={{ borderRadius: 40, width: "70px" }} />
+                            </div>
+                            <div className="picture-edit" onClick={handleToggleEdit}>
+                                <ModeEditIcon sx={{ color: 'white' }} />
+                            </div>
+                        </div>
                         <div>
                             <h4>{`@${user.userName}`}</h4>
                             <h6>{user.fullName}</h6>
@@ -105,7 +110,7 @@ function ProfileBox() {
                     <p>0 followers</p>
                     <p>0 following</p>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', margin: ' 20px', flexWrap: 'wrap' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', margin: ' 20px 50px', flexWrap: 'wrap' }}>
                     <div>
                         <h4>Settings</h4>
                         <div className="column">
@@ -147,10 +152,10 @@ function ProfileBox() {
                                 <p><strong>GitHub:</strong></p>
                                 {editable ? <input type="text" name="github" value={formData.github} onChange={handleChange} /> : <a>{formData.github}</a>}
                             </div>
-                            {editable &&
+                            {editable && isImage &&
                                 <div>
                                     <p><strong>Change Profile Picture</strong></p>
-                                    <input type="file" name="profilePicture" onChange={handleChange} />
+                                    <input type="file" name="profilePicture" onChange={(e)=>{setImage(e.target.files[0])}} />
                                 </div>
                             }
                         </div>

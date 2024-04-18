@@ -110,10 +110,10 @@ function PostBox({ fetchPosts }) {
     ];
 
     return (
-        <div className={`box ${theme}`} style={{ maxWidth: '900px' }}>
+        <div className={`box ${theme}`} style={{maxWidth: '900px' }}>
             <div className="space-between" style={{ marginBottom: '10px' }}>
                 <div className="inline-left" style={{ gap: '20px' }}>
-                    <img src={user.profilePicture} alt="name" style={{ borderRadius: 40, width: "40px" }} />
+                    <img src={`${API_DOMAIN}/${user.profilePicture}`} alt="name" style={{ borderRadius: 40, width: "40px" }} />
                     <div className="search-box" style={{ height: '35px', width: '500px' }}>
                         <input
                             type="text"

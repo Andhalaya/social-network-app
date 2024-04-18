@@ -42,7 +42,7 @@ function FeedBox() {
     };
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        <div >
             <PostBox fetchPosts={fetchPosts} />
             <div className={`box ${theme}`} style={{ maxWidth: '900px' }}>
                 <div className="space-between" style={{ marginBottom: '10px' }}>

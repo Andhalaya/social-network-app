@@ -142,7 +142,7 @@ function Post({ post, updatePostLikes }) {
                             comments.map((comment, index) => (
                                 <div key={index} style={{ marginBottom: '10px' }}>
                                     <div className="inline-left" style={{ gap: '10px', marginBottom: '5px' }}>
-                                        <img src={comment.profilePicture} alt="name" style={{ borderRadius: 40, width: "25px" }} />
+                                        <img src={`${API_DOMAIN}/${comment.profilePicture}`} alt="name" style={{ borderRadius: 40, width: "25px" }} />
                                         <div className="inline-left" style={{ gap: '10px' }}>
                                             <p style={{ fontWeight: '500' }}>{comment.user}</p>
                                             ({calculateTimeAgo(comment.time)})
@@ -155,7 +155,7 @@ function Post({ post, updatePostLikes }) {
                     </div>
                     <div style={{ margin: '20px 0px' }}>
                         <div className="inline-left" style={{ gap: '10px', marginBottom: '10px' }}>
-                        <img src={user.profilePicture} alt="name" style={{ borderRadius: 40, width: "25px" }} />
+                        <img src={`${API_DOMAIN}/${user.profilePicture}`} alt="name" style={{ borderRadius: 40, width: "25px" }} />
                         <p style={{ fontWeight: '500' }}>{user.fullName}</p>  
                         </div>
                     <ReactQuill
@@ -167,7 +167,7 @@ function Post({ post, updatePostLikes }) {
                     />
                     <div style={{width:'100%', display:'flex', justifyContent:'right', marginTop:'20px'}}>
                      <Button variant="contained" color="primary" onClick={handleComment}>
-                        <img src="src\assets\icons8-send-24.png" />
+                        <img src="/icons8-send-24.png" />
                         Comment
                     </Button>   
                     </div>

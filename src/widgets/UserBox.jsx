@@ -6,6 +6,7 @@ import WorkOutlineOutlinedIcon from '@mui/icons-material/WorkOutlineOutlined';
 import ThumbUpAltRoundedIcon from '@mui/icons-material/ThumbUpAltRounded';
 import ChatBubbleOutlineRoundedIcon from '@mui/icons-material/ChatBubbleOutlineRounded';
 import { useAuth } from '../context/AuthProvider';
+import { API_DOMAIN } from "../utils/api-domain";
 
 function UserBox() {
     const { theme } = useTheme();
@@ -15,7 +16,7 @@ function UserBox() {
         <div className={`box ${theme}`} style={{ height: '600px' }}>
             <div className="inline-left" style={{ gap: 15 }}>
                 <div>
-                    <img src={user.profilePicture} alt="name" style={{ borderRadius: 40, width: "70px" }} />
+                    <img src={`${API_DOMAIN}/${user.profilePicture}`} alt="name" style={{ borderRadius: 40, width: "70px" }} />
                 </div>
                 <div style={{ marginBottom: '10px' }}>
                     <h4>{`@${user.userName}`}</h4>
