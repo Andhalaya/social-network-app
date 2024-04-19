@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes, Navigate} from 'react-router-dom'
 import './App.css'
 import { ThemeProvider, useTheme } from './context/theme'
-import { AuthProvider, useAuth } from './context/AuthProvider'
+import { AuthProvider } from './context/AuthProvider'
 import ProtectedRoute from './components/ProtectedRoute';
 import LoginPage from './pages/LoginPage/index'
 import Home from './pages/Home/index'

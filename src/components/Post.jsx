@@ -80,9 +80,9 @@ function Post({ post, updatePostLikes }) {
     ];
 
     return (
-        <div key={post._id} style={{ margin: '10px ' }}>
+        <div key={post._id} >
             <div className="space-between">
-                <div className="inline-left" style={{ gap: 10 }}>
+                <div className="inline-left gap margin-top">
                     <img src={post.user.profilePicture} alt={post.user.userName} style={{ borderRadius: 40, width: "40px" }} />
                     <div>
                         <h5>{post.user.fullName}</h5>
@@ -91,13 +91,13 @@ function Post({ post, updatePostLikes }) {
                 </div>
                 <p>{calculateTimeAgo(post.createdAt)}</p>
             </div>
-            <div style={{ margin: '10px 0px' }}>
+            <div className="column gap">
                 <p>{post.title}</p>
                 <div dangerouslySetInnerHTML={{ __html: post.description }} />
             </div>
 
             {post.image && (
-                <img src={`${API_DOMAIN}/${post.image}`} alt="" style={{ width: '600px' }} />
+                <img src={`${API_DOMAIN}/${post.image}`} alt="" width={'100%'}/>
             )}
 
             {post.codeSnippet && (
@@ -110,23 +110,23 @@ function Post({ post, updatePostLikes }) {
                 </SyntaxHighlighter>
             )}
 
-            <div className='space-between'>
+            <div className='space-between margin-top margin-bottom'>
                 {post.link && (
-                    <div className='inline-left' style={{ gap: '10px' }}>
+                    <div >
                         <LinkSharpIcon />
                         <a href={post.link} target="_blank" rel="noopener noreferrer" style={{ width: '600px' }}>
                             {post.link}
                         </a>
                     </div>
                 )}
-                <div className="inline-right" style={{ gap: '15px', marginBottom: '10px', width: '100%' }}>
-                    <div className="inline-right" style={{ gap: '10px' }} >
+                <div className="inline-left gap">
+                    <div className="inline-left gap">
                         <p>{post.likes ? post.likes.length : 0}</p>
                         <div style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }} onClick={handleLike}>
                             {liked ? <ThumbUpAltRoundedIcon className={`icon ${theme}`} style={{ width: '20px', color: '#008cff' }} /> : <ThumbUpAltRoundedIcon className={`icon ${theme}`} style={{ width: '20px' }} />}
                         </div>
                     </div>
-                    <div className="inline-left" style={{ gap: '10px', cursor: 'pointer' }} onClick={() => setShowComments(!showComments)}>
+                    <div onClick={() => setShowComments(!showComments)} className="inline-left gap">
                         <p>{comments.length}</p>
                         <ChatBubbleOutlineRoundedIcon className={`icon ${theme}`} style={{ width: '20px' }} />
                     </div>
@@ -153,8 +153,8 @@ function Post({ post, updatePostLikes }) {
                             ))
                         )}
                     </div>
-                    <div style={{ margin: '20px 0px' }}>
-                        <div className="inline-left" style={{ gap: '10px', marginBottom: '10px' }}>
+                    <div >
+                        <div >
                         <img src={`${API_DOMAIN}/${user.profilePicture}`} alt="name" style={{ borderRadius: 40, width: "25px" }} />
                         <p style={{ fontWeight: '500' }}>{user.fullName}</p>  
                         </div>
@@ -165,7 +165,7 @@ function Post({ post, updatePostLikes }) {
                         value={comment}
                         onChange={(value) => setComment(value)}
                     />
-                    <div style={{width:'100%', display:'flex', justifyContent:'right', marginTop:'20px'}}>
+                    <div>
                      <Button variant="contained" color="primary" onClick={handleComment}>
                         <img src="/icons8-send-24.png" />
                         Comment

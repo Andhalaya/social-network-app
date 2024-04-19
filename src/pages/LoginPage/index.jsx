@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import Form from "./Form";
 import { useAuth } from '../../context/AuthProvider';
 import { useNavigate } from "react-router";
+import './Login.css';
 
 function LoginPage() {
     const navigate = useNavigate();

@@ -110,18 +110,18 @@ function PostBox({ fetchPosts }) {
     ];
 
     return (
-        <div className={`box ${theme}`} style={{maxWidth: '900px' }}>
+        <div className={`box ${theme}`} >
             <div className="space-between" style={{ marginBottom: '10px' }}>
                 <div className="inline-left" style={{ gap: '20px' }}>
                     <img src={`${API_DOMAIN}/${user.profilePicture}`} alt="name" style={{ borderRadius: 40, width: "40px" }} />
-                    <div className="search-box" style={{ height: '35px', width: '500px' }}>
+                    <div className="search-box">
                         <input
                             type="text"
                             placeholder="Write a thought..."
                             value={formData.title}
                             onChange={(e) => handleChange("title", e.target.value)}
                             className="roboto-font"
-                            style={{ width: '100%' }}
+                            
                         />
                     </div>
                 </div>
@@ -175,7 +175,7 @@ function PostBox({ fetchPosts }) {
                     <p>Add link</p>
                 </div>
             </div>
-            <div className="column" style={{ gap: '10px', width: '100%' }}>
+            <div className="column gap">
                 {isFieldActive("description") && (
                     <ReactQuill
                         theme="snow"
@@ -186,7 +186,7 @@ function PostBox({ fetchPosts }) {
                     />
                 )}
                 {isFieldActive("image") && (
-                    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+                    <div style={{display:'flex', justifyContent:'center'}}>
                         <Dropzone
                             acceptedFiles=".jpg,.jpeg,.png"
                             multiple={false}
@@ -199,7 +199,7 @@ function PostBox({ fetchPosts }) {
                                         <p className="dropzone">Add Image Here</p>
                                     ) : (
                                         <div className="column">
-                                            {imageURL && <img src={imageURL} alt="Preview" style={{ maxWidth: "600px" }} />}
+                                            {imageURL && <img src={imageURL} alt="Preview"  />}
                                             <div className="inline-left">
                                                 <p>{image.name}</p>
                                                 <IconButton onClick={() => { setImage(null); setImageURL(null); }}>

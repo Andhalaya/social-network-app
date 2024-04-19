@@ -27,9 +27,9 @@ function Header () {
     };
 
     return (
-        <nav className={`header ${theme}`}>
+        <div className={`header ${theme}`}>
             <div className={`logo ${theme}`} onClick={() =>{navigate('/home')}}>
-                <img src="logo3.png" alt="" width='50px'/>
+                <img src="logo3.png" alt="" width='45px'/>
                 LazyCoder
             </div>
             <div className="nav">
@@ -69,7 +69,7 @@ function Header () {
                     </IconButton>
                 </div>
             </div>
-        </nav>
+        </div>
     )
 }
 

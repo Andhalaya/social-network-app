@@ -1,0 +1,135 @@
+.loginPage {
+    height: 911px;
+    display: flex;
+    flex-wrap: wrap;
+    background: linear-gradient(to bottom, #3048e7f7, #271839);
+    color: #ffffff;
+  }
+  
+  a {
+    color: #006eff;
+    text-decoration: none;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  
+  .container {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+  }
+  
+  .section {
+    display: flex;
+    padding-left: 100px;
+    margin-top: 70px;
+    width: 80%;
+    gap: 50px;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .section button {
+    background-color: transparent;
+    border: 1px solid #00FFC2;
+    color: #00FFC2;
+    margin-top: 20px;
+    padding: 15px 50px;
+    font-weight: 600;
+  }
+  
+  .section button:hover {
+    background-color: #00FFC2;
+    color: #2e1039;
+    cursor: pointer;
+  }
+  
+  .loginPage img {
+    border-radius: 20px;
+    box-shadow: 9px 10px 5px -3px rgba(8, 8, 8, 0.411);
+  }
+  
+  .loginPage h1 {
+    font-size: 64px;
+    font-weight: 500;
+    text-align: center;
+  }
+  
+  .loginPage h2 {
+    font-size: 36px;
+    font-weight: 300;
+    font-family: 'poppins';
+    margin: 0;
+  }
+  
+  .loginPage h3 {
+    margin: 0;
+  
+  }
+  
+  .loginPage span {
+    color: #00FFC2;
+    font-weight: 500;
+  
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #00000082;
+    height: 100%;
+    width: 30%;
+  }
+  
+  .form form {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    gap: 20px;
+  }
+  
+  .formTitle {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin-bottom: 40px;
+    font-family: 'Roboto mono';
+  }
+  
+  .formTitle h2,
+  h3 {
+    font-family: 'Roboto mono';
+    font-weight: 600;
+  
+  }
+  
+  .form button {
+    background-color: #FDAFFF;
+    color: #250054;
+    border: none;
+    font-weight: 800;
+    padding: 10px;
+    margin-top: 20px;
+  }
+  
+  .form button:hover {
+    background-color: transparent;
+    border: 1px solid #FDAFFF;
+    color: #FDAFFF;
+    box-shadow: 0px 0px 28px 1px #00FFC2;
+    cursor: pointer;
+  }
+  
+  .form input {
+    background-color: transparent;
+    border: 1px solid #00d0ff;
+    background-color: #006eff13;
+    height: 30px;
+    color: white;
+  }
+  
+  .form label {
+    color: #FDAFFF;
+  }

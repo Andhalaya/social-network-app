@@ -42,18 +42,18 @@ function FeedBox() {
     };
 
     return (
-        <div >
+        <div className="feed">
             <PostBox fetchPosts={fetchPosts} />
-            <div className={`box ${theme}`} style={{ maxWidth: '900px' }}>
-                <div className="space-between" style={{ marginBottom: '10px' }}>
-                    <h3 style={{ fontWeight: '400' }}>Posts</h3>
+            <div className={`box ${theme}`}>
+                <div className="space-between margin-bottom">
+                    <h3>Posts</h3>
                     <div className="search-box">
                         <input type="text" placeholder="search post" value={searchQuery} onChange={handleSearchChange} />
                         <SearchIcon className={`icon ${theme}`} style={{ width: '20px' }} />  
                     </div>
                 </div>
                 <Divider />
-                <div style={{ display: 'flex', flexDirection: 'column-reverse' }}>
+                <div >
                     {filteredPosts.map(post => (
                         <Post key={post._id} post={post} updatePostLikes={updatePostLikes}/>
                     ))}

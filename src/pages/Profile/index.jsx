@@ -5,12 +5,12 @@ import ProfileBox from "../../widgets/ProfileBox";
 function Profile () {
     const { theme } = useTheme();
     return (
-    <div className="home-container">
+    <>
         <Header />
-        <div className={`home ${theme}`}>
+        <div className={`profile-container ${theme}`}>
             <ProfileBox />
         </div>
-    </div>
+    </>
         
     )
 }

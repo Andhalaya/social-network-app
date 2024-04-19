@@ -1,0 +1,102 @@
+/* ------------------------MAIN----------------------------- */
+
+.main::-webkit-scrollbar {
+    overflow: hidden;
+  }
+  
+  .main {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 2rem 3rem;
+    background: radial-gradient(circle, #3f5efb 50%, #291a3b 90%);
+    margin-top: 60px;
+  }
+  
+  /* -------USER BOX --------*/
+  
+  .user{
+    flex: 15%;
+    padding: 20px;
+    min-width: 200px;
+  }
+  
+  /* -------FEED BOX-------- */
+  
+  .feed {
+    flex: 50%;
+    padding: 20px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .share-btn {
+    background-color: #008cff;
+    color: white;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .dropzone {
+    width: 500px;
+    height: 300px;
+    background-color: #EDEDED;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .dropzone:hover {
+    cursor: pointer;
+  
+    border: 1px solid #a3a3a3;
+  }
+  
+  .search-box {
+    background-color: #EDEDED;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    max-width: 20rem;
+    justify-content: space-between;
+  }
+  
+  .search-box input {
+    background-color: transparent;
+    border: none;
+    height: 20px;
+   
+    text-decoration: none;
+    margin-left: 15px;
+  }
+  
+  
+  /*-------- FRIENDS BOX------ */
+  .friends {
+    flex: 20%;
+    padding: 20px;
+    min-width: 300px;
+  }
+  
+  .follow-btn{
+    color: #008cff;
+    font-weight: 500;
+    font-family: 'Roboto mono';
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .follow-btn:hover{
+    border: 1px solid #008cff;
+    padding: 5px 10px;
+    border-radius: 10px;
+  }
+  

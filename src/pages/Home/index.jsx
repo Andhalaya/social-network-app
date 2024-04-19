@@ -3,18 +3,19 @@ import UserBox from "../../widgets/UserBox";
 import FeedBox from "../../widgets/FeedBox"
 import FriendsBox from "../../widgets/FriendsBox"
 import { useTheme } from "../../context/theme";
+import './Home.css'
 
 function Home () {
     const { theme } = useTheme();
     return (
-    <div className="home-container">
+    <>
         <Header />
-        <div className={`home ${theme}`}>
+        <div className={`main ${theme}`}>
             <UserBox/>
             <FeedBox />
-            <FriendsBox/>   
+            <FriendsBox/>    
         </div>
-    </div>
+    </>
         
     )
 }

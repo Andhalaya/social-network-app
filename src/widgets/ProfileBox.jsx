@@ -41,7 +41,7 @@ function ProfileBox() {
 
     const handleSave = async () => {
         try {
-            if (!formDataChanged) return; // No se envían cambios si no se ha modificado nada
+            if (!formDataChanged) return; 
 
             const formDataToSend = new FormData();
             formDataToSend.append('id', formData.id);
@@ -62,12 +62,12 @@ function ProfileBox() {
                 }
             });
 
-            setFormDataChanged(false); // Se resetea la bandera de cambios
+            setFormDataChanged(false); 
             setEditable(false);
             setIsImage(false);
 
-            // Actualizar datos de la página después de recibir la respuesta del servidor
-            setUser(response.data.user); // Actualizar datos de usuario en el contexto
+           
+            setUser(response.data.user); 
         } catch (error) {
             console.error('Error updating profile:', error);
         }
@@ -87,11 +87,12 @@ function ProfileBox() {
     }, []);
 
     return (
-        <div>
+        <>
             <div className='profile-background'>
-                <img src="1517636940967.jpeg" alt="" />
+                <img src="back.jpg" alt="" width={'1400px'}/>
             </div>
-            <div className={`box ${theme} profile`} >
+            
+            <div className={`box profile ${theme} `} >
                 <div className="space-between">
                     <div className="inline-left" style={{ gap: '5px' }}>
                         <div className="picture">
@@ -178,7 +179,8 @@ function ProfileBox() {
                     </div>
                 </div>
             </div>
-        </div>
+           
+        </>
     )
 }
 
