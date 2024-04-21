@@ -53,7 +53,7 @@ function FriendsBox() {
             <div className={`box ${theme}`}>
                 <div >
                     <div className="space-between margin-bottom">
-                        <h3 style={{ fontWeight: '500' }}>Lazy Coders</h3>
+                        <h3 className="color" style={{ fontWeight: '500' }}>Lazy Coders</h3>
                         <div className="search-box">
                             <input
                                 type="text"

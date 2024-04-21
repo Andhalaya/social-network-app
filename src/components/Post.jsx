@@ -97,7 +97,7 @@ function Post({ post, updatePostLikes }) {
             </div>
 
             {post.image && (
-                <img src={`${API_DOMAIN}/${post.image}`} alt="" width={'100%'}/>
+                <img src={`${API_DOMAIN}/${post.image}`} alt="" width={'80%'}/>
             )}
 
             {post.codeSnippet && (
