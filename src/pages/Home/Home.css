@@ -71,9 +71,19 @@
     background-color: transparent;
     border: none;
     height: 20px;
-   
     text-decoration: none;
     margin-left: 15px;
+  }
+
+  .tag{
+    padding: 5px 10px;
+    border-radius: 10px;
+    background-color: #4e4e4e39;
+  }
+
+  .tag:hover{
+    background-color: #acacac;
+    cursor: pointer;
   }
   
   

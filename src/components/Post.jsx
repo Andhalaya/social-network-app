@@ -71,8 +71,9 @@ function Post({ post, updatePostLikes }) {
             [{ 'align': [] }],
             [{ 'color': [] }, { 'background': [] }],
             ['link', 'image', 'code-block'], 
-            ['clean']
-        ]
+            ['clean'],
+        ],  
+
     };
     const formats = [
         'header', 'bold', 'italic', 'underline', 'strike', 'blockquote',
@@ -154,7 +155,7 @@ function Post({ post, updatePostLikes }) {
                         )}
                     </div>
                     <div >
-                        <div >
+                        <div className="inline-left margin-bottom margin-top">
                         <img src={`${API_DOMAIN}/${user.profilePicture}`} alt="name" style={{ borderRadius: 40, width: "25px" }} />
                         <p style={{ fontWeight: '500' }}>{user.fullName}</p>  
                         </div>
@@ -164,8 +165,9 @@ function Post({ post, updatePostLikes }) {
                         formats={formats}
                         value={comment}
                         onChange={(value) => setComment(value)}
+                        components={{ Emoji }}
                     />
-                    <div>
+                    <div style={{width:'100%', display:'flex', justifyContent:'right', paddingRight:'20px'}}>
                      <Button variant="contained" color="primary" onClick={handleComment}>
                         <img src="/icons8-send-24.png" />
                         Comment

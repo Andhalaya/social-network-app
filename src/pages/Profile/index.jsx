@@ -53,10 +53,7 @@ function Profile() {
 
   const backgroundOptions = [
     "src/assets/background1.jpeg",
-    "src/assets/background2.jpg",
-    "src/assets/web.jpeg",
-
-    
+    "src/assets/background2.jpg"  
    
   ];
 

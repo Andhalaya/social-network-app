@@ -199,10 +199,15 @@ input:focus {
 
 .ql-toolbar.ql-snow {
   background-color: rgb(186, 186, 186);
+  
 }
 
 .ql-container.ql-snow {
   background-color: white;
+}
+
+.quill{
+  margin: 20px;
 }
 
 .margin-bottom{

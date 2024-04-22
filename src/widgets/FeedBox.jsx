@@ -33,7 +33,7 @@ function FeedBox() {
     };
 
     const filteredPosts = posts.filter(post => {
-        const searchableContent = post.title + post.description; 
+        const searchableContent = post.title + post.description;
         return searchableContent.toLowerCase().includes(searchQuery.toLowerCase());
     });
 
@@ -46,16 +46,28 @@ function FeedBox() {
             <PostBox fetchPosts={fetchPosts} />
             <div className={`box ${theme}`}>
                 <div className="space-between margin-bottom">
-                    <h3>Posts</h3>
+                    <div className="inline-left margin-bottom gap">
+                        <p>Filter by:</p>
+                        <div className="inline-left gap">
+                            <p className="tag">friends</p>
+                            <p className="tag">all users</p>
+                            <p className="tag">most recent</p>
+                            <p className="tag">oldest</p>
+                        </div>
+                    </div>
+
                     <div className="search-box">
                         <input type="text" placeholder="search post" value={searchQuery} onChange={handleSearchChange} />
-                        <SearchIcon className={`icon ${theme}`} style={{ width: '20px' }} />  
+                        <SearchIcon className={`icon ${theme}`} style={{ width: '20px' }} />
                     </div>
+                    
                 </div>
+                <h2>Feed</h2>
+
                 <Divider />
                 <div style={{ display: 'flex', flexDirection: 'column-reverse' }}>
                     {filteredPosts.map(post => (
-                        <Post key={post._id} post={post} updatePostLikes={updatePostLikes}/>
+                        <Post key={post._id} post={post} updatePostLikes={updatePostLikes} />
                     ))}
                 </div>
             </div>

@@ -1,33 +1,32 @@
-import * as React from 'react';
-import { useState } from 'react';
-import Popper from '@mui/material/Popper';
-import ClickAwayListener from '@mui/material/ClickAwayListener';
-import { Paper } from '@mui/material';
+import React, { useState } from 'react';
+import Box from "@mui/material/Box";
+import Popper from "@mui/material/Popper";
+import Fade from "@mui/material/Fade";
 
-const ModalPopper = ({ button, children }) => {
+const ModalPopper = ({ trigger, children }) => {
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-  
 
-  const handleToggle = () => {
-    setOpen(!open);
-    setAnchorEl(anchorEl ? null : button.current);
+  const handleClick = (event) => {
+    setOpen((prev) => !prev);
+    setAnchorEl(event.currentTarget);
   };
 
   const handleClose = () => {
     setOpen(false);
+    setAnchorEl(null);
   };
 
   return (
     <>
-      {React.cloneElement(button.current, { onClick: handleToggle })}
-      <Popper open={open} anchorEl={anchorEl} placement="bottom" transition>
+      {trigger(handleClick)}
+      <Popper open={open} anchorEl={anchorEl} transition>
         {({ TransitionProps }) => (
-          <ClickAwayListener onClickAway={handleClose}>
-            <Paper {...TransitionProps} square>
-              {children}
-            </Paper>
-          </ClickAwayListener>
+          <Fade {...TransitionProps} timeout={350}>
+            <Box sx={{ border: 1, p: 1, bgcolor: "background.paper" }}>
+              {children(handleClose)}
+            </Box>
+          </Fade>
         )}
       </Popper>
     </>
