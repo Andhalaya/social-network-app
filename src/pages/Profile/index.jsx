@@ -65,6 +65,11 @@ function Profile() {
     setOpen((prev) => !prev);
   };
 
+  const handleClose = () => {
+    setOpen(false);
+    setAnchorEl(null); 
+  };
+
   return (
     <>
       <Header />
@@ -108,12 +113,15 @@ function Profile() {
             <FriendsBox />
           </div>
           <div className="side-container">
-            <div className="box box1">
+            <div className={`box ${theme} box1`}>
               <h4>MY POSTS</h4>
               <Divider />
-              {posts.map((post) => (
+              <div style={{ display: 'flex', flexDirection: 'column-reverse' }}>
+                {posts.map((post) => (
                 <Post key={post._id} post={post} updatePostLikes={updatePostLikes} />
               ))}
+              </div>
+              
             </div>
             <ProjectsBox />
           </div>

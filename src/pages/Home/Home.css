@@ -7,7 +7,8 @@
   .main {
     display: flex;
     flex-wrap: wrap;
-    padding: 2rem 3rem;
+    gap: 3rem;
+    padding: 4rem;
     background: radial-gradient(circle, #3f5efb 50%, #291a3b 90%);
     margin-top: 60px;
   }
@@ -16,7 +17,6 @@
   
   .user{
     flex: 15%;
-    padding: 20px;
     min-width: 200px;
   }
   
@@ -24,7 +24,6 @@
   
   .feed {
     flex: 50%;
-    padding: 20px 40px;
     display: flex;
     flex-direction: column;
     gap: 2rem;
@@ -81,7 +80,6 @@
   /*-------- FRIENDS BOX------ */
   .friends {
     flex: 20%;
-    padding: 20px;
     min-width: 300px;
   }
   

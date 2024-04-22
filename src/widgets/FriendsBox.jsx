@@ -51,38 +51,38 @@ function FriendsBox() {
     return (
         <div className="friends">
             <div className={`box ${theme}`}>
-                <div >
-                    <div className="space-between margin-bottom">
-                        <h3 className="color" style={{ fontWeight: '500' }}>Lazy Coders</h3>
-                        <div className="search-box">
-                            <input
-                                type="text"
-                                placeholder="search user"
-                                style={{ width: '75px' }}
-                                value={searchTerm}
-                                onChange={handleSearch}
-                            />
-                            <SearchIcon className={`icon ${theme}`} style={{ width: '20px', marginRight: '10px' }} />
-                        </div>
-                    
+
+                <div className="space-between margin-bottom">
+                    <h3 className="color" style={{ fontWeight: '500' }}>Lazy Coders</h3>
+                    <div className="search-box">
+                        <input
+                            type="text"
+                            placeholder="search user"
+                            style={{ width: '75px' }}
+                            value={searchTerm}
+                            onChange={handleSearch}
+                        />
+                        <SearchIcon className={`icon ${theme}`} style={{ width: '20px', marginRight: '10px' }} />
                     </div>
-                    <Divider />
-                    {filteredUsers.map(filteredUser => (
-                        <div className="space-between" key={filteredUser._id}>
-                            <div className="inline-left gap">
-                                <img src={filteredUser.profilePicture} alt="name" style={{ borderRadius: 40, width: "40px" }} />
-                                <div className="column">
-                                    <h4>{`@${filteredUser.userName}`}</h4>
-                                    <h6 style={{ fontWeight: '400', fontSize: '12px' }}>{filteredUser.fullName}</h6>
-                                    <h6 style={{ fontWeight: '400', fontSize: '12px' }}>{filteredUser.occupation}</h6>
-                                </div>
-                            </div>
-                            <button className="follow-btn" onClick={() => toggleFollow(filteredUser)}>
-                                {user.friends.includes(filteredUser._id) ? '- unfollow' : '+ follow'}
-                            </button>
-                        </div>
-                    ))}
+
                 </div>
+                <Divider />
+                {filteredUsers.map(filteredUser => (
+                    <div className="space-between" key={filteredUser._id}>
+                        <div className="inline-left gap">
+                            <img src={`${API_DOMAIN}/${filteredUser.profilePicture}`} alt="name" style={{ borderRadius: 40, width: "40px" }} />
+                            <div className="column">
+                                <h4>{`@${filteredUser.userName}`}</h4>
+                                <h6 style={{ fontWeight: '400', fontSize: '12px' }}>{filteredUser.fullName}</h6>
+                                <h6 style={{ fontWeight: '400', fontSize: '12px' }}>{filteredUser.occupation}</h6>
+                            </div>
+                        </div>
+                        <button className="follow-btn" onClick={() => toggleFollow(filteredUser)}>
+                            {user.friends.includes(filteredUser._id) ? '- unfollow' : '+ follow'}
+                        </button>
+                    </div>
+                ))}
+
             </div>
         </div>
 

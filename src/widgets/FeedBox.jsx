@@ -53,7 +53,7 @@ function FeedBox() {
                     </div>
                 </div>
                 <Divider />
-                <div >
+                <div style={{ display: 'flex', flexDirection: 'column-reverse' }}>
                     {filteredPosts.map(post => (
                         <Post key={post._id} post={post} updatePostLikes={updatePostLikes}/>
                     ))}
