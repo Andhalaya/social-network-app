@@ -84,7 +84,7 @@ function Post({ post, updatePostLikes }) {
         <div key={post._id} >
             <div className="space-between">
                 <div className="inline-left gap margin-top">
-                    <img src={`${API_DOMAIN}/${post.user.profilePicture}`} alt={post.user.userName} style={{ borderRadius: 40, width: "40px" }} />
+                    <img src={`${API_DOMAIN}/public/${post.user.profilePicture}`} alt={post.user.userName} style={{ borderRadius: 40, width: "40px" }} />
                     <div>
                         <h5>{post.user.fullName}</h5>
                         <h6>{post.user.occupation}</h6>
@@ -98,7 +98,7 @@ function Post({ post, updatePostLikes }) {
             </div>
 
             {post.image && (
-                <img src={`${API_DOMAIN}/${post.image}`} alt="" width={'80%'}/>
+                <img src={`${API_DOMAIN}/public/${post.image}`} alt="" width={'80%'}/>
             )}
 
             {post.codeSnippet && (

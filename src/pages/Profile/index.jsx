@@ -22,6 +22,7 @@ function Profile() {
     const [posts, setPosts] = useState([]);
     const [backgroundImage, setBackgroundImage] = useState(user.profileCover);
     const [isEditingCover, setIsEditingCover] = useState(false);
+   
 
     useEffect(() => {
         fetchPosts();
@@ -48,10 +49,12 @@ function Profile() {
 
     const handleSaveBackground = async (background) => {
         try {
+    
             await axios.patch(`${API_DOMAIN}/users/${user._id}/updateCover`, { profileCover: background }, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             setBackgroundImage(background);
+            
         } catch (error) {
             console.error("Error updating background:", error);
         }
@@ -61,7 +64,7 @@ function Profile() {
         <>
             <Header />
             <div className={`profile ${theme}`}>
-                <div className="background" style={{ backgroundImage: `url(${backgroundImage})`, textAlign: 'right' }}>
+                <div className="background" style={{ backgroundImage: `url(${API_DOMAIN}${backgroundImage})`, textAlign: 'right' }}>
                     <CustomModal
                         trigger={(openModal) => (
                             !isEditingCover && (
@@ -78,7 +81,6 @@ function Profile() {
                             <CoverOptions
                               closeModal={closeModal}
                               setIsEditingCover={setIsEditingCover}
-                              
                               handleSaveBackground={handleSaveBackground}
                             />                        
                         )}
@@ -88,7 +90,7 @@ function Profile() {
                 <div className="profile-container">
                     <div className="info-container">
                         <div className="user-img">
-                            <img src={`${API_DOMAIN}/${user.profilePicture}`} alt="name" />
+                            <img src={`${API_DOMAIN}/public/${user.profilePicture}`} alt="name" />
                         </div>
                         <Suspense fallback={<div className="loadingBox1 box">Loading...<SpinningIcon /></div>}>
                             <ProfileBox />

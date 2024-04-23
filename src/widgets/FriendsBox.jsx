@@ -1,7 +1,7 @@
-import { motion } from "framer-motion"
 import { useTheme } from "../context/theme";
 import SearchIcon from '@mui/icons-material/Search';
-import CachedOutlinedIcon from '@mui/icons-material/CachedOutlined';
+import PersonRemoveRoundedIcon from '@mui/icons-material/PersonRemoveRounded';
+import PersonAddAltOutlinedIcon from '@mui/icons-material/PersonAddAltOutlined';
 import { useAuth } from '../context/AuthProvider';
 import { useState, useEffect } from "react";
 import axios from 'axios';
@@ -12,7 +12,7 @@ import AnimatedBox from "../components/Box";
 
 function FriendsBox({ type }) {
     const { theme } = useTheme();
-    const { token, user, friends } = useAuth();
+    const { token, user, friends, setUser } = useAuth(); 
     const [users, setUsers] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [updateUsers, setUpdateUsers] = useState(false);
@@ -47,7 +47,8 @@ function FriendsBox({ type }) {
                 { userId: user._id },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
-            console.log(res.data)
+            console.log(res.data);
+            setUser(res.data.user);
 
         } catch (error) {
             console.error("Error toggling follow:", error);
@@ -56,11 +57,9 @@ function FriendsBox({ type }) {
 
     let filteredUsers;
     if (type === 'home') {
-
         filteredUsers = users.filter(u => u.userName.toLowerCase().includes(searchTerm.toLowerCase()));
         filteredUsers = filteredUsers.sort(() => 0.5 - Math.random()).slice(0, 4);
     } else if (type === 'profile') {
-
         filteredUsers = users.filter(u => user.friends.includes(u._id) && u.userName.toLowerCase().includes(searchTerm.toLowerCase()));
     }
 
@@ -71,15 +70,13 @@ function FriendsBox({ type }) {
     return (
         <div className="friends">
             <AnimatedBox >
-
                 <div className="space-between margin-bottom">
                     <div className="inline-left gap">
                         <h3 className="color" style={{ fontWeight: '500' }}>Lazy Coders</h3>
                         {type === 'home' && (
-                            <div onClick={handleShowMore} ><SpinningIcon /></div>
+                            <div onClick={handleShowMore}><SpinningIcon /></div>
                         )}
                     </div>
-
                     <div className="search-box">
                         <input
                             type="text"
@@ -90,13 +87,12 @@ function FriendsBox({ type }) {
                         />
                         <SearchIcon className={`icon ${theme}`} style={{ width: '20px', marginRight: '10px' }} />
                     </div>
-
                 </div>
                 <Divider />
                 {filteredUsers.map(filteredUser => (
                     <div className="space-between" key={filteredUser._id}>
                         <div className="inline-left gap">
-                            <img src={`${API_DOMAIN}/${filteredUser.profilePicture}`} alt="name" style={{ borderRadius: 40, width: "40px" }} />
+                            <img src={`${API_DOMAIN}/public/${filteredUser.profilePicture}`} alt="name" style={{ borderRadius: 40, width: "40px" }} />
                             <div className="column">
                                 <h4>{`@${filteredUser.userName}`}</h4>
                                 <h6 style={{ fontWeight: '400', fontSize: '12px' }}>{filteredUser.fullName}</h6>
@@ -104,14 +100,12 @@ function FriendsBox({ type }) {
                             </div>
                         </div>
                         <button className="follow-btn" onClick={() => toggleFollow(filteredUser)}>
-                            {user.friends.includes(filteredUser._id) ? '- unfollow' : '+ follow'}
+                            {user.friends.includes(filteredUser._id) ? <PersonRemoveRoundedIcon sx={{ fontSize: '25px' }} /> : <PersonAddAltOutlinedIcon sx={{ fontSize: '25px' }} />}
                         </button>
                     </div>
                 ))}
-
             </AnimatedBox>
         </div>
-
     )
 }
 

@@ -119,6 +119,31 @@
     background-color: #acacac;
     cursor: pointer;
   }
+
+  .post-elements {
+    display: flex;
+    transition: width 0.5s;
+    align-items: center;
+    cursor: pointer;
+    gap: 5px;
+    transition: 0.5s;
+    overflow: hidden;
+    width: 30px;
+    white-space: nowrap;
+  }
+
+  .post-elements:hover{
+    width: 130px;
+    color: #008cff;
+  }
+
+  .big:hover{
+    width: 170px;
+  }
+
+  .medium:hover{
+    width: 150px;
+  }
   
   
   /*-------- FRIENDS BOX------ */

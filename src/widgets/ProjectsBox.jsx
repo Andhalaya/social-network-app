@@ -35,7 +35,7 @@ function ProjectsBox() {
                         <div className="project" key={project._id}>
                             <h5>{project.title}</h5>
 
-                            <img src={`${API_DOMAIN}/${project.image}`} alt="project-img" className="project-img" />
+                            <img src={`${API_DOMAIN}/public/${project.image}`} alt="project-img" className="project-img" />
 
 
                             <button className="share-btn">

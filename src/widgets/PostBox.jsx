@@ -114,7 +114,7 @@ function PostBox({ fetchPosts }) {
         <AnimatedBox >
             <div className="space-between" style={{ marginBottom: '10px' }}>
                 <div className="inline-left" style={{ gap: '20px' }}>
-                    <img src={`${API_DOMAIN}/${user.profilePicture}`} alt="name" style={{ borderRadius: 40, width: "40px" }} />
+                    <img src={`${API_DOMAIN}/public/${user.profilePicture}`} alt="name" style={{ borderRadius: 40, width: "40px" }} />
                     <div className="search-box">
                         <input
                             type="text"
@@ -159,20 +159,20 @@ function PostBox({ fetchPosts }) {
             </div>
             <Divider />
             <div className="inline-left" style={{ gap: '20px', marginTop: '10px' }}>
-                <div className="inline-left" style={{ gap: '5px', cursor: 'pointer' }} onClick={() => handleToggleField("image")}>
-                    <AddPhotoAlternateOutlinedIcon />
+                <div className="post-elements" onClick={() => handleToggleField("image")}>
+                    <AddPhotoAlternateOutlinedIcon className="icon1" sx={{fontSize:'30px'}}/>
                     <p>Add image</p>
                 </div>
-                <div className="inline-left" style={{ gap: '5px', cursor: 'pointer' }} onClick={() => handleToggleField("description")}>
-                    <FormatAlignLeftOutlinedIcon />
+                <div className="post-elements medium" onClick={() => handleToggleField("description")}>
+                    <FormatAlignLeftOutlinedIcon sx={{fontSize:'30px'}}/>
                     <p>Add description</p>
                 </div>
-                <div className="inline-left" style={{ gap: '5px', cursor: 'pointer' }} onClick={() => handleToggleField("codeSnippet")}>
-                    <CodeRoundedIcon />
+                <div className="post-elements big" onClick={() => handleToggleField("codeSnippet")}>
+                    <CodeRoundedIcon sx={{fontSize:'30px'}}/>
                     <p>Add code snippet</p>
                 </div>
-                <div className="inline-left" style={{ gap: '5px', cursor: 'pointer' }} onClick={() => handleToggleField("link")}>
-                    <LinkOutlinedIcon />
+                <div className="post-elements" onClick={() => handleToggleField("link")}>
+                    <LinkOutlinedIcon sx={{fontSize:'30px'}}/>
                     <p>Add link</p>
                 </div>
             </div>
