@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import { useAuth } from '../context/AuthProvider';
 import axios from 'axios';
 import { API_DOMAIN } from "../utils/api-domain";
+import AnimatedBox from "../components/Box";
 
 function FeedBox() {
     const { theme } = useTheme();
@@ -28,8 +29,8 @@ function FeedBox() {
         }
     };
 
-    const handleSearchChange = (event) => {
-        setSearchQuery(event.target.value);
+    const handleSearchChange = (e) => {
+        setSearchQuery(e.target.value);
     };
 
     const filteredPosts = posts.filter(post => {
@@ -44,7 +45,7 @@ function FeedBox() {
     return (
         <div className="feed">
             <PostBox fetchPosts={fetchPosts} />
-            <div className={`box ${theme}`}>
+            <AnimatedBox >
                 <div className="space-between margin-bottom">
                     <div className="inline-left margin-bottom gap">
                         <p>Filter by:</p>
@@ -70,7 +71,7 @@ function FeedBox() {
                         <Post key={post._id} post={post} updatePostLikes={updatePostLikes} />
                     ))}
                 </div>
-            </div>
+            </AnimatedBox>
         </div>
     )
 }

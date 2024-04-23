@@ -7,6 +7,7 @@ import ThumbUpAltRoundedIcon from '@mui/icons-material/ThumbUpAltRounded';
 import ChatBubbleOutlineRoundedIcon from '@mui/icons-material/ChatBubbleOutlineRounded';
 import { useAuth } from '../context/AuthProvider';
 import { API_DOMAIN } from "../utils/api-domain";
+import AnimatedBox from "../components/Box";
 
 function UserBox() {
     const { theme } = useTheme();
@@ -14,7 +15,7 @@ function UserBox() {
 
     return (
         <div className="user">
-            <div className={`box ${theme}`} >
+            <AnimatedBox >
                 <div className="inline-left gap">
                     <div>
                         <img src={`${API_DOMAIN}/${user.profilePicture}`} alt="name" style={{ borderRadius: 40, width: "70px" }} />
@@ -78,7 +79,7 @@ function UserBox() {
                     <p>github.com/myprofile</p>
                     <p>github.com/myprofile</p>
                 </div>
-            </div>
+            </AnimatedBox>
         </div>
 
     )

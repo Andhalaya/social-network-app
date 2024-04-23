@@ -13,6 +13,7 @@ import { useAuth } from '../context/AuthProvider';
 import { API_DOMAIN } from "../utils/api-domain";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import AnimatedBox from "../components/Box";
 
 function PostBox({ fetchPosts }) {
     const { theme } = useTheme();
@@ -110,7 +111,7 @@ function PostBox({ fetchPosts }) {
     ];
 
     return (
-        <div className={`box ${theme}`} >
+        <AnimatedBox >
             <div className="space-between" style={{ marginBottom: '10px' }}>
                 <div className="inline-left" style={{ gap: '20px' }}>
                     <img src={`${API_DOMAIN}/${user.profilePicture}`} alt="name" style={{ borderRadius: 40, width: "40px" }} />
@@ -229,7 +230,7 @@ function PostBox({ fetchPosts }) {
                     />
                 )}
             </div>
-        </div>
+        </AnimatedBox>
     );
 }
 

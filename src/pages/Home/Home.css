@@ -41,6 +41,10 @@
     align-items: center;
     gap: 5px;
   }
+
+  .share-btn:hover{
+    background-color: #3f5efb;
+  }
   
   .dropzone {
     width: 500px;
@@ -106,5 +110,16 @@
     border: 1px solid #008cff;
     padding: 5px 10px;
     border-radius: 10px;
+  }
+
+  .showMore-btn{
+    border: none; 
+    background-color: transparent;
+    cursor:pointer;
+    display: flex;
+  }
+
+  .showMore-btn:hover{
+    color: #9c64ba;
   }
   

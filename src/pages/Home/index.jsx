@@ -13,7 +13,7 @@ function Home () {
         <div className={`main ${theme}`}>
             <UserBox/>
             <FeedBox />
-            <FriendsBox/>    
+            <FriendsBox type="home"/>    
         </div>
     </>
         

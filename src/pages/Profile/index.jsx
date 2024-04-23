@@ -4,13 +4,15 @@ import ProfileBox from "../../widgets/ProfileBox";
 import FriendsBox from "../../widgets/FriendsBox";
 import Post from "../../components/Post";
 import ProjectsBox from "../../widgets/ProjectsBox";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect} from "react";
 import { API_DOMAIN } from "../../utils/api-domain";
 import axios from "axios";
 import { useAuth } from "../../context/AuthProvider";
 import "./Profile.css";
 import { Divider } from "@mui/material";
 import CustomModal from "../../components/Modal";
+import { AnimatePresence } from "framer-motion";
+import AnimatedBox from "../../components/Box";
 
 
 function Profile() {
@@ -24,7 +26,8 @@ function Profile() {
         "src/assets/background2.jpg",
         "src/assets/background3.jpg",
         "src/assets/background4.jpg",
-        "src/assets/background5.jpg"
+        "src/assets/background5.jpg",
+        "src/assets/background6.jpg",
 
     ];
 
@@ -69,6 +72,7 @@ function Profile() {
             <Header />
             <div className={`profile ${theme}`}>
                 <div className="background" style={{ backgroundImage: `url(${backgroundImage})`, textAlign:'right' }}>
+                    
                     <CustomModal
                         trigger={(openModal) => (
                             !isEditingCover && (
@@ -82,6 +86,7 @@ function Profile() {
                         )}
                     >
                         {(closeModal) => (
+                            <AnimatePresence>
                             <div className="editBack">
                                 <div style={{ display: 'flex', justifyContent: 'right' }}>
                                     <button
@@ -113,8 +118,10 @@ function Profile() {
 
 
                             </div>
+                            </AnimatePresence>
                         )}
                     </CustomModal>
+                    
 
                 </div>
                 <div className="profile-container">
@@ -123,10 +130,10 @@ function Profile() {
                             <img src={`${API_DOMAIN}/${user.profilePicture}`} alt="name" />
                         </div>
                         <ProfileBox />
-                        <FriendsBox />
+                        <FriendsBox type="profile"/>
                     </div>
                     <div className="side-container">
-                        <div className={`box ${theme} box1`}>
+                        <AnimatedBox className='box1'>
                             <h4>MY POSTS</h4>
                             <Divider />
                             <div style={{ display: 'flex', flexDirection: 'column-reverse' }}>
@@ -134,8 +141,7 @@ function Profile() {
                                     <Post key={post._id} post={post} updatePostLikes={updatePostLikes} />
                                 ))}
                             </div>
-
-                        </div>
+                        </AnimatedBox>
                         <ProjectsBox />
                     </div>
                 </div>

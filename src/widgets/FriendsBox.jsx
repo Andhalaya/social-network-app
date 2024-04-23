@@ -1,38 +1,44 @@
+import { motion } from "framer-motion"
 import { useTheme } from "../context/theme";
 import SearchIcon from '@mui/icons-material/Search';
+import CachedOutlinedIcon from '@mui/icons-material/CachedOutlined';
 import { useAuth } from '../context/AuthProvider';
 import { useState, useEffect } from "react";
 import axios from 'axios';
 import { Divider } from "@mui/material";
 import { API_DOMAIN } from "../utils/api-domain";
+import SpinningIcon from "../components/SpinningIcon";
+import AnimatedBox from "../components/Box";
 
-function FriendsBox() {
+function FriendsBox({ type }) {
     const { theme } = useTheme();
-    const { token, user } = useAuth();
+    const { token, user, friends } = useAuth();
     const [users, setUsers] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
+    const [updateUsers, setUpdateUsers] = useState(false);
 
     useEffect(() => {
         fetchUsers();
-    }, []);
+    }, [updateUsers]);
 
     const fetchUsers = async () => {
         try {
             const res = await axios.get(`${API_DOMAIN}/users`,
                 { headers: { Authorization: `Bearer ${token}` } });
-            setUsers(res.data);
+            if (type === 'home') {
+                setUsers(res.data)
+            } else if (type === 'profile') {
+                setUsers(friends);
+            }
+
         } catch (error) {
             console.error("Error fetching users:", error);
         }
     };
 
-    const handleSearch = (event) => {
-        setSearchTerm(event.target.value);
+    const handleSearch = (e) => {
+        setSearchTerm(e.target.value);
     };
-
-    const filteredUsers = users.filter(u =>
-        u._id !== user._id && u.userName.toLowerCase().includes(searchTerm.toLowerCase())
-    );
 
     const toggleFollow = async (filteredUser) => {
         try {
@@ -41,18 +47,39 @@ function FriendsBox() {
                 { userId: user._id },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
+            console.log(res.data)
 
         } catch (error) {
             console.error("Error toggling follow:", error);
         }
     };
 
+    let filteredUsers;
+    if (type === 'home') {
+
+        filteredUsers = users.filter(u => u.userName.toLowerCase().includes(searchTerm.toLowerCase()));
+        filteredUsers = filteredUsers.sort(() => 0.5 - Math.random()).slice(0, 4);
+    } else if (type === 'profile') {
+
+        filteredUsers = users.filter(u => user.friends.includes(u._id) && u.userName.toLowerCase().includes(searchTerm.toLowerCase()));
+    }
+
+    const handleShowMore = () => {
+        setUpdateUsers(!updateUsers);
+    };
+
     return (
         <div className="friends">
-            <div className={`box ${theme}`}>
+            <AnimatedBox >
 
                 <div className="space-between margin-bottom">
-                    <h3 className="color" style={{ fontWeight: '500' }}>Lazy Coders</h3>
+                    <div className="inline-left gap">
+                        <h3 className="color" style={{ fontWeight: '500' }}>Lazy Coders</h3>
+                        {type === 'home' && (
+                            <div onClick={handleShowMore} ><SpinningIcon /></div>
+                        )}
+                    </div>
+
                     <div className="search-box">
                         <input
                             type="text"
@@ -82,7 +109,7 @@ function FriendsBox() {
                     </div>
                 ))}
 
-            </div>
+            </AnimatedBox>
         </div>
 
     )

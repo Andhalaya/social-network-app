@@ -9,6 +9,7 @@ import Brightness2Icon from '@mui/icons-material/Brightness2';
 import {useState} from 'react';
 import { useNavigate} from 'react-router'
 import { useAuth } from '../context/AuthProvider';
+import AnimatedBox from './Box';
 
 function Header () {
     

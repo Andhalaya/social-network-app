@@ -5,6 +5,7 @@ import axios from "axios";
 import { API_DOMAIN } from "../utils/api-domain";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import SaveIcon from '@mui/icons-material/Save';
+import AnimatedBox from "../components/Box";
 
 function ProfileBox() {
     const { theme } = useTheme();
@@ -80,8 +81,8 @@ function ProfileBox() {
     ];
 
     return (
-
-        <div className={`profile-box box ${theme}`}>
+        <AnimatedBox>
+        <div className={`profile-box }`}>
             <div className="space-between margin-bottom">
                 <h4>{`@${user.userName}`}</h4>
                 <div onClick={handleToggleEdit}>
@@ -113,6 +114,7 @@ function ProfileBox() {
                 </div>
             }
         </div>
+        </AnimatedBox>
     )
 }
 

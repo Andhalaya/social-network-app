@@ -8,6 +8,7 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
+  const [friends, setFriends] = useState(null);
   const [loading, setLoading] = useState(true);
   const [token, setToken] = useState(localStorage.getItem("token"));
 
@@ -22,7 +23,9 @@ export const AuthProvider = ({ children }) => {
           });
           if (response.data.user) {
             setIsLoggedIn(true);
-            setUser(response.data.user);
+            setUser(response.data.user.user);
+            setFriends(response.data.user.friendsData)
+
           } else {
             setIsLoggedIn(false);
             setUser(null);
@@ -59,7 +62,7 @@ export const AuthProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, user, setUser, login, logout, token }}>
+    <AuthContext.Provider value={{ isLoggedIn, user, friends, login, logout, token }}>
       {children}
     </AuthContext.Provider>
   );
