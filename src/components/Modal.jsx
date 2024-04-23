@@ -36,7 +36,7 @@ const CustomModal = ({ trigger, children }) => {
             >
                 {isOpen && (
                     <div>
-                        {children}
+                        {children(closeModal)}
                     </div>
                 )}
             </motion.div>

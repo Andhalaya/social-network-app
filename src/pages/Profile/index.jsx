@@ -9,12 +9,12 @@ import { Divider } from "@mui/material";
 import AnimatedBox from "../../components/Box";
 import CustomModal from "../../components/Modal";
 import SpinningIcon from "../../components/SpinningIcon";
+import CoverOptions from "./CoverOptions"
 
 const ProfileBox = lazy(() => import("../../widgets/ProfileBox"));
 const Post = lazy(() => import("../../components/Post"));
 const FriendsBox = lazy(() => import("../../widgets/FriendsBox"));
 const ProjectsBox = lazy(() => import("../../widgets/ProjectsBox"))
-const CoverOptions = lazy(() => import("./CoverOptions"));
 
 function Profile() {
     const { theme } = useTheme();
@@ -62,24 +62,28 @@ function Profile() {
             <Header />
             <div className={`profile ${theme}`}>
                 <div className="background" style={{ backgroundImage: `url(${backgroundImage})`, textAlign: 'right' }}>
-                    <CustomModal trigger={(openModal) => (
-                        !isEditingCover && (
-                            <button className="editCover-btn" type="button" onClick={() => {
-                                openModal();
-                                setIsEditingCover(true);
-                            }}>
-                                <p>change cover</p>
-                            </button>
-                        )
-                    )}>
-                        <Suspense fallback={<div>Loading...</div>}>
+                    <CustomModal
+                        trigger={(openModal) => (
+                            !isEditingCover && (
+                                <button className="editCover-btn" type="button" onClick={() => {
+                                    openModal();
+                                    setIsEditingCover(true);
+                                }}>
+                                    <p>change cover</p>
+                                </button>
+                            )
+                        )}
+                    >
+                        {(closeModal) => (
                             <CoverOptions
-                                closeModal={closeModal}
-                                setIsEditingCover={setIsEditingCover}
-                                handleSaveBackground={handleSaveBackground}
-                            />
-                        </Suspense>
+                              closeModal={closeModal}
+                              setIsEditingCover={setIsEditingCover}
+                              
+                              handleSaveBackground={handleSaveBackground}
+                            />                        
+                        )}
                     </CustomModal>
+
                 </div>
                 <div className="profile-container">
                     <div className="info-container">
