@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import axios from "axios";
 import { API_DOMAIN } from "../utils/api-domain";
 import { Divider } from "@mui/material";
+import AnimatedBox from "../components/Box";
 
 
 function ProjectsBox() {
@@ -25,7 +26,7 @@ function ProjectsBox() {
         fetchProjects();
     }, []);
     return (
-        <div className={`projects-box box ${theme}`}>
+        <AnimatedBox className={`projects-box `}>
             <h4>MY PROJECTS</h4>
             <Divider />
             <div className="project-container">
@@ -42,7 +43,7 @@ function ProjectsBox() {
                     </div>
                 ))}
             </div>
-        </div>
+        </AnimatedBox>
     )
 }
 

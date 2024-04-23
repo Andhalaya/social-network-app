@@ -4,16 +4,17 @@ import ProfileBox from "../../widgets/ProfileBox";
 import FriendsBox from "../../widgets/FriendsBox";
 import Post from "../../components/Post";
 import ProjectsBox from "../../widgets/ProjectsBox";
-import { useState, useEffect} from "react";
+import { useState, useEffect, Suspense, lazy } from "react";
 import { API_DOMAIN } from "../../utils/api-domain";
 import axios from "axios";
 import { useAuth } from "../../context/AuthProvider";
 import "./Profile.css";
 import { Divider } from "@mui/material";
 import CustomModal from "../../components/Modal";
-import { AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import AnimatedBox from "../../components/Box";
 
+const CustomModal = lazy(() => import('../../components/Modal'));
 
 function Profile() {
     const { theme } = useTheme();
@@ -28,7 +29,6 @@ function Profile() {
         "src/assets/background4.jpg",
         "src/assets/background5.jpg",
         "src/assets/background6.jpg",
-
     ];
 
     useEffect(() => {
@@ -56,7 +56,6 @@ function Profile() {
 
     const handleSaveBackground = async (background) => {
         try {
-
             await axios.patch(`${API_DOMAIN}/users/${user._id}/updateCover`, { profileCover: background }, {
                 headers: { Authorization: `Bearer ${token}` },
             });
@@ -64,14 +63,15 @@ function Profile() {
         } catch (error) {
             console.error("Error updating background:", error);
         }
-
     };
 
     return (
         <>
             <Header />
             <div className={`profile ${theme}`}>
-                <div className="background" style={{ backgroundImage: `url(${backgroundImage})`, textAlign:'right' }}>
+                <div className="background" style={{ backgroundImage: `url(${backgroundImage})`, textAlign: 'right' }}>
+                    <Suspense>
+
                     
                     <CustomModal
                         trigger={(openModal) => (
@@ -86,7 +86,6 @@ function Profile() {
                         )}
                     >
                         {(closeModal) => (
-                            <AnimatePresence>
                             <div className="editBack">
                                 <div style={{ display: 'flex', justifyContent: 'right' }}>
                                     <button
@@ -101,7 +100,7 @@ function Profile() {
                                 </div>
                                 <div className="background-options">
                                     {backgroundOptions.map((background, index) => (
-                                        <div className="backgroundImg-container" key={index}>
+                                        <motion.div className="backgroundImg-container" key={index}>
                                             <img
                                                 src={background}
                                                 alt={`Background ${index + 1}`}
@@ -112,17 +111,13 @@ function Profile() {
                                                 }}
                                                 style={{ maxWidth: '200px' }}
                                             />
-                                        </div>
+                                        </motion.div>
                                     ))}
                                 </div>
-
-
                             </div>
-                            </AnimatePresence>
                         )}
                     </CustomModal>
-                    
-
+                    </Suspense>
                 </div>
                 <div className="profile-container">
                     <div className="info-container">
@@ -130,7 +125,7 @@ function Profile() {
                             <img src={`${API_DOMAIN}/${user.profilePicture}`} alt="name" />
                         </div>
                         <ProfileBox />
-                        <FriendsBox type="profile"/>
+                        <FriendsBox type="profile" />
                     </div>
                     <div className="side-container">
                         <AnimatedBox className='box1'>
@@ -146,6 +141,7 @@ function Profile() {
                     </div>
                 </div>
             </div>
+    
         </>
     );
 }
