@@ -7,9 +7,9 @@ const ModalPopper = ({ trigger, children }) => {
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
 
-  const handleClick = (event) => {
+  const handleClick = (e) => {
     setOpen((prev) => !prev);
-    setAnchorEl(event.currentTarget);
+    setAnchorEl(e.currentTarget);
   };
 
   const handleClose = () => {
