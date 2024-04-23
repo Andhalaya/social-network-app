@@ -11,9 +11,8 @@ const CustomModal = ({ trigger, children }) => {
         <>
             {trigger(openModal)} 
             {isOpen && (
-                <div className="modal">
-                    <div className="modal-content">
-                        <span className="close-btn" onClick={closeModal} >&times;</span> 
+                <div>
+                    <div>
                         {children(closeModal)} 
                     </div>
                 </div>

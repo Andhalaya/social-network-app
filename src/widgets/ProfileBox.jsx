@@ -85,7 +85,7 @@ function ProfileBox() {
             <div className="space-between margin-bottom">
                 <h4>{`@${user.userName}`}</h4>
                 <div onClick={handleToggleEdit}>
-                    {editable ? <SaveIcon onClick={handleSave} /> : <ModeEditIcon />}
+                    {editable ? <SaveIcon className="icon" onClick={handleSave} /> : <ModeEditIcon className="icon" />}
                 </div>
             </div>
             {fields.map((field) => (

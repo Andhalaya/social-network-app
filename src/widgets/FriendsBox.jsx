@@ -41,7 +41,6 @@ function FriendsBox() {
                 { userId: user._id },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
-            console.log(res.data)
 
         } catch (error) {
             console.error("Error toggling follow:", error);

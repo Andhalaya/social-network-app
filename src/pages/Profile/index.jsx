@@ -21,7 +21,10 @@ function Profile() {
     const [isEditingCover, setIsEditingCover] = useState(false);
     const backgroundOptions = [
         "src/assets/background1.jpeg",
-        "src/assets/background2.jpg"
+        "src/assets/background2.jpg",
+        "src/assets/background3.jpg",
+        "src/assets/background4.jpg",
+        "src/assets/background5.jpg"
 
     ];
 
@@ -50,54 +53,69 @@ function Profile() {
 
     const handleSaveBackground = async (background) => {
         try {
-            
+
             await axios.patch(`${API_DOMAIN}/users/${user._id}/updateCover`, { profileCover: background }, {
-              headers: { Authorization: `Bearer ${token}` },
+                headers: { Authorization: `Bearer ${token}` },
             });
             setBackgroundImage(background);
-          } catch (error) {
+        } catch (error) {
             console.error("Error updating background:", error);
-          }
-        
+        }
+
     };
 
     return (
         <>
             <Header />
             <div className={`profile ${theme}`}>
-                <div className="background" style={{ backgroundImage: `url(${backgroundImage})` }}>
-                    <div className="editBack">
+                <div className="background" style={{ backgroundImage: `url(${backgroundImage})`, textAlign:'right' }}>
                     <CustomModal
-                            trigger={(openModal) => (
-                                !isEditingCover && (
-                                    <button className="editCover-btn" type="button" onClick={openModal}>
-                                        <p>change cover</p>
+                        trigger={(openModal) => (
+                            !isEditingCover && (
+                                <button className="editCover-btn" type="button" onClick={() => {
+                                    openModal();
+                                    setIsEditingCover(true);
+                                }}>
+                                    <p>change cover</p>
+                                </button>
+                            )
+                        )}
+                    >
+                        {(closeModal) => (
+                            <div className="editBack">
+                                <div style={{ display: 'flex', justifyContent: 'right' }}>
+                                    <button
+                                        className="close-btn"
+                                        onClick={() => {
+                                            closeModal();
+                                            setIsEditingCover(false);
+                                        }}
+                                    >
+                                        X
                                     </button>
-                                )
-                            )}
-                        >
-                            {(closeModal) => (
-                                <>
-                                    <div className="background-options">
-                                        {backgroundOptions.map((background, index) => (
-                                            <div className="backgroundImg-container" key={index}>
-                                                <img
-                                                    src={background}
-                                                    alt={`Background ${index + 1}`}
-                                                    onClick={() => {
-                                                        closeModal();
-                                                        setIsEditingCover(true);
-                                                        handleSaveBackground(background);
-                                                    }}
-                                                    style={{ maxWidth: '200px' }}
-                                                />
-                                            </div>
-                                        ))}
-                                    </div>
-                                </>
-                            )}
-                        </CustomModal>
-                    </div>
+                                </div>
+                                <div className="background-options">
+                                    {backgroundOptions.map((background, index) => (
+                                        <div className="backgroundImg-container" key={index}>
+                                            <img
+                                                src={background}
+                                                alt={`Background ${index + 1}`}
+                                                onClick={() => {
+                                                    closeModal();
+                                                    setIsEditingCover(false);
+                                                    handleSaveBackground(background);
+                                                }}
+                                                style={{ maxWidth: '200px' }}
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+
+
+                            </div>
+                        )}
+                    </CustomModal>
+
                 </div>
                 <div className="profile-container">
                     <div className="info-container">
