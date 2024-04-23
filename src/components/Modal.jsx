@@ -1,36 +1,25 @@
-import React, { useState } from 'react';
-import Box from "@mui/material/Box";
-import Popper from "@mui/material/Popper";
-import Fade from "@mui/material/Fade";
 
-const ModalPopper = ({ trigger, children }) => {
-  const [open, setOpen] = useState(false);
-  const [anchorEl, setAnchorEl] = useState(null);
+import { useState } from 'react';
 
-  const handleClick = (e) => {
-    setOpen((prev) => !prev);
-    setAnchorEl(e.currentTarget);
-  };
+const CustomModal = ({ trigger, children }) => {
+    const [isOpen, setIsOpen] = useState(false);
 
-  const handleClose = () => {
-    setOpen(false);
-    setAnchorEl(null);
-  };
+    const openModal = () => setIsOpen(true);
+    const closeModal = () => setIsOpen(false);
 
-  return (
-    <>
-      {trigger(handleClick)}
-      <Popper open={open} anchorEl={anchorEl} transition>
-        {({ TransitionProps }) => (
-          <Fade {...TransitionProps} timeout={350}>
-            <Box sx={{ border: 1, p: 1, bgcolor: "background.paper" }}>
-              {children(handleClose)}
-            </Box>
-          </Fade>
-        )}
-      </Popper>
-    </>
-  );
+    return (
+        <>
+            {trigger(openModal)} 
+            {isOpen && (
+                <div className="modal">
+                    <div className="modal-content">
+                        <span className="close-btn" onClick={closeModal} >&times;</span> 
+                        {children(closeModal)} 
+                    </div>
+                </div>
+            )}
+        </>
+    );
 };
 
-export default ModalPopper;
+export default CustomModal;

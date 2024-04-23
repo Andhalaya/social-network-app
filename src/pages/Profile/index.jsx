@@ -4,22 +4,21 @@ import ProfileBox from "../../widgets/ProfileBox";
 import FriendsBox from "../../widgets/FriendsBox";
 import Post from "../../components/Post";
 import ProjectsBox from "../../widgets/ProjectsBox";
-import ModeEditIcon from "@mui/icons-material/ModeEdit";
-import ModalPopper from '../../components/Modal';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { API_DOMAIN } from "../../utils/api-domain";
 import axios from "axios";
 import { useAuth } from "../../context/AuthProvider";
 import "./Profile.css";
 import { Divider } from "@mui/material";
-import SaveIcon from '@mui/icons-material/Save';
+import CustomModal from "../../components/Modal";
+
 
 function Profile() {
     const { theme } = useTheme();
     const { token, user } = useAuth();
     const [posts, setPosts] = useState([]);
-    const [backgroundImage, setBackgroundImage] = useState("src/assets/background1.jpeg");
-    const [isEditing, setIsEditing] = useState(false);
+    const [backgroundImage, setBackgroundImage] = useState(user.profileCover);
+    const [isEditingCover, setIsEditingCover] = useState(false);
     const backgroundOptions = [
         "src/assets/background1.jpeg",
         "src/assets/background2.jpg"
@@ -52,12 +51,10 @@ function Profile() {
     const handleSaveBackground = async (background) => {
         try {
             
-            const res = await axios.patch(`${API_DOMAIN}/${user.id}/updateCover`, { profileCover: background }, {
+            await axios.patch(`${API_DOMAIN}/users/${user._id}/updateCover`, { profileCover: background }, {
               headers: { Authorization: `Bearer ${token}` },
             });
             setBackgroundImage(background);
-            setIsEditing(false); 
-            console.log(res)
           } catch (error) {
             console.error("Error updating background:", error);
           }
@@ -70,31 +67,36 @@ function Profile() {
             <div className={`profile ${theme}`}>
                 <div className="background" style={{ backgroundImage: `url(${backgroundImage})` }}>
                     <div className="editBack">
-                        <ModalPopper
-                            trigger={(handleClick) => (
-                                <button aria-describedby="transition-popper" type="button" onClick={handleClick}>
-                                    {isEditing ? <SaveIcon onClick={handleSaveBackground} /> : <ModeEditIcon />}
-                                </button>
+                    <CustomModal
+                            trigger={(openModal) => (
+                                !isEditingCover && (
+                                    <button className="editCover-btn" type="button" onClick={openModal}>
+                                        <p>change cover</p>
+                                    </button>
+                                )
                             )}
                         >
-                            {(handleClose) => (
-                                <div className="background-options">
-                                    <button onClick={handleClose}>X</button>
-                                    {backgroundOptions.map((background, index) => (
-                                        <div className="backgroundImg-container" key={index}>
-                                            <img
-                                                src={background}
-                                                alt={`Background ${index + 1}`}
-                                                onClick={() => {
-                                                    handleClose(); 
-                                                    handleSaveBackground(background);
-                                                }}
-                                            />
-                                        </div>
-                                    ))}
-                                </div>
+                            {(closeModal) => (
+                                <>
+                                    <div className="background-options">
+                                        {backgroundOptions.map((background, index) => (
+                                            <div className="backgroundImg-container" key={index}>
+                                                <img
+                                                    src={background}
+                                                    alt={`Background ${index + 1}`}
+                                                    onClick={() => {
+                                                        closeModal();
+                                                        setIsEditingCover(true);
+                                                        handleSaveBackground(background);
+                                                    }}
+                                                    style={{ maxWidth: '200px' }}
+                                                />
+                                            </div>
+                                        ))}
+                                    </div>
+                                </>
                             )}
-                        </ModalPopper>
+                        </CustomModal>
                     </div>
                 </div>
                 <div className="profile-container">

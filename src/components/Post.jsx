@@ -129,7 +129,7 @@ function Post({ post, updatePostLikes }) {
                     </div>
                     <div onClick={() => setShowComments(!showComments)} className="inline-left gap">
                         <p>{comments.length}</p>
-                        <ChatBubbleOutlineRoundedIcon className={`icon ${theme}`} style={{ width: '20px' }} />
+                        <ChatBubbleOutlineRoundedIcon className={`icon ${theme}`} style={{ width: '20px', cursor:'pointer' }} />
                     </div>
                 </div>
             </div>
@@ -165,7 +165,6 @@ function Post({ post, updatePostLikes }) {
                         formats={formats}
                         value={comment}
                         onChange={(value) => setComment(value)}
-                        components={{ Emoji }}
                     />
                     <div style={{width:'100%', display:'flex', justifyContent:'right', paddingRight:'20px'}}>
                      <Button variant="contained" color="primary" onClick={handleComment}>
