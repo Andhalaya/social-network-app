@@ -26,24 +26,27 @@ function ProjectsBox() {
         fetchProjects();
     }, []);
     return (
-        <AnimatedBox className={`projects-box `}>
-            <h4>MY PROJECTS</h4>
-            <Divider />
-            <div className="project-container">
-                {projects.map(project => (
-                    <div className="project" key={project._id}>
-                        <h5>{project.title}</h5>
-                        
-                          <img src={`${API_DOMAIN}/${project.image}`} alt="project-img" className="project-img"/>  
-                        
-                        
-                        <button className="share-btn">
-                            <Link to={`/projects/${project._id}`} style={{ color: 'white' }}>view project</Link>
-                        </button>
-                    </div>
-                ))}
-            </div>
-        </AnimatedBox>
+        <div className={`projects-box `}>
+            <AnimatedBox>
+                <h4>MY PROJECTS</h4>
+                <Divider />
+                <div className="project-container">
+                    {projects.map(project => (
+                        <div className="project" key={project._id}>
+                            <h5>{project.title}</h5>
+
+                            <img src={`${API_DOMAIN}/${project.image}`} alt="project-img" className="project-img" />
+
+
+                            <button className="share-btn">
+                                <Link to={`/projects/${project._id}`} style={{ color: 'white' }}>view project</Link>
+                            </button>
+                        </div>
+                    ))}
+                </div>
+            </AnimatedBox>
+        </div>
+
     )
 }
 

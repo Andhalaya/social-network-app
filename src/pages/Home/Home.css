@@ -12,6 +12,36 @@
     background: radial-gradient(circle, #3f5efb 50%, #291a3b 90%);
     margin-top: 60px;
   }
+
+  .loadingBox1{
+    width: 330px;
+    height: 480px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+    font-weight: 600;
+  }
+
+  .loadingBox2{
+    width: 950px;
+    height: 1000px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+    font-weight: 600;
+  }
+
+  .loadingBox3{
+    width: 420px;
+    height: 480px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+    font-weight: 600;
+  }
   
   /* -------USER BOX --------*/
   

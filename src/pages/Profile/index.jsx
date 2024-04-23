@@ -1,20 +1,20 @@
 import Header from "../../components/Header";
 import { useTheme } from "../../context/theme";
-import ProfileBox from "../../widgets/ProfileBox";
-import FriendsBox from "../../widgets/FriendsBox";
-import Post from "../../components/Post";
-import ProjectsBox from "../../widgets/ProjectsBox";
 import { useState, useEffect, Suspense, lazy } from "react";
 import { API_DOMAIN } from "../../utils/api-domain";
 import axios from "axios";
 import { useAuth } from "../../context/AuthProvider";
 import "./Profile.css";
 import { Divider } from "@mui/material";
-import CustomModal from "../../components/Modal";
-import { motion } from "framer-motion";
 import AnimatedBox from "../../components/Box";
+import CustomModal from "../../components/Modal";
+import SpinningIcon from "../../components/SpinningIcon";
 
-const CustomModal = lazy(() => import('../../components/Modal'));
+const ProfileBox = lazy(() => import("../../widgets/ProfileBox"));
+const Post = lazy(() => import("../../components/Post"));
+const FriendsBox = lazy(() => import("../../widgets/FriendsBox"));
+const ProjectsBox = lazy(() => import("../../widgets/ProjectsBox"))
+const CoverOptions = lazy(() => import("./CoverOptions"));
 
 function Profile() {
     const { theme } = useTheme();
@@ -22,14 +22,6 @@ function Profile() {
     const [posts, setPosts] = useState([]);
     const [backgroundImage, setBackgroundImage] = useState(user.profileCover);
     const [isEditingCover, setIsEditingCover] = useState(false);
-    const backgroundOptions = [
-        "src/assets/background1.jpeg",
-        "src/assets/background2.jpg",
-        "src/assets/background3.jpg",
-        "src/assets/background4.jpg",
-        "src/assets/background5.jpg",
-        "src/assets/background6.jpg",
-    ];
 
     useEffect(() => {
         fetchPosts();
@@ -70,78 +62,58 @@ function Profile() {
             <Header />
             <div className={`profile ${theme}`}>
                 <div className="background" style={{ backgroundImage: `url(${backgroundImage})`, textAlign: 'right' }}>
-                    <Suspense>
-
-                    
-                    <CustomModal
-                        trigger={(openModal) => (
-                            !isEditingCover && (
-                                <button className="editCover-btn" type="button" onClick={() => {
-                                    openModal();
-                                    setIsEditingCover(true);
-                                }}>
-                                    <p>change cover</p>
-                                </button>
-                            )
-                        )}
-                    >
-                        {(closeModal) => (
-                            <div className="editBack">
-                                <div style={{ display: 'flex', justifyContent: 'right' }}>
-                                    <button
-                                        className="close-btn"
-                                        onClick={() => {
-                                            closeModal();
-                                            setIsEditingCover(false);
-                                        }}
-                                    >
-                                        X
-                                    </button>
-                                </div>
-                                <div className="background-options">
-                                    {backgroundOptions.map((background, index) => (
-                                        <motion.div className="backgroundImg-container" key={index}>
-                                            <img
-                                                src={background}
-                                                alt={`Background ${index + 1}`}
-                                                onClick={() => {
-                                                    closeModal();
-                                                    setIsEditingCover(false);
-                                                    handleSaveBackground(background);
-                                                }}
-                                                style={{ maxWidth: '200px' }}
-                                            />
-                                        </motion.div>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
+                    <CustomModal trigger={(openModal) => (
+                        !isEditingCover && (
+                            <button className="editCover-btn" type="button" onClick={() => {
+                                openModal();
+                                setIsEditingCover(true);
+                            }}>
+                                <p>change cover</p>
+                            </button>
+                        )
+                    )}>
+                        <Suspense fallback={<div>Loading...</div>}>
+                            <CoverOptions
+                                closeModal={closeModal}
+                                setIsEditingCover={setIsEditingCover}
+                                handleSaveBackground={handleSaveBackground}
+                            />
+                        </Suspense>
                     </CustomModal>
-                    </Suspense>
                 </div>
                 <div className="profile-container">
                     <div className="info-container">
                         <div className="user-img">
                             <img src={`${API_DOMAIN}/${user.profilePicture}`} alt="name" />
                         </div>
-                        <ProfileBox />
-                        <FriendsBox type="profile" />
+                        <Suspense fallback={<div className="loadingBox1 box">Loading...<SpinningIcon /></div>}>
+                            <ProfileBox />
+                        </Suspense>
+                        <Suspense fallback={<div className="loadingBox1 box">Loading...<SpinningIcon /></div>}>
+                            <FriendsBox type="profile" />
+                        </Suspense>
                     </div>
                     <div className="side-container">
-                        <AnimatedBox className='box1'>
-                            <h4>MY POSTS</h4>
-                            <Divider />
-                            <div style={{ display: 'flex', flexDirection: 'column-reverse' }}>
-                                {posts.map((post) => (
-                                    <Post key={post._id} post={post} updatePostLikes={updatePostLikes} />
-                                ))}
-                            </div>
-                        </AnimatedBox>
-                        <ProjectsBox />
+                        <div className='box1'>
+                            <AnimatedBox >
+                                <h4>MY POSTS</h4>
+                                <Divider />
+                                <div style={{ display: 'flex', flexDirection: 'column-reverse' }}>
+                                    {posts.map((post) => (
+                                        <Suspense fallback={<div>Loading...<SpinningIcon /></div>}>
+                                            <Post key={post._id} post={post} updatePostLikes={updatePostLikes} />
+                                        </Suspense>
+                                    ))}
+                                </div>
+                            </AnimatedBox>
+                        </div>
+                        <Suspense fallback={<div className="loadingBox3">Loading...<SpinningIcon /></div>}>
+                            <ProjectsBox />
+                        </Suspense>
                     </div>
                 </div>
             </div>
-    
+
         </>
     );
 }
