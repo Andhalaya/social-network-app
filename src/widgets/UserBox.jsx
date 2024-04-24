@@ -17,8 +17,8 @@ function UserBox() {
         <div className="user">
             <AnimatedBox >
                 <div className="inline-left gap">
-                    <div>
-                        <img src={`${API_DOMAIN}/public/${user.profilePicture}`} alt="name" style={{ borderRadius: 40, width: "70px" }} />
+                    <div style={{borderRadius:'20px', }}>
+                    <img src={`${API_DOMAIN}/public/${user.profilePicture ? user.profilePicture : 'uploads/default-profile-picture.jpg'}`} alt="name" style={{borderRadius:'40px', width:'70px'}} />
                     </div>
                     <div >
                         <h4>{`@${user.userName}`}</h4>

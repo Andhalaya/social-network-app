@@ -64,7 +64,7 @@ function Profile() {
         <>
             <Header />
             <div className={`profile ${theme}`}>
-                <div className="background" style={{ backgroundImage: `url(${API_DOMAIN}${backgroundImage})`, textAlign: 'right' }}>
+                <div className="background" style={{ backgroundImage: `url(${API_DOMAIN}${backgroundImage ? backgroundImage : '/public/backgrounds/background5.jpg'})`, textAlign: 'right' }}>
                     <CustomModal
                         trigger={(openModal) => (
                             !isEditingCover && (
@@ -90,7 +90,7 @@ function Profile() {
                 <div className="profile-container">
                     <div className="info-container">
                         <div className="user-img">
-                            <img src={`${API_DOMAIN}/public/${user.profilePicture}`} alt="name" />
+                        <img src={`${API_DOMAIN}/public/${user.profilePicture ? user.profilePicture : 'uploads/default-profile-picture.jpg'}`} alt="name" />
                         </div>
                         <Suspense fallback={<div className="loadingBox1 box">Loading...<SpinningIcon /></div>}>
                             <ProfileBox />
