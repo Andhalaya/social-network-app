@@ -1,3 +1,3 @@
 
 export const API_DOMAIN =
-  "http://localhost:8080";
+  "https://app-server-dev-pdet.2.ie-1.fl0.io";
