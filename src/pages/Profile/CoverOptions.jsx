@@ -14,7 +14,7 @@ const CoverOptions = ({ closeModal, setIsEditingCover, handleSaveBackground }) =
     const fetchBackgroundOptions = async () => {
         try {
             
-            const response = await axios.get("http://localhost:8080/covers");
+            const response = await axios.get(`${API_DOMAIN}/covers`);
             console.log(response.data)
             setBackgroundOptions(response.data);
         } catch (error) {
