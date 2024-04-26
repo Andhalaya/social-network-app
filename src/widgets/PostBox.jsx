@@ -190,7 +190,7 @@ function PostBox({ fetchPosts }) {
                                     <input {...getInputProps()} />
                                     {!image ? (
                                         <div className="dropzone">
-                                           <Icons.FiUpload />
+                                           <Icons.FiUpload className={`icon ${theme}`}/>
                                             <p>Add Image Here</p> 
                                         </div>
                                         
@@ -200,7 +200,7 @@ function PostBox({ fetchPosts }) {
                                             <div className="inline-left">
                                                 <p>{image.name}</p>
                                                 <IconButton onClick={() => { setImage(null); setImageURL(null); }}>
-                                                    <Icons.DeleteOutlined />
+                                                    <Icons.DeleteOutlined className={`icon ${theme}`}/>
                                                 </IconButton>
                                             </div>
                                         </div>

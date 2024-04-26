@@ -10,6 +10,9 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { DeleteOutlined } from "@mui/icons-material";
 import { IoPricetagsOutline } from "react-icons/io5";
 import { FiUpload } from "react-icons/fi";
+import { GoThumbsup } from "react-icons/go";
+import { FaThumbsUp } from "react-icons/fa6";
+import { BiCommentDetail } from "react-icons/bi";
 
 
 export {
@@ -24,5 +27,8 @@ export {
     KeyboardArrowDownIcon,
     DeleteOutlined,
     IoPricetagsOutline,
-    FiUpload
+    FiUpload,
+    GoThumbsup,
+    BiCommentDetail,
+    FaThumbsUp
   }

@@ -42,31 +42,32 @@ function FeedBox() {
         setPosts(posts.map(post => post._id === postId ? { ...post, likes: updatedLikes } : post));
     };
 
+    const filters = ['Friends', 'All users', 'Most recent', 'Oldest']
+
     return (
         <div className="feed">
             <PostBox fetchPosts={fetchPosts} />
-            <div style={{display:'flex', justifyContent:'space-between', padding:'35px 30px 5px 30px'}}>
-                    <div className="inline-left gap">
-                        <p className="white">Friends</p>
-                        <p className="white">All users</p>
-                        <p className="white">Most recent</p>
-                        <p className="white">Oldest</p>
-                    </div>
+            <div className="filters">
+                <div className="inline-left" style={{gap:'30px'}}>
+                    {filters.map(filter => (
+                        <p className={`tag ${theme}`}>{filter}</p>
+                    ))}
+                </div>
                 <div className="">
                     {/* <input type="text" placeholder="search post" value={searchQuery} onChange={handleSearchChange} /> */}
                     <SearchIcon className={`icon ${theme}`} style={{ width: '20px' }} />
                 </div>
 
             </div>
-            
-                <div style={{ display: 'flex', gap:'20px', flexDirection: 'column-reverse' }}>
-                    {filteredPosts.map(post => (
-                        <AnimatedBox >
+
+            <div className="posts">
+                {filteredPosts.map(post => (
+                    <AnimatedBox >
                         <Post key={post._id} post={post} updatePostLikes={updatePostLikes} />
-                        </AnimatedBox>
-                    ))}
-                </div>
-            
+                    </AnimatedBox>
+                ))}
+            </div>
+
         </div>
     )
 }

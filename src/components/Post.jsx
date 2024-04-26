@@ -8,6 +8,7 @@ import SyntaxHighlighter from 'react-syntax-highlighter';
 import { anOldHope } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { useState, useEffect } from "react";
 import axios from 'axios'
+import * as Icons from "../utils/Icons";
 import { useAuth } from "../context/AuthProvider";
 import { API_DOMAIN } from "../utils/api-domain";
 import ReactQuill from 'react-quill';
@@ -90,7 +91,7 @@ function Post({ post, updatePostLikes }) {
                         <h6 className="grey">{post.user.occupation}</h6>
                     </div>
                 </div>
-                <p>{calculateTimeAgo(post.createdAt)}</p>
+                <p className={`typography2 ${theme}`}>{calculateTimeAgo(post.createdAt)}</p>
             </div>
             <div style={{ marginLeft: '50px', marginRight:'40px' }}>
                 <div className="column gap">
@@ -125,12 +126,12 @@ function Post({ post, updatePostLikes }) {
                         <div className="inline-left gap">
                             <p>{post.likes ? post.likes.length : 0}</p>
                             <div style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }} onClick={handleLike}>
-                                {liked ? <ThumbUpAltRoundedIcon className={`icon ${theme}`} style={{ width: '20px', color: '#008cff' }} /> : <ThumbUpAltRoundedIcon className={`icon ${theme}`} style={{ width: '20px' }} />}
+                                {liked ? <Icons.GoThumbsup className={`icon ${theme}`} style={{ width: '20px', color: '#008cff' }} /> : <ThumbUpAltRoundedIcon className={`icon ${theme}`} style={{ width: '20px' }} />}
                             </div>
                         </div>
                         <div onClick={() => setShowComments(!showComments)} className="inline-left gap">
                             <p>{comments.length}</p>
-                            <ChatBubbleOutlineRoundedIcon className={`icon ${theme}`} style={{ width: '20px', cursor: 'pointer' }} />
+                            <Icons.BiCommentDetail className={`icon ${theme}`} />
                         </div>
                     </div>
                 </div>
