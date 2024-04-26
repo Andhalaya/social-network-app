@@ -1,9 +1,11 @@
 import { useState } from "react";
 import axios from "axios";
 import Alert from '@mui/material/Alert';
+import { Divider } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthProvider";
 import {API_DOMAIN} from "../../utils/api-domain" 
+import { CoPresentOutlined } from "@mui/icons-material";
 
 const initialForm = {
     fullName: "",
@@ -20,6 +22,7 @@ function Form() {
     const [invalidCredentials, setInvalidCredentials] = useState(false);
     const navigation = useNavigate();
     const { login } = useAuth(); 
+    
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({
@@ -65,6 +68,23 @@ function Form() {
         setErrors();
         setRegistrationSuccess(false);
     };
+ 
+    const guestCredentials = {
+        username: import.meta.env.VITE_GUEST_EMAIL,
+        password: import.meta.env.VITE_GUEST_PASSWORD
+    };
+
+    const handleLoginAsGuest = async() => {
+        try{
+            const res = await axios.post(`${API_DOMAIN}/auth/login`, guestCredentials);
+            localStorage.setItem('token', res.data.token)
+            login(res.data.token); 
+            navigation("/home");
+            
+        }catch(error){
+            setInvalidCredentials(true)
+        }
+    }
 
     return (
         <>
@@ -121,6 +141,8 @@ function Form() {
                 <button type="submit">
                     {pageType === "login" ? "Login" : "Register"}
                 </button>
+                {pageType=== "login" && 
+                    (<button onClick={handleLoginAsGuest}>Sign in as guest user</button>) }
                 <p onClick={pageType === "login" ? handleRegisterClick : handleLoginClick}>
                     {pageType === "login" ? (
                         <>
@@ -132,6 +154,7 @@ function Form() {
                         </>
                     )}
                 </p>
+                
             </form>
         </>
     )

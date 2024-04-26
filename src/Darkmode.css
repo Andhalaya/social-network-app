@@ -17,7 +17,7 @@
   
   .switchButton.dark .circle {
     left: 50px;
-    background-color: #bebebe;
+    background-color: hsla(0, 0%, 75%, 0.364);
     transition: left 0.5s ease;
   }
   
@@ -27,9 +27,9 @@
   
   }
 
-  .box.dark p{
-    color: hsla(0, 0%, 100%, 0.353);
-    font-family: 'Inder', sans-serif;
+  .typography1.dark{
+    color: #ffffff37;
+    font-weight: 300;
   }
   
   .icon.dark {

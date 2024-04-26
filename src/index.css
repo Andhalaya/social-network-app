@@ -15,7 +15,15 @@ div,h1,h2,h3,h4,h5,h6,p{
 
 /* --------GLOBAL CLASSES----- */
 
-.typography-1{
+.typography1{
+  font-family: 'Roboto mono', sans-serif;
+  color: rgba(0, 0, 0, 0.589);
+  font-size: 12px;
+}
+
+.typography2{
+  font-family: 'Inder', sans-serif;
+  color: rgba(0, 0, 0, 0.589);
   
 }
 

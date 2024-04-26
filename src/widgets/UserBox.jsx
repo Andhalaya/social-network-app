@@ -16,24 +16,24 @@ function UserBox() {
                     </div>
                     <div style={{ textAlign: 'center' }}>
                         <h4 className="">{`${user.fullName}`}</h4>
-                        <p className="">@{user.userName}</p>
+                        <p className={`typography1 ${theme}`}>@{user.userName}</p>
                     </div>
 
                 </div>
                 <div className="inline-left">
                     <div className="numbers">
                         <h2 className=" ">10</h2>
-                        <p className="">followers</p>
+                        <p className={`typography1 ${theme}`}>followers</p>
                     </div>
                     <div className="" style={{ fontSize: '25px' }}>|</div>
                     <div className="numbers">
                         <h2 className="">6</h2>
-                        <p className="">following</p>
+                        <p className={`typography1 ${theme}`}>following</p>
                     </div>
                     <div className="grey" style={{ fontSize: '25px' }}>|</div>
                     <div className="numbers">
                         <h2 className="">4</h2>
-                        <p className="">posts</p>
+                        <p className={`typography1 ${theme}`}>posts</p>
                     </div>
                 </div>
                 <div className="margin-bottom margin-top">
@@ -60,7 +60,7 @@ function UserBox() {
                         <h4 className="">LINKS</h4>
                     </div>
                     <div className="info-projects">
-                        <p>github.com/happylion175</p>
+                        <p className="grey">github.com/happylion175</p>
                     </div>
                 </div>
                 <div className="margin-bottom margin-top">

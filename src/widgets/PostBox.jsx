@@ -16,7 +16,6 @@ import 'react-quill/dist/quill.snow.css';
 import AnimatedBox from "../components/Box";
 
 function PostBox({ fetchPosts }) {
-    const { theme } = useTheme();
     const { user, token } = useAuth();
     const [image, setImage] = useState(null);
     const [imageURL, setImageURL] = useState(null);
@@ -114,7 +113,6 @@ function PostBox({ fetchPosts }) {
         <AnimatedBox >
             <div className="space-between block" style={{ marginBottom: '10px' }}>
                 <div className="inline-left" style={{ gap: '20px' }}>
-                    <img src={`${API_DOMAIN}/public/${user.profilePicture ? user.profilePicture : 'uploads/default-profile-picture.jpg'}`} alt={user.userName} className="post-img" />
                     <div className="search-box">
                         <input
                             type="text"
@@ -157,8 +155,7 @@ function PostBox({ fetchPosts }) {
                     message="Please add some content before sharing"
                 />
             </div>
-            <Divider />
-            <div className="inline-left" style={{ gap: '20px', marginTop: '10px' }}>
+            <div className="inline-left" style={{ gap: '20px', marginTop: '10px', marginLeft:'10px' }}>
                 <div className="post-elements" onClick={() => handleToggleField("image")}>
                     <AddPhotoAlternateOutlinedIcon className="icon1" sx={{fontSize:'30px'}}/>
                     <p>Add image</p>
