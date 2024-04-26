@@ -1,22 +1,18 @@
-import React, { useState} from "react";
-import axios from "axios";
+import React, { useState } from "react";
 import { useTheme } from "../context/theme";
-import { Divider, IconButton, Snackbar, Menu, MenuItem } from "@mui/material";
-import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternateOutlined';
-import FormatAlignLeftOutlinedIcon from '@mui/icons-material/FormatAlignLeftOutlined';
-import CodeRoundedIcon from '@mui/icons-material/CodeRounded';
-import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { DeleteOutlined } from "@mui/icons-material";
+import axios from "axios";
+import { IconButton, Snackbar, Menu, MenuItem } from "@mui/material";
 import Dropzone from "react-dropzone";
 import { useAuth } from '../context/AuthProvider';
 import { API_DOMAIN } from "../utils/api-domain";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import AnimatedBox from "../components/Box";
+import * as Icons from "../utils/Icons";
 
 function PostBox({ fetchPosts }) {
     const { user, token } = useAuth();
+    const { theme } = useTheme();
     const [image, setImage] = useState(null);
     const [imageURL, setImageURL] = useState(null);
     const [activeFields, setActiveFields] = useState([]);
@@ -44,7 +40,7 @@ function PostBox({ fetchPosts }) {
     };
 
     const handleFormSubmit = async (url) => {
-        
+
         if (!formData.title && !formData.description && !formData.codeSnippet && !formData.link && !image) {
             setOpenSnackbar(true);
         } else {
@@ -56,7 +52,7 @@ function PostBox({ fetchPosts }) {
                 formDataToSend.append("codeSnippet", formData.codeSnippet);
                 formDataToSend.append("link", formData.link);
                 formDataToSend.append("image", image);
-    
+
                 await axios.post(url, formDataToSend, {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -100,7 +96,7 @@ function PostBox({ fetchPosts }) {
             [{ 'list': 'ordered' }, { 'list': 'bullet' }],
             [{ 'align': [] }],
             [{ 'color': [] }, { 'background': [] }],
-            ['link', 'image', 'code-block'], 
+            ['link', 'image', 'code-block'],
             ['clean']
         ]
     };
@@ -120,14 +116,14 @@ function PostBox({ fetchPosts }) {
                             value={formData.title}
                             onChange={(e) => handleChange("title", e.target.value)}
                             className="roboto-font"
-                            
+
                         />
                     </div>
                 </div>
                 <div>
-                    <button className="share-btn" onClick={(e) => {setAnchorEl(e.currentTarget)}}>
+                    <button className="share-btn" onClick={(e) => { setAnchorEl(e.currentTarget) }}>
                         share
-                        <KeyboardArrowDownIcon /> 
+                        <Icons.KeyboardArrowDownIcon />
                     </button>
                     <Menu
                         anchorEl={anchorEl}
@@ -138,7 +134,7 @@ function PostBox({ fetchPosts }) {
                         <MenuItem onClick={() => { handleFormSubmit(`${API_DOMAIN}/projects`); handleMenuClose(); }}>Share as Project</MenuItem>
                     </Menu>
                 </div>
-                <Snackbar 
+                <Snackbar
                     open={openSnackbar}
                     autoHideDuration={3000}
                     onClose={(e) => {
@@ -155,21 +151,21 @@ function PostBox({ fetchPosts }) {
                     message="Please add some content before sharing"
                 />
             </div>
-            <div className="inline-left" style={{ gap: '20px', marginTop: '10px', marginLeft:'10px' }}>
+            <div className="inline-left" style={{ gap: '20px', marginTop: '10px', marginLeft: '15px' }}>
                 <div className="post-elements" onClick={() => handleToggleField("image")}>
-                    <AddPhotoAlternateOutlinedIcon className="icon1" sx={{fontSize:'30px'}}/>
+                    <div><Icons.IoImageOutline className={`icon ${theme}`} style={{fontSize:'30px'}} /></div>
                     <p>Add image</p>
                 </div>
-                <div className="post-elements medium" onClick={() => handleToggleField("description")}>
-                    <FormatAlignLeftOutlinedIcon sx={{fontSize:'30px'}}/>
+                <div className="post-elements" onClick={() => handleToggleField("description")}>
+                    <div><Icons.FaAlignJustify className={`icon ${theme}`}/></div>
                     <p>Add description</p>
                 </div>
                 <div className="post-elements big" onClick={() => handleToggleField("codeSnippet")}>
-                    <CodeRoundedIcon sx={{fontSize:'30px'}}/>
+                    <div><Icons.BiCodeBlock className={`icon ${theme}`} style={{fontSize:'30px'}}/></div>
                     <p>Add code snippet</p>
                 </div>
                 <div className="post-elements" onClick={() => handleToggleField("link")}>
-                    <LinkOutlinedIcon sx={{fontSize:'30px'}}/>
+                    <div><Icons.FaLink className={`icon ${theme}`} /></div>
                     <p>Add link</p>
                 </div>
             </div>
@@ -184,7 +180,7 @@ function PostBox({ fetchPosts }) {
                     />
                 )}
                 {isFieldActive("image") && (
-                    <div style={{display:'flex', justifyContent:'center'}}>
+                    <div style={{ display: 'flex', justifyContent: 'center' }}>
                         <Dropzone
                             acceptedFiles=".jpg,.jpeg,.png"
                             multiple={false}
@@ -197,11 +193,11 @@ function PostBox({ fetchPosts }) {
                                         <p className="dropzone">Add Image Here</p>
                                     ) : (
                                         <div className="column">
-                                            {imageURL && <img src={imageURL} alt="Preview"  />}
+                                            {imageURL && <img src={imageURL} alt="Preview" />}
                                             <div className="inline-left">
                                                 <p>{image.name}</p>
                                                 <IconButton onClick={() => { setImage(null); setImageURL(null); }}>
-                                                    <DeleteOutlined />
+                                                    <Icons.DeleteOutlined />
                                                 </IconButton>
                                             </div>
                                         </div>

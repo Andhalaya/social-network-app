@@ -103,12 +103,14 @@ input:focus {
 }
 
 .icon {
-  color: #ffffff;
+  color: #000000a1;
   cursor: pointer;
+  font-size: 25px;
+  display: flex;
 }
 
 .icon:hover{
-  color: #FE754D; 
+  color: #1663f1; 
 }
 
 .version2 {

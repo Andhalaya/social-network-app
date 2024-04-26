@@ -1,6 +1,7 @@
 import { useTheme } from "../context/theme";
 import { useAuth } from '../context/AuthProvider';
 import { API_DOMAIN } from "../utils/api-domain";
+import * as Icons from "../utils/Icons";
 import AnimatedBox from "../components/Box";
 
 function UserBox() {
@@ -38,17 +39,17 @@ function UserBox() {
                 </div>
                 <div className="margin-bottom margin-top">
                     <div className="inline-left gap" >
-                        <img src="public\icons\icons8-folder.svg" alt="" width={'30px'} />
+                        <Icons.IoFolderOutline className={`icon ${theme}`} style={{fontSize:'30px'}}/>
                         <h4 className="">LATEST PROJECTS</h4>
                     </div>
                     <div className="info-projects">
                         <div className="space-between" >
-                            <p>Super project</p>
-                            <img src="public\icons\open.svg" alt="" width={'20px'}/>
+                            <p className={`typography1 ${theme}`}>Super project</p>
+                            <Icons.MdOpenInNew className={`icon ${theme}`} style={{fontSize:'20px'}}/>
                         </div>
                         <div className="space-between">
-                            <p>Second Super project</p>
-                            <img src="public\icons\open.svg" alt="" width={'20px'}/>
+                            <p className={`typography1 ${theme}`}>Second Super project</p>
+                            <Icons.MdOpenInNew className={`icon ${theme}`} style={{fontSize:'20px'}}/>
 
                         </div>
                     </div>
@@ -56,20 +57,20 @@ function UserBox() {
                 </div>
                 <div className="margin-bottom margin-top">
                     <div className="inline-left gap" >
-                        <img src="public\icons\link.png" alt="" width={'25px'} />
+                    <Icons.FaGithub className={`icon ${theme}`} style={{fontSize:'30px'}}/>
                         <h4 className="">LINKS</h4>
                     </div>
                     <div className="info-projects">
-                        <p className="grey">github.com/happylion175</p>
+                        <p className={`typography1 ${theme}`}>github.com/happylion175</p>
                     </div>
                 </div>
                 <div className="margin-bottom margin-top">
                     <div className="inline-left gap" >
-                        <img src="public\icons\about.png" alt="" width={'25px'} />
+                    <Icons.MdInfoOutline className={`icon ${theme}`} style={{fontSize:'32px'}}/>
                         <h4 className="">ABOUT ME</h4>
                     </div>
                     <div className="info-projects">
-                        <p>slkdjf flskdf fdfd df fdfd skds sdlfkjdfls fsd sldkf sfkd sdjhfksjf sdfksjdfh</p>
+                        <p className={`typography1 ${theme}`}>slkdjf flskdf fdfd df fdfd skds sdlfkjdfls fsd sldkf sfkd sdjhfksjf sdfksjdfh</p>
                     </div>
                 </div>
             </AnimatedBox>
