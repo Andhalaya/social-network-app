@@ -45,12 +45,12 @@ function FeedBox() {
     return (
         <div className="feed">
             <PostBox fetchPosts={fetchPosts} />
-            <div style={{display:'flex', justifyContent:'space-between', padding:'35px 30px 10px 30px'}}>
+            <div style={{display:'flex', justifyContent:'space-between', padding:'35px 30px 5px 30px'}}>
                     <div className="inline-left gap">
-                        <p className="tag">Friends</p>
-                        <p className="tag">All users</p>
-                        <p className="tag">Most recent</p>
-                        <p className="tag">Oldest</p>
+                        <p className="white">Friends</p>
+                        <p className="white">All users</p>
+                        <p className="white">Most recent</p>
+                        <p className="white">Oldest</p>
                     </div>
                 <div className="">
                     {/* <input type="text" placeholder="search post" value={searchQuery} onChange={handleSearchChange} /> */}

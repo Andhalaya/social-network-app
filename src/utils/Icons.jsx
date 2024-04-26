@@ -9,6 +9,7 @@ import { MdOpenInNew } from "react-icons/md";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { DeleteOutlined } from "@mui/icons-material";
 import { IoPricetagsOutline } from "react-icons/io5";
+import { FiUpload } from "react-icons/fi";
 
 
 export {
@@ -22,5 +23,6 @@ export {
     MdOpenInNew,
     KeyboardArrowDownIcon,
     DeleteOutlined,
-    IoPricetagsOutline
+    IoPricetagsOutline,
+    FiUpload
   }

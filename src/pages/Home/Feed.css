@@ -4,7 +4,6 @@
     flex: 50%;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
   }
   
   .post-img{
@@ -42,7 +41,8 @@
   .dropzone {
     width: 500px;
     height: 300px;
-    background-color: #EDEDED;
+    border: 1px solid #a3a3a3;
+    border-radius: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -50,7 +50,7 @@
   
   .dropzone:hover {
     cursor: pointer;
-    border: 1px solid #a3a3a3;
+    background-color: #a3a3a346;
   }
   
   .search-box {

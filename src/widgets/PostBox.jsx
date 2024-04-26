@@ -189,10 +189,14 @@ function PostBox({ fetchPosts }) {
                                 <div {...getRootProps()} >
                                     <input {...getInputProps()} />
                                     {!image ? (
-                                        <p className="dropzone">Add Image Here</p>
+                                        <div className="dropzone">
+                                           <Icons.FiUpload />
+                                            <p>Add Image Here</p> 
+                                        </div>
+                                        
                                     ) : (
                                         <div className="column">
-                                            {imageURL && <img src={imageURL} alt="Preview" />}
+                                            {imageURL && <img src={imageURL} alt="Preview" width='400px' />}
                                             <div className="inline-left">
                                                 <p>{image.name}</p>
                                                 <IconButton onClick={() => { setImage(null); setImageURL(null); }}>
