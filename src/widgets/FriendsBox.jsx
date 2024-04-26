@@ -95,8 +95,8 @@ function FriendsBox({ type }) {
                             <img src={`${API_DOMAIN}/public/${filteredUser.profilePicture}`} alt="name" style={{ borderRadius: 40, width: "40px" }} />
                             <div className="column">
                                 <h4>{`@${filteredUser.userName}`}</h4>
-                                <h6 style={{ fontWeight: '400', fontSize: '12px' }}>{filteredUser.fullName}</h6>
-                                <h6 style={{ fontWeight: '400', fontSize: '12px' }}>{filteredUser.occupation}</h6>
+                                <h6 className="grey">{filteredUser.fullName}</h6>
+                                <h6 className="grey">{filteredUser.occupation}</h6>
                             </div>
                         </div>
                         <button className="follow-btn" onClick={() => toggleFollow(filteredUser)}>

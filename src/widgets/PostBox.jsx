@@ -112,9 +112,9 @@ function PostBox({ fetchPosts }) {
 
     return (
         <AnimatedBox >
-            <div className="space-between" style={{ marginBottom: '10px' }}>
+            <div className="space-between block" style={{ marginBottom: '10px' }}>
                 <div className="inline-left" style={{ gap: '20px' }}>
-                    <img src={`${API_DOMAIN}/public/${user.profilePicture ? user.profilePicture : 'uploads/default-profile-picture.jpg'}`} alt="name" style={{ borderRadius: 40, width: "40px" }} />
+                    <img src={`${API_DOMAIN}/public/${user.profilePicture ? user.profilePicture : 'uploads/default-profile-picture.jpg'}`} alt={user.userName} className="post-img" />
                     <div className="search-box">
                         <input
                             type="text"

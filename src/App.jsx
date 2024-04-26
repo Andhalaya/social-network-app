@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes, Navigate} from 'react-router-dom'
 import './App.css'
+import './Darkmode.css'
 import { ThemeProvider, useTheme } from './context/theme'
 import { AuthProvider } from './context/AuthProvider'
 import ProtectedRoute from './components/ProtectedRoute';

@@ -1,0 +1,49 @@
+/*-------------------- DARK MODE -------------------- */
+.main.dark{
+    background-image: url('/public/peakpx.jpg');
+    background-size: contain;
+  
+  }
+  
+  .logo.dark {
+    background: linear-gradient(to left, #462258, #187ac5);
+  
+  }
+  
+  .moon.dark {
+    background-color: #1e00ff;
+    color: white;
+  }
+  
+  .switchButton.dark .circle {
+    left: 50px;
+    background-color: #bebebe;
+    transition: left 0.5s ease;
+  }
+  
+  .box.dark {
+    background-color: rgba(5, 3, 19, 0.28);
+    color: #c9c9c9;
+  
+  }
+
+  .box.dark p{
+    color: hsla(0, 0%, 100%, 0.353);
+    font-family: 'Inder', sans-serif;
+  }
+  
+  .icon.dark {
+    color: #ffffff;
+  }
+  
+  .header.dark {
+    background-color: #00000052;
+    color: white;
+  
+  }
+  
+  
+  .profile.dark{
+    background-color: #000000;
+  }
+  

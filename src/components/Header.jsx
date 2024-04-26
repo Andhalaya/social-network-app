@@ -6,15 +6,16 @@ import MarkChatUnreadOutlinedIcon from '@mui/icons-material/MarkChatUnreadOutlin
 import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 import LightMode from '@mui/icons-material/LightMode';
 import Brightness2Icon from '@mui/icons-material/Brightness2';
+import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import {useState} from 'react';
 import { useNavigate} from 'react-router'
 import { useAuth } from '../context/AuthProvider';
-import AnimatedBox from './Box';
 
 function Header () {
     
     const {theme, toggleTheme} = useTheme();
     const [anchorEl, setAnchorEl] = useState(null);
+    const [showMenu, setShowMenu] = useState(false);
     const open = Boolean(anchorEl);
     const { logout } = useAuth();
     const navigate = useNavigate();
@@ -27,13 +28,21 @@ function Header () {
         handleClose(); 
     };
 
+    const handleShowMenu = () => {
+        setShowMenu(!showMenu);
+    }
+
     return (
         <div className={`header ${theme}`}>
             <div className={`logo ${theme}`} onClick={() =>{navigate('/home')}}>
                 <img src="logo3.png" alt="" width='45px'/>
                 LazyCoder
             </div>
-            <div className="nav">
+            <div className='menu'>
+               <MenuRoundedIcon sx={{marginRight:'35px'}} onClick={handleShowMenu}/>  
+            </div>
+           
+            <div className={`nav ${showMenu ? 'nav-mobile' : 'hidden'}`}>
                 <IconButton 
                     onClick={(e) => { setAnchorEl(e.currentTarget)}} 
                     aria-controls={open ? 'basic-menu' : undefined}
@@ -70,6 +79,7 @@ function Header () {
                     </IconButton>
                 </div>
             </div>
+
         </div>
     )
 }
