@@ -45,28 +45,28 @@ function FeedBox() {
     return (
         <div className="feed">
             <PostBox fetchPosts={fetchPosts} />
-            <div className="space-between margin-bottom">
+            <div style={{display:'flex', justifyContent:'space-between', padding:'35px 30px 10px 30px'}}>
                     <div className="inline-left gap">
                         <p className="tag">Friends</p>
                         <p className="tag">All users</p>
                         <p className="tag">Most recent</p>
                         <p className="tag">Oldest</p>
                     </div>
-                <div className="search-box">
-                    <input type="text" placeholder="search post" value={searchQuery} onChange={handleSearchChange} />
+                <div className="">
+                    {/* <input type="text" placeholder="search post" value={searchQuery} onChange={handleSearchChange} /> */}
                     <SearchIcon className={`icon ${theme}`} style={{ width: '20px' }} />
                 </div>
 
             </div>
-            <AnimatedBox >
-
-
-                <div style={{ display: 'flex', flexDirection: 'column-reverse' }}>
+            
+                <div style={{ display: 'flex', gap:'20px', flexDirection: 'column-reverse' }}>
                     {filteredPosts.map(post => (
+                        <AnimatedBox >
                         <Post key={post._id} post={post} updatePostLikes={updatePostLikes} />
+                        </AnimatedBox>
                     ))}
                 </div>
-            </AnimatedBox>
+            
         </div>
     )
 }

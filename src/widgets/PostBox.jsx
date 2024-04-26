@@ -115,7 +115,7 @@ function PostBox({ fetchPosts }) {
                             placeholder="Write a thought..."
                             value={formData.title}
                             onChange={(e) => handleChange("title", e.target.value)}
-                            className={`roboto darko ${theme}`}
+                            className="roboto"
                         />
                     </div>
                 </div>
@@ -155,7 +155,7 @@ function PostBox({ fetchPosts }) {
                     <div><Icons.IoImageOutline className={`icon ${theme}`} style={{fontSize:'30px'}} /></div>
                     <p>Add image</p>
                 </div>
-                <div className="post-elements" onClick={() => handleToggleField("description")}>
+                <div className="post-elements medium" onClick={() => handleToggleField("description")}>
                     <div><Icons.FaAlignJustify className={`icon ${theme}`}/></div>
                     <p>Add description</p>
                 </div>
