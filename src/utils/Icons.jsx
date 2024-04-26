@@ -8,6 +8,8 @@ import { MdInfoOutline } from "react-icons/md";
 import { MdOpenInNew } from "react-icons/md";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { DeleteOutlined } from "@mui/icons-material";
+import { IoPricetagsOutline } from "react-icons/io5";
+
 
 export {
     BiCodeBlock,
@@ -19,5 +21,6 @@ export {
     MdInfoOutline,
     MdOpenInNew,
     KeyboardArrowDownIcon,
-    DeleteOutlined
+    DeleteOutlined,
+    IoPricetagsOutline
   }

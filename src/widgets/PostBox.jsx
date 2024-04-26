@@ -107,22 +107,21 @@ function PostBox({ fetchPosts }) {
 
     return (
         <AnimatedBox >
-            <div className="space-between block" style={{ marginBottom: '10px' }}>
-                <div className="inline-left" style={{ gap: '20px' }}>
-                    <div className="search-box">
+            <div className="post-input">
+                <div style={{flex:'70%'}}>
+                    <div className={`search-box ${theme}`}>
                         <input
                             type="text"
                             placeholder="Write a thought..."
                             value={formData.title}
                             onChange={(e) => handleChange("title", e.target.value)}
-                            className="roboto-font"
-
+                            className={`roboto darko ${theme}`}
                         />
                     </div>
                 </div>
-                <div>
-                    <button className="share-btn" onClick={(e) => { setAnchorEl(e.currentTarget) }}>
-                        share
+                <div style={{flex:'30%'}}>
+                    <button className={`share-btn ${theme}`} onClick={(e) => { setAnchorEl(e.currentTarget) }}>
+                        Share
                         <Icons.KeyboardArrowDownIcon />
                     </button>
                     <Menu

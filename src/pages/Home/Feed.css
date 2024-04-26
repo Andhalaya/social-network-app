@@ -1,0 +1,98 @@
+/* -------FEED BOX-------- */
+  
+.feed {
+    flex: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .post-img{
+    width: 40px;
+    border-radius: 30px;
+  }
+
+  .post-input{
+    display: flex;
+    width: 100%;
+    gap: 20px;
+  }
+
+  .share-btn {
+    background-color: #008cff;
+    color: white;
+    width: 100%;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'Roboto mono', sans-serif;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .share-btn:hover{
+    background-color: #3f5efb;
+  }
+  
+  .dropzone {
+    width: 500px;
+    height: 300px;
+    background-color: #EDEDED;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .dropzone:hover {
+    cursor: pointer;
+    border: 1px solid #a3a3a3;
+  }
+  
+  .search-box {
+    background-color: #EDEDED;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    height: 40px;
+    width: 100%;
+  }
+  
+  .search-box input {
+    background-color: transparent;
+    border: none;
+    height: 20px;
+    text-decoration: none;
+    margin-left: 15px;
+  }
+
+  .post-elements {
+    display: flex;
+    transition: width 0.5s;
+    align-items: center;
+    cursor: pointer;
+    gap: 5px;
+    transition: 0.5s;
+    overflow: hidden;
+    width: 30px;
+    white-space: nowrap;
+  }
+
+  .post-elements:hover{
+    width: 130px;
+    color: #008cff;
+  }
+
+  .big:hover{
+    width: 170px;
+  }
+
+  .medium:hover{
+    width: 150px;
+  }
+  

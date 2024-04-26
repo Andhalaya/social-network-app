@@ -2,6 +2,7 @@ import Header from "../../components/Header";
 import { useTheme } from "../../context/theme";
 import { lazy, Suspense } from "react";
 import './Home.css';
+import './Feed.css';
 import SpinningIcon from "../../components/SpinningIcon";
 
 const UserBox = lazy(() => import("../../widgets/UserBox"));

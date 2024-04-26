@@ -16,7 +16,7 @@ function UserBox() {
                         <img src={`${API_DOMAIN}/public/${user.profilePicture ? user.profilePicture : 'uploads/default-profile-picture.jpg'}`} alt="name" style={{ borderRadius: '40px', width: '70px' }} />
                     </div>
                     <div style={{ textAlign: 'center' }}>
-                        <h4 className="">{`${user.fullName}`}</h4>
+                        <h4 className={`typography3 ${theme}`}>{`${user.fullName}`}</h4>
                         <p className={`typography1 ${theme}`}>@{user.userName}</p>
                     </div>
 
@@ -44,11 +44,11 @@ function UserBox() {
                     </div>
                     <div className="info-projects">
                         <div className="space-between" >
-                            <p className={`typography1 ${theme}`}>Super project</p>
+                            <p className={`typography2 ${theme}`}>Super project</p>
                             <Icons.MdOpenInNew className={`icon ${theme}`} style={{fontSize:'20px'}}/>
                         </div>
                         <div className="space-between">
-                            <p className={`typography1 ${theme}`}>Second Super project</p>
+                            <p className={`typography2 ${theme}`}>Second Super project</p>
                             <Icons.MdOpenInNew className={`icon ${theme}`} style={{fontSize:'20px'}}/>
 
                         </div>
@@ -58,10 +58,10 @@ function UserBox() {
                 <div className="margin-bottom margin-top">
                     <div className="inline-left gap" >
                     <Icons.FaGithub className={`icon ${theme}`} style={{fontSize:'30px'}}/>
-                        <h4 className="">LINKS</h4>
+                        <h4 className="">GITHUB</h4>
                     </div>
                     <div className="info-projects">
-                        <p className={`typography1 ${theme}`}>github.com/happylion175</p>
+                        <p className={`typography2 ${theme}`}>github.com/happylion175</p>
                     </div>
                 </div>
                 <div className="margin-bottom margin-top">
@@ -70,7 +70,7 @@ function UserBox() {
                         <h4 className="">ABOUT ME</h4>
                     </div>
                     <div className="info-projects">
-                        <p className={`typography1 ${theme}`}>slkdjf flskdf fdfd df fdfd skds sdlfkjdfls fsd sldkf sfkd sdjhfksjf sdfksjdfh</p>
+                        <p className={`typography2 ${theme}`}>slkdjf flskdf fdfd df fdfd skds sdlfkjdfls fsd sldkf sfkd sdjhfksjf sdfksjdfh</p>
                     </div>
                 </div>
             </AnimatedBox>

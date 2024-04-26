@@ -5,10 +5,8 @@
     background-position: top;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    
-  
-  }
-  
+    color: #ffffff;
+  } 
   .logo.dark {
     background: linear-gradient(to left, #462258, #187ac5);
   
@@ -27,30 +25,47 @@
   
   .box.dark {
     background-color: rgba(5, 3, 19, 0.28);
-    color: #c9c9c9;
   
   }
 
   .typography1.dark{
-    color: #ffffff37;
+    color: #ffffff56;
     font-weight: 300;
+  }
+
+  .typography2.dark{
+    color: #ffffff56;
+    font-family: 'Inder', sans-serif;
+  }
+
+  .typography3.dark{
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    
   }
   
   .icon.dark {
     color: #ffffff;
   }
-  
+
+  .icon.dark:hover{
+    color: #fe754d; 
+  }
   .header.dark {
     background-color: #00000052;
     color: white;
   
   }
   
-  
+  .share-btn.dark{
+    background-color: #fe754d;
+  }
+
+  .search-box.dark{
+    background-color: rgba(255, 255, 255, 0.13);
+  }
+
   .profile.dark{
     background-color: #000000;
   }
   
-  .icon.dark{
-    color: #ffffff;
-  }
