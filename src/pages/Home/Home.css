@@ -8,7 +8,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 3rem;
-    padding: 9rem;
+    padding: 200px;
     background-image: radial-gradient(circle, #3f5efb 50%, #291a3b 90%);
     padding-top: 120px;
   }
@@ -46,7 +46,7 @@
   /* -------USER BOX --------*/
   
   .user{
-    flex: 15%;
+    flex: 10%;
     min-width: 200px;
   }
 
@@ -67,7 +67,7 @@
   
   /*-------- FRIENDS BOX------ */
   .friends {
-    flex: 20%;
+    flex: 10%;
     min-width: 300px;
   }
   

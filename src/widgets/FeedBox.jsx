@@ -1,6 +1,5 @@
 import { useTheme } from "../context/theme";
-import { Divider } from "@mui/material";
-import SearchIcon from '@mui/icons-material/Search';
+import * as Icons from "../utils/Icons";
 import Post from "../components/Post";
 import PostBox from "./PostBox";
 import { useState, useEffect } from "react";
@@ -55,7 +54,7 @@ function FeedBox() {
                 </div>
                 <div className="">
                     {/* <input type="text" placeholder="search post" value={searchQuery} onChange={handleSearchChange} /> */}
-                    <SearchIcon className={`icon ${theme}`} style={{ width: '20px' }} />
+                    <Icons.IoSearch className={`icon white ${theme}`} />
                 </div>
 
             </div>

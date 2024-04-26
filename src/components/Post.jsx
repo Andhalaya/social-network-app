@@ -93,14 +93,12 @@ function Post({ post, updatePostLikes }) {
                 </div>
                 <p className={`typography2 ${theme}`}>{calculateTimeAgo(post.createdAt)}</p>
             </div>
-            <div style={{ marginLeft: '50px', marginRight:'40px' }}>
-                <div className="column gap">
-                    <p>{post.title}</p>
-                    <div dangerouslySetInnerHTML={{ __html: post.description }} />
-                </div>
-
+            <div style={{ marginLeft: '50px', marginRight:'40px', display:'flex', flexDirection:'column' }}>
+                
+                <p className="margin-top margin-bottom">{post.title}</p>
+                <div dangerouslySetInnerHTML={{ __html: post.description }} className="margin-bottom"/>
                 {post.image && (
-                    <img src={`${API_DOMAIN}/public/${post.image}`} alt="" width={'100%'} />
+                    <img src={`${API_DOMAIN}/public/${post.image}`} alt="" width={'100%'} className="margin-bottom"/>
                 )}
 
                 {post.codeSnippet && (
@@ -122,16 +120,16 @@ function Post({ post, updatePostLikes }) {
                             </a>
                         </div>
                     )}
-                    <div className="inline-left gap">
+                    <div className="inline-left gap ">
                         <div className="inline-left gap">
                             <p>{post.likes ? post.likes.length : 0}</p>
                             <div style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }} onClick={handleLike}>
-                                {liked ? <Icons.GoThumbsup className={`icon ${theme}`} style={{ width: '20px', color: '#008cff' }} /> : <ThumbUpAltRoundedIcon className={`icon ${theme}`} style={{ width: '20px' }} />}
+                                {liked ? <Icons.FaThumbsUp className={` thumbsUp ${theme}`} /> : <Icons.GoThumbsup className={`icon ${theme}`} />}
                             </div>
                         </div>
                         <div onClick={() => setShowComments(!showComments)} className="inline-left gap">
                             <p>{comments.length}</p>
-                            <Icons.BiCommentDetail className={`icon ${theme}`} />
+                            <Icons.FaRegComment className={`icon ${theme}`} />
                         </div>
                     </div>
                 </div>
