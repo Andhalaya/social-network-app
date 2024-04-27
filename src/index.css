@@ -2,6 +2,7 @@
 html, body, #root, .App{
   padding: 0;
   margin: 0;
+  height: 100%;
   font-size: 15px;
   font-family: "Inder", sans-serif;
   font-weight: 500;

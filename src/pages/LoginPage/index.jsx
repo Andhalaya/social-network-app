@@ -6,23 +6,23 @@ import './Login.css';
 
 function LoginPage() {
     const navigate = useNavigate();
-    const {isLoggedIn} = useAuth();
+    const { isLoggedIn } = useAuth();
 
     useEffect(() => {
         if (isLoggedIn) {
-        
-          navigate('/home');
+
+            navigate('/home');
         }
-      }, [isLoggedIn, navigate]);
+    }, [isLoggedIn, navigate]);
 
     return (
         <div className="loginPage">
             <div className="container">
-                <h1 style={{ textDecoration: 'line-through' }}>Hello World!</h1>
                 <div className="section">
-                    <div>
+                    <div className="text">
+                        <h1 style={{ textDecoration: 'line-through' }}>Hello World!</h1>
                         <h2 style={{ marginBottom: '50px' }}>Welcome to the <span>LazyCoder</span>,</h2>
-                        <p style={{ lineHeight: '2.3' }}>
+                        <p style={{ lineHeight: '1.6', fontFamily: 'poppins' }}>
                             a social media/platform built by developers for developers.
                             Here you can share, post and learn everything about programming.
                             You can begin by sharing an idea about a project and get feedback from other developers.
@@ -30,8 +30,17 @@ function LoginPage() {
                         </p>
                         <button>START SHARING</button>
                     </div>
+                    <div className="container">
+                    <img src="/sloth-copy.png" className="login-img"/>
+                        <div class="d3-container"> 
+                            <img src="/Black Clay Isometric Apple Devices.png" alt="" class="mac" width={400}/>
+                            <img src="/Camera0003.png" alt="" class="camera" width={300}/>
+                            <img src="/Color_Wheel_with_Dropper0002.png" alt="" class="wheel" width={300}/>
+                            <img src="/Folder0003.png" alt="" class="folder" width={250}/>
+                            <img src="/sloth.png" alt="devImage" class="sloth" width={250}/>
+                            <img src="/Cursor_Small_Vertical0002.png" alt="" class="cursor" width={130}/></div>
+                    </div>
 
-                    <img src="/loginImage.jpg" alt="devImage" width={400} />
 
                 </div>
             </div>
