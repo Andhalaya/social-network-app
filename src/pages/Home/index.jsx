@@ -16,13 +16,13 @@ function Home() {
         <>
             <Header />
             <div className={`main ${theme}`}>
-                <Suspense fallback={<div className="loadingBox1 box">Loading...<SpinningIcon /></div>}>
+                <Suspense fallback={<div className={`loadingBox1 box ${theme}`}>Loading...<SpinningIcon /></div>}>
                     <UserBox />  
                 </Suspense>
-                <Suspense fallback={<div className="loadingBox2 box">Loading...<SpinningIcon /></div>}>
+                <Suspense fallback={<div className={`loadingBox2 box ${theme}`}>Loading...<SpinningIcon /></div>}>
                     <FeedBox />
                 </Suspense>
-                <Suspense fallback={<div className="loadingBox3 box">Loading...<SpinningIcon /></div>}>
+                <Suspense fallback={<div className={`loadingBox3 box ${theme}`}>Loading...<SpinningIcon /></div>}>
                     <FriendsBox type="home" />
                 </Suspense>
             </div>

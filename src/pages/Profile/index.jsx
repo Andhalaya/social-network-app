@@ -92,26 +92,26 @@ function Profile() {
                         <div className="user-img">
                         <img src={`${API_DOMAIN}/public/${user.profilePicture ? user.profilePicture : 'uploads/default-profile-picture.jpg'}`} alt="name" />
                         </div>
-                        <Suspense fallback={<div className="loadingBox1 box">Loading...<SpinningIcon /></div>}>
+                        <Suspense fallback={<div className={`loadingBox1 box ${theme}`}>Loading...<SpinningIcon /></div>}>
                             <ProfileBox />
                         </Suspense>
-                        <Suspense fallback={<div className="loadingBox1 box">Loading...<SpinningIcon /></div>}>
+                        <Suspense fallback={<div className={`loadingBox1 box ${theme}`}>Loading...<SpinningIcon /></div>}>
                             <FriendsBox type="profile" />
                         </Suspense>
                     </div>
                     <div className="side-container">
                         <div className='box1'>
-                            <AnimatedBox >
-                                <h4>MY POSTS</h4>
-                                <Divider />
-                                <div style={{ display: 'flex', flexDirection: 'column-reverse' }}>
+                            
+                                <div style={{ display: 'flex', flexDirection: 'column-reverse', gap:'20px' }}>
                                     {posts.map((post) => (
-                                        <Suspense fallback={<div>Loading...<SpinningIcon /></div>}>
+                                        <Suspense fallback={<div className={`box ${theme}`}>Loading...<SpinningIcon /></div>}>
+                                            <AnimatedBox >
                                             <Post key={post._id} post={post} updatePostLikes={updatePostLikes} />
+                                            </AnimatedBox>
                                         </Suspense>
                                     ))}
                                 </div>
-                            </AnimatedBox>
+                            
                         </div>
                         <Suspense fallback={<div className="loadingBox3">Loading...<SpinningIcon /></div>}>
                             <ProjectsBox />
