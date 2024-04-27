@@ -16,6 +16,8 @@ import { FaRegComment } from "react-icons/fa6";
 import { IoSearch } from "react-icons/io5";
 import { HiOutlineUserAdd } from "react-icons/hi";
 import { HiUserRemove } from "react-icons/hi";
+import { FiEdit2 } from "react-icons/fi";
+import { FaRegSave } from "react-icons/fa";
 
 
 export {
@@ -36,5 +38,7 @@ export {
     FaThumbsUp,
     IoSearch,
     HiOutlineUserAdd,
-    HiUserRemove
+    HiUserRemove,
+    FiEdit2,
+    FaRegSave
   }

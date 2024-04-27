@@ -6,6 +6,7 @@ import { API_DOMAIN } from "../utils/api-domain";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import SaveIcon from '@mui/icons-material/Save';
 import AnimatedBox from "../components/Box";
+import * as Icons from "../utils/Icons"
 
 function ProfileBox() {
     const { theme } = useTheme();
@@ -84,32 +85,32 @@ function ProfileBox() {
         <AnimatedBox>
         <div className={`profile-box }`}>
             <div className="space-between margin-bottom">
-                <h4>{`@${user.userName}`}</h4>
+            <p className={`poppins h4 bold ${theme}`}>@{`${user.userName}`}</p>
                 <div onClick={handleToggleEdit}>
-                    {editable ? <SaveIcon className="icon" onClick={handleSave} /> : <ModeEditIcon className="icon" />}
+                    {editable ? <Icons.FaRegSave className={`icon ${theme}`} onClick={handleSave} /> : <Icons.FiEdit2 className={`icon ${theme}`} />}
                 </div>
             </div>
             {fields.map((field) => (
                 <div style={{marginBottom:'10px'}} key={field.name}>
-                    <p ><strong>{field.label}:</strong></p>
+                    <p>{field.label}:</p>
                     {editable ? (
                         field.link ? (
-                            <input type={field.type} name={field.name} value={formData[field.name]} onChange={handleChange} />
+                            <input className="profile-input" type={field.type} name={field.name} value={formData[field.name]} onChange={handleChange} />
                         ) : (
-                            <input type={field.type} name={field.name} value={formData[field.name]} onChange={handleChange} />
+                            <input className="profile-input" type={field.type} name={field.name} value={formData[field.name]} onChange={handleChange} />
                         )
                     ) : (
                         field.link ? (
                             <a href={formData[field.name]}>{formData[field.name]}</a>
                         ) : (
-                            <span>{formData[field.name]}</span>
+                            <p className={`typography2 ${theme}`}>{formData[field.name]}</p>
                         )
                     )}
                 </div>
             ))}
             {editable && isImage &&
                 <div>
-                    <p><strong>Change Profile Picture</strong></p>
+                    <p>Change Profile Picture</p>
                     <input type="file" name="profilePicture" onChange={(e) => { setImage(e.target.files[0]) }} />
                 </div>
             }

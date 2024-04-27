@@ -133,6 +133,18 @@
     gap: 1rem;
 }
 
+.profile-input{
+    background-color: rgba(21, 85, 163, 0.356);
+    border: 1px solid #ffffff;
+    color: #ffffff;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.profile-input:focus{
+    border: 2px solid #fe754d;
+}
+
 
 @media (max-width: 1350px) {
     .project{
