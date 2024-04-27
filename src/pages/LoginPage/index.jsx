@@ -18,6 +18,7 @@ function LoginPage() {
     return (
         <div className="loginPage">
             <div className="container">
+
                 <div className="section">
                     <div className="text">
                         <h1 style={{ textDecoration: 'line-through' }}>Hello World!</h1>
@@ -30,16 +31,17 @@ function LoginPage() {
                         </p>
                         <button>START SHARING</button>
                     </div>
-                    <div className="container">
-                    <img src="/sloth-copy.png" className="login-img"/>
+                    <img src="/sloth-copy.png" alt="devImage" class="login-img" width={250}/>
+                    
                         <div class="d3-container"> 
                             <img src="/Black Clay Isometric Apple Devices.png" alt="" class="mac" width={400}/>
-                            <img src="/Camera0003.png" alt="" class="camera" width={300}/>
+                            <img src="/Camera0003.png" alt="" class="camera" width={250}/>
                             <img src="/Color_Wheel_with_Dropper0002.png" alt="" class="wheel" width={300}/>
                             <img src="/Folder0003.png" alt="" class="folder" width={250}/>
                             <img src="/sloth.png" alt="devImage" class="sloth" width={250}/>
-                            <img src="/Cursor_Small_Vertical0002.png" alt="" class="cursor" width={130}/></div>
-                    </div>
+                            <img src="/Cursor_Small_Vertical0002.png" alt="" class="cursor" width={130}/>
+                        
+                        </div>
 
 
                 </div>
