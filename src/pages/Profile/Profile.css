@@ -3,14 +3,13 @@
 .profile{
     display: flex;
     flex-wrap: wrap;
-    background-color: #f0f2f5;
-    margin-top: 60px;
+    background-color: #f5f5f5;
     overflow-x: hidden;
 }
 
 .background{
     background-size: cover;
-    height: 300px;
+    height: 400px;
     width: 100%;
     display: flex;
     justify-content: center;

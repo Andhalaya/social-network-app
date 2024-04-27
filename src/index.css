@@ -2,15 +2,35 @@
 html, body, #root, .App{
   padding: 0;
   margin: 0;
-  font-size: 14px;
+  font-size: 15px;
   font-family: "Inder", sans-serif;
-  font-weight: 400;
+  font-weight: 500;
+  letter-spacing: 0.6px;
   color: rgba(0, 0, 0, 0.818);
 }
 
 div,h1,h2,h3,h4,h5,h6,p{
   margin: 0;
   padding: 0;
+}
+
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: linear-gradient(#140a20, #2f0b20) ;
+}
+ 
+::-webkit-scrollbar-thumb {
+  background: transparent; 
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  cursor: pointer;
+  background: #fe754d; 
 }
 
 /* --------GLOBAL CLASSES----- */
@@ -25,6 +45,11 @@ div,h1,h2,h3,h4,h5,h6,p{
   font-family: 'Inder', sans-serif;
   color: rgba(0, 0, 0, 0.63);
   
+}
+
+.typography4{
+  font-family: 'Inder', sans-serif;
+  color: #919191;
 }
 
 .blue{
@@ -44,7 +69,7 @@ div,h1,h2,h3,h4,h5,h6,p{
 }
 
 .h4{
-  font-size: 18px;
+  font-size: 20px;
 }
 
 .bold{

@@ -1,7 +1,7 @@
 /* -------FEED BOX-------- */
   
 .feed {
-    flex: 40%;
+    flex: 30%;
     display: flex;
     flex-direction: column;
   }

@@ -14,6 +14,8 @@ import { GoThumbsup } from "react-icons/go";
 import { FaThumbsUp } from "react-icons/fa6";
 import { FaRegComment } from "react-icons/fa6";
 import { IoSearch } from "react-icons/io5";
+import { HiOutlineUserAdd } from "react-icons/hi";
+import { HiUserRemove } from "react-icons/hi";
 
 
 export {
@@ -32,5 +34,7 @@ export {
     GoThumbsup,
     FaRegComment,
     FaThumbsUp,
-    IoSearch
+    IoSearch,
+    HiOutlineUserAdd,
+    HiUserRemove
   }

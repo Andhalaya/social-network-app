@@ -1,8 +1,6 @@
 import { useTheme } from "../context/theme";
-import { Divider, TextField, Button } from "@mui/material";
+import { Divider, Button } from "@mui/material";
 import LinkSharpIcon from '@mui/icons-material/LinkSharp';
-import ThumbUpAltRoundedIcon from '@mui/icons-material/ThumbUpAltRounded';
-import ChatBubbleOutlineRoundedIcon from '@mui/icons-material/ChatBubbleOutlineRounded';
 import moment from 'moment';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { anOldHope } from 'react-syntax-highlighter/dist/esm/styles/hljs';
@@ -87,8 +85,8 @@ function Post({ post, updatePostLikes }) {
                 <div className="inline-left gap ">
                     <img src={`${API_DOMAIN}/public/${post.user.profilePicture}`} alt={post.user.userName} style={{ borderRadius: 40, width: "40px" }} />
                     <div>
-                        <h5>{post.user.fullName}</h5>
-                        <h6 className="grey">{post.user.occupation}</h6>
+                        <p className={`poppins ${theme}`}>{post.user.fullName}</p>
+                        <p className={`typography2 ${theme}`}>{post.user.occupation}</p>
                     </div>
                 </div>
                 <p className={`typography2 ${theme}`}>{calculateTimeAgo(post.createdAt)}</p>

@@ -1,5 +1,4 @@
 import { useTheme } from "../context/theme";
-import SearchIcon from '@mui/icons-material/Search';
 import PersonRemoveRoundedIcon from '@mui/icons-material/PersonRemoveRounded';
 import PersonAddAltOutlinedIcon from '@mui/icons-material/PersonAddAltOutlined';
 import { useAuth } from '../context/AuthProvider';
@@ -9,6 +8,7 @@ import { Divider } from "@mui/material";
 import { API_DOMAIN } from "../utils/api-domain";
 import SpinningIcon from "../components/SpinningIcon";
 import AnimatedBox from "../components/Box";
+import * as Icons from "../utils/Icons";
 
 function FriendsBox({ type }) {
     const { theme } = useTheme();
@@ -47,7 +47,6 @@ function FriendsBox({ type }) {
                 { userId: user._id },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
-            console.log(res.data);
             setUser(res.data.user);
 
         } catch (error) {
@@ -72,12 +71,12 @@ function FriendsBox({ type }) {
             <AnimatedBox >
                 <div className="space-between margin-bottom">
                     <div className="inline-left gap">
-                        <h3 className="color" style={{ fontWeight: '500' }}>Lazy Coders</h3>
+                        <p className="inder h4">LAZY CODERS</p>
                         {type === 'home' && (
                             <div onClick={handleShowMore}><SpinningIcon /></div>
                         )}
                     </div>
-                    <div className="search-box">
+                    {/* <div className="search-box">
                         <input
                             type="text"
                             placeholder="search user"
@@ -86,21 +85,20 @@ function FriendsBox({ type }) {
                             onChange={handleSearch}
                         />
                         <SearchIcon className={`icon ${theme}`} style={{ width: '20px', marginRight: '10px' }} />
-                    </div>
+                    </div> */}
+                    <Icons.IoSearch  className={`icon white ${theme}`} />
                 </div>
-                <Divider />
                 {filteredUsers.map(filteredUser => (
-                    <div className="space-between" key={filteredUser._id}>
+                    <div className="space-between margin-top" key={filteredUser._id}>
                         <div className="inline-left gap">
                             <img src={`${API_DOMAIN}/public/${filteredUser.profilePicture}`} alt="name" style={{ borderRadius: 40, width: "40px" }} />
                             <div className="column">
-                                <h4>{`@${filteredUser.userName}`}</h4>
-                                <h6 className="grey">{filteredUser.fullName}</h6>
-                                <h6 className="grey">{filteredUser.occupation}</h6>
+                                <p className={`typography3 ${theme}`}>{filteredUser.fullName}</p>
+                                <p className={`typography4 ${theme}`}>{filteredUser.occupation}</p>
                             </div>
                         </div>
                         <button className="follow-btn" onClick={() => toggleFollow(filteredUser)}>
-                            {user.friends.includes(filteredUser._id) ? <PersonRemoveRoundedIcon sx={{ fontSize: '25px' }} /> : <PersonAddAltOutlinedIcon sx={{ fontSize: '25px' }} />}
+                            {user.friends.includes(filteredUser._id) ? <Icons.HiUserRemove className={`icon orange ${theme}`} style={{fontSize: '30px'}} /> : <Icons.HiOutlineUserAdd className={`icon ${theme}`} style={{fontSize: '30px'}} />}
                         </button>
                     </div>
                 ))}

@@ -54,7 +54,7 @@ function FeedBox() {
                 </div>
                 <div className="">
                     {/* <input type="text" placeholder="search post" value={searchQuery} onChange={handleSearchChange} /> */}
-                    <Icons.IoSearch className={`icon white ${theme}`} />
+                    <Icons.IoSearch className={`white ${theme}`} />
                 </div>
 
             </div>

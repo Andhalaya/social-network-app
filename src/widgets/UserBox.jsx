@@ -16,7 +16,7 @@ function UserBox() {
                         <img src={`${API_DOMAIN}/public/${user.profilePicture ? user.profilePicture : 'uploads/default-profile-picture.jpg'}`} alt="name" style={{ borderRadius: '40px', width: '70px' }} />
                     </div>
                     <div style={{ textAlign: 'center' }}>
-                        <h4 className={`typography3 ${theme}`}>{`${user.fullName}`}</h4>
+                        <p className={`poppins h4 bold ${theme}`}>{`${user.fullName}`}</p>
                         <p className={`typography1 ${theme}`}>@{user.userName}</p>
                     </div>
 
