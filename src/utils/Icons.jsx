@@ -19,7 +19,7 @@ import { HiUserRemove } from "react-icons/hi";
 import { FiEdit2 } from "react-icons/fi";
 import { FaRegSave } from "react-icons/fa";
 import { IoSettingsOutline } from "react-icons/io5";
-import { FaRegUser } from "react-icons/fa";
+import { AiOutlineUser } from "react-icons/ai";
 import { IoChatbubblesOutline } from "react-icons/io5";
 import { IoNotificationsOutline } from "react-icons/io5";
 
@@ -46,7 +46,7 @@ export {
     FiEdit2,
     FaRegSave,
     IoSettingsOutline,
-    FaRegUser,
+    AiOutlineUser ,
     IoChatbubblesOutline,
     IoNotificationsOutline
   }

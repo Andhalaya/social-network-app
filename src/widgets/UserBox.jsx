@@ -70,7 +70,7 @@ function UserBox() {
                         <h4 className="">ABOUT ME</h4>
                     </div>
                     <div className="info-projects">
-                        <p className={`typography2 ${theme}`}>slkdjf flskdf fdfd df fdfd skds sdlfkjdfls fsd sldkf sfkd sdjhfksjf sdfksjdfh</p>
+                        <p className={`typography2 ${theme}`}></p>
                     </div>
                 </div>
             </AnimatedBox>

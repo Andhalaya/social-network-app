@@ -12,7 +12,7 @@ import * as Icons from "../utils/Icons";
 
 function FriendsBox({ type }) {
     const { theme } = useTheme();
-    const { token, user, friends, setUser } = useAuth(); 
+    const { token, user, friends, setUser } = useAuth();
     const [users, setUsers] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [updateUsers, setUpdateUsers] = useState(false);
@@ -86,22 +86,24 @@ function FriendsBox({ type }) {
                         />
                         <SearchIcon className={`icon ${theme}`} style={{ width: '20px', marginRight: '10px' }} />
                     </div> */}
-                    <Icons.IoSearch  className={`icon white ${theme}`} />
+                    <Icons.IoSearch className={`icon white ${theme}`} />
                 </div>
-                {filteredUsers.map(filteredUser => (
-                    <div className="space-between margin-top" key={filteredUser._id}>
-                        <div className="inline-left gap">
-                            <img src={`${API_DOMAIN}/public${filteredUser.profilePicture ? filteredUser.profilePicture : '/uploads/default.jpg'}`} style={{ borderRadius: 40, width: "40px" }} />
-                            <div className="column">
-                                <p className={`typography3 ${theme}`}>{filteredUser.fullName}</p>
-                                <p className={`typography4 ${theme}`}>{filteredUser.occupation ? filteredUser.occupation : 'full-time lazyCoder'}</p>
+                {filteredUsers.length === 0 ?
+                    <div style={{textAlign:'center', padding:'15px 0px'}}> <p>No friends yet!</p> </div>
+                    : filteredUsers.map(filteredUser => (
+                        <div className="space-between margin-top" key={filteredUser._id}>
+                            <div className="inline-left gap">
+                                <img src={`${API_DOMAIN}/public${filteredUser.profilePicture ? filteredUser.profilePicture : '/uploads/default.jpg'}`} style={{ borderRadius: 40, width: "40px" }} />
+                                <div className="column">
+                                    <p className={`typography3 ${theme}`}>{filteredUser.fullName}</p>
+                                    <p className={`typography4 ${theme}`}>{filteredUser.occupation}</p>
+                                </div>
                             </div>
+                            <button className="follow-btn" onClick={() => toggleFollow(filteredUser)}>
+                                {user.friends.includes(filteredUser._id) ? <Icons.HiUserRemove className={`icon orange ${theme}`} style={{ fontSize: '30px' }} /> : <Icons.HiOutlineUserAdd className={`icon ${theme}`} style={{ fontSize: '30px' }} />}
+                            </button>
                         </div>
-                        <button className="follow-btn" onClick={() => toggleFollow(filteredUser)}>
-                            {user.friends.includes(filteredUser._id) ? <Icons.HiUserRemove className={`icon orange ${theme}`} style={{fontSize: '30px'}} /> : <Icons.HiOutlineUserAdd className={`icon ${theme}`} style={{fontSize: '30px'}} />}
-                        </button>
-                    </div>
-                ))}
+                    ))}
             </AnimatedBox>
         </div>
     )

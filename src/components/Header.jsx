@@ -1,9 +1,5 @@
 import { IconButton, Menu, MenuItem } from '@mui/material';
 import { useTheme } from "../context/theme";
-import SettingsIcon from '@mui/icons-material/Settings';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import MarkChatUnreadOutlinedIcon from '@mui/icons-material/MarkChatUnreadOutlined';
-import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 import LightMode from '@mui/icons-material/LightMode';
 import Brightness2Icon from '@mui/icons-material/Brightness2';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
@@ -44,12 +40,10 @@ function Header() {
             </div>
 
             <div className={`nav ${showMenu ? 'nav-mobile' : 'hidden'}`}>
-
+                <Icons.AiOutlineUser onClick={() => { navigate('/my-profile') }} className={`icon ${theme}`} />
                 <Icons.IoNotificationsOutline className={`icon ${theme}`} />
+                <Icons.IoChatbubblesOutline className={`icon ${theme}`}/>
 
-                < Icons.IoChatbubblesOutline className={`icon ${theme}`} />
-
-                <Icons.FaRegUser onClick={() => { navigate('/my-profile') }} className={`icon ${theme}`} />
                 <IconButton
                     onClick={(e) => { setAnchorEl(e.currentTarget) }}
                     aria-controls={open ? 'basic-menu' : undefined}
