@@ -17,6 +17,13 @@
     gap: 20px;
   }
 
+  .post-content{
+    margin-left: 50px; 
+    margin-right: 40px; 
+    display: flex; 
+    flex-direction: column; 
+  }
+
   .share-btn {
     background-color: #008cff;
     color: white;
@@ -54,7 +61,7 @@
     background-color: #a3a3a346;
   }
   
-  .search-box {
+  .search-box, .search-post {
     background-color: #EDEDED;
     border-radius: 30px;
     display: flex;
@@ -63,8 +70,12 @@
     height: 40px;
     width: 100%;
   }
+
+  .search-post{
+    height: 25px;
+  }
   
-  .search-box input {
+  .search-box input, .search-post input {
     background-color: transparent;
     border: none;
     height: 20px;
@@ -100,7 +111,7 @@
   .filters{
     display: flex;
     justify-content: space-between; 
-    padding: 35px 30px 10px 30px;
+    padding: 35px 30px 15px 30px;
     color: #ffffff;
   }
 

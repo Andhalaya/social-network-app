@@ -97,6 +97,10 @@ input:focus {
   outline: none;
 }
 
+input.dark{
+  color: white;
+}
+
 .inline-right {
   display: flex;
   align-items: center;

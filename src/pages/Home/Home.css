@@ -106,7 +106,9 @@
   .main{
     display: block;
     overflow-x: hidden;
-    padding: 2rem;
+    padding: 30px;
+    padding-top: 100px;
+    
   }
 
   .feed{
@@ -166,7 +168,27 @@
   .menu{
     display: block;
   }
-
   
+}
+
+@media (max-width: 400px) {
+  .main {
+    padding: 0;
+    padding-top: 100px;
+  }
+
+  .box.dark, .box.light{
+    border-radius: 0px;
+    padding: 20px 30px;
+  }
+
+  .post-content.dark, .post-content.light{
+    margin: 0;
+  }
+
+  .share-btn.dark, .share-btn.light{
+    font-size: 13px;
+    padding: 8px 15px;
+  }
 }
   

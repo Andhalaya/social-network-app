@@ -23,7 +23,8 @@ function PostBox({ fetchPosts }) {
         title: "",
         description: "",
         codeSnippet: "",
-        link: ""
+        link: "",
+        
     };
     const [formData, setFormData] = useState(initialState);
 

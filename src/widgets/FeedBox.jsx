@@ -13,6 +13,7 @@ function FeedBox() {
     const { token } = useAuth();
     const [posts, setPosts] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
+    const [showSearchInput, setShowSearchInput] = useState(false);
 
     useEffect(() => {
         fetchPosts();
@@ -47,14 +48,19 @@ function FeedBox() {
         <div className="feed">
             <PostBox fetchPosts={fetchPosts} />
             <div className="filters">
-                <div className="inline-left" style={{gap:'30px'}}>
+                <div className="inline-left" style={{ gap: '30px' }}>
                     {filters.map(filter => (
                         <p className={`tag ${theme}`}>{filter}</p>
                     ))}
                 </div>
-                <div className="">
-                    {/* <input type="text" placeholder="search post" value={searchQuery} onChange={handleSearchChange} /> */}
-                    <Icons.IoSearch className={`white ${theme}`} style={{fontSize:'20px'}} />
+                <div style={{display:'flex', cursor:'pointer', gap:'5px'}}>
+                    {showSearchInput && (
+                        <div className= {`search-post ${theme}`}>
+                            <input type="text" placeholder="search post" value={searchQuery} onChange={handleSearchChange} className={`${theme}`} />
+                        </div>
+                       
+                    )}
+                    <Icons.IoSearch className={`white ${theme}`} style={{ fontSize: '20px' }} onClick={() => setShowSearchInput(!showSearchInput)} />
                 </div>
 
             </div>

@@ -13,9 +13,20 @@ function Header() {
     const { theme, toggleTheme } = useTheme();
     const [anchorEl, setAnchorEl] = useState(null);
     const [showMenu, setShowMenu] = useState(false);
+    const [color, setColor] = useState(false);
     const open = Boolean(anchorEl);
     const { logout } = useAuth();
     const navigate = useNavigate();
+
+    const changeColor = () => {
+        if(window.scrollY >= 90) {
+            setColor(true)
+        } else {
+            setColor(false)
+        }
+    }
+
+    window.addEventListener('scroll', changeColor)
 
     const handleClose = () => {
         setAnchorEl(null);
@@ -30,7 +41,7 @@ function Header() {
     }
 
     return (
-        <div className={`header ${theme}`}>
+        <div className={color ? `header color ${theme}` : `header ${theme}`}>
             <div className={`logo ${theme}`} onClick={() => { navigate('/home') }}>
                 <img src="logo3.png" alt="" width='45px' />
                 LazyCoder

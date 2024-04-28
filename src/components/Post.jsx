@@ -91,7 +91,7 @@ function Post({ post, updatePostLikes }) {
                 </div>
                 <p className={`typography2 ${theme}`}>{calculateTimeAgo(post.createdAt)}</p>
             </div>
-            <div style={{ marginLeft: '50px', marginRight:'40px', display:'flex', flexDirection:'column' }}>
+            <div className={`post-content ${theme}`} >
                 
                 <p className="margin-top margin-bottom">{post.title}</p>
                 <div dangerouslySetInnerHTML={{ __html: post.description }} className="margin-bottom"/>
