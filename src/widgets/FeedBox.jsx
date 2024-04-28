@@ -23,6 +23,7 @@ function FeedBox() {
         try {
             const res = await axios.get(`${API_DOMAIN}/posts`,
                 { headers: { Authorization: `Bearer ${token}` } })
+
             setPosts(res.data);
         } catch (error) {
             console.error("Error fetching posts:", error);
@@ -68,7 +69,7 @@ function FeedBox() {
             <div className="posts">
                 {filteredPosts.map(post => (
                     <AnimatedBox >
-                        <Post key={post._id} post={post} updatePostLikes={updatePostLikes} />
+                        <Post fetchPosts={fetchPosts} key={post._id} post={post} updatePostLikes={updatePostLikes} />
                     </AnimatedBox>
                 ))}
             </div>

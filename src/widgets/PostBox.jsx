@@ -20,14 +20,14 @@ function PostBox({ fetchPosts }) {
     const [activeFields, setActiveFields] = useState([]);
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
-    const [selected, setSelected] = useState(["helloWorld"]);
+    const [selected, setSelected] = useState([]);
     const initialState = {
         user: user._id,
         title: "",
         description: "",
         codeSnippet: "",
         link: "",
-        tags: ""
+        tags: []
     };
     const [formData, setFormData] = useState(initialState);
 
@@ -56,7 +56,7 @@ function PostBox({ fetchPosts }) {
                 formDataToSend.append("codeSnippet", formData.codeSnippet);
                 formDataToSend.append("link", formData.link);
                 formDataToSend.append("image", image);
-                formDataToSend.append("tags", JSON.stringify(selected));
+                selected.forEach(tag => formDataToSend.append("tags[]", tag));
 
                 await axios.post(url, formDataToSend, {
                     headers: {

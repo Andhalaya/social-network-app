@@ -218,6 +218,7 @@ input.dark{
   background-color: #1e89e079;
   color: #ffffff;
   font-family: 'Roboto mono';
+  font-size: 12px;
 }
 
 .tag span{

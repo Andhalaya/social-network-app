@@ -16,7 +16,7 @@ function calculateTimeAgo(timestamp) {
     return moment(timestamp).fromNow();
 }
 
-function Post({ post, updatePostLikes }) {
+function Post({ post, updatePostLikes, fetchPosts }) {
     const { theme } = useTheme();
     const { user, token } = useAuth();
     const [liked, setLiked] = useState(false);
@@ -49,7 +49,7 @@ function Post({ post, updatePostLikes }) {
 
     const handleComment = async () => {
         try {
-            const response = await axios.patch(`${API_DOMAIN}/posts/${post._id}/comment`, { userId: user._id, comment }, {
+            await axios.patch(`${API_DOMAIN}/posts/${post._id}/comment`, { userId: user._id, comment }, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -62,6 +62,21 @@ function Post({ post, updatePostLikes }) {
             console.error("Error commenting:", error);
         }
     };
+
+    const handleDeletePost = async () => {
+        try {
+            await axios.delete(`${API_DOMAIN}/posts/${post._id}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            )
+            fetchPosts();
+        } catch {
+            console.error("Error deleting post:", error);
+        }
+    }
     const modules = {
         toolbar: [
             [{ 'header': [1, 2, false] }],
@@ -89,14 +104,22 @@ function Post({ post, updatePostLikes }) {
                         <p className={`typography2 ${theme}`}>{post.user.occupation}</p>
                     </div>
                 </div>
-                <p className={`typography2 ${theme}`}>{calculateTimeAgo(post.createdAt)}</p>
+                <div className="inline-right gap">
+                   <p className={`typography2 ${theme}`}>{calculateTimeAgo(post.createdAt)}</p>
+                {post.user._id === user._id && 
+                <div onClick={handleDeletePost}>
+                    <Icons.DeleteOutlined className={`icon ${theme}`} />
+                </div> }
+
+                </div>
+                
             </div>
             <div className={`post-content ${theme}`} >
-                
+
                 <p className="margin-top margin-bottom">{post.title}</p>
-                <div dangerouslySetInnerHTML={{ __html: post.description }} className="margin-bottom"/>
+                <div dangerouslySetInnerHTML={{ __html: post.description }} className="margin-bottom" />
                 {post.image && (
-                    <img src={`${API_DOMAIN}/public/${post.image}`} alt="" width={'100%'} className="margin-bottom"/>
+                    <img src={`${API_DOMAIN}/public/${post.image}`} alt="" width={'100%'} className="margin-bottom" />
                 )}
 
                 {post.codeSnippet && (
@@ -108,16 +131,14 @@ function Post({ post, updatePostLikes }) {
                         {post.codeSnippet}
                     </SyntaxHighlighter>
                 )}
-
+                {post.tags && (
+                    <div className="post-tags">
+                        {post.tags.map((tag, index) => (
+                            <div className={`tag ${theme}`} key={index}>#{tag}</div>
+                        ))}
+                    </div>
+                )}
                 <div className='space-between'>
-                    {post.link && (
-                        <div >
-                            <LinkSharpIcon />
-                            <a href={post.link} target="_blank" rel="noopener noreferrer" style={{ width: '600px' }}>
-                                {post.link}
-                            </a>
-                        </div>
-                    )}
                     <div className="inline-left gap ">
                         <div className="inline-left gap">
                             <p>{post.likes ? post.likes.length : 0}</p>
@@ -130,7 +151,17 @@ function Post({ post, updatePostLikes }) {
                             <Icons.FaRegComment className={`icon ${theme}`} />
                         </div>
                     </div>
+                    {post.link && (
+                        <div >
+                            <LinkSharpIcon />
+                            <a href={post.link} target="_blank" rel="noopener noreferrer" style={{ width: '600px' }}>
+                                {post.link}
+                            </a>
+                        </div>
+                    )}
+
                 </div>
+
                 {showComments && (
                     <div style={{ backgroundColor: '#EDEDED', padding: '15px', borderRadius: '10px', marginBottom: '10px', marginTop: '10px' }}>
                         <Divider />
