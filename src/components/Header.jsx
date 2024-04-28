@@ -10,6 +10,7 @@ import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import {useState} from 'react';
 import { useNavigate} from 'react-router'
 import { useAuth } from '../context/AuthProvider';
+import * as Icons from "../utils/Icons"
 
 function Header () {
     
@@ -49,7 +50,7 @@ function Header () {
                     aria-haspopup="true"
                     aria-expanded={open ? 'true' : undefined}
                 >
-                    <SettingsIcon className={`icon ${theme}`}/>
+                    <Icons.IoSettingsOutline className={`icon ${theme}`}/>
                 </IconButton>
                 <Menu
                     id="basic-menu"
@@ -64,15 +65,13 @@ function Header () {
                     <MenuItem onClick={handleClose}>My account</MenuItem>
                     <MenuItem onClick={handleLogout}>Logout</MenuItem>
                 </Menu>
-                <IconButton>
-                    <NotificationsIcon className={`icon ${theme}`}/>
-                </IconButton>
-                <IconButton>
-                    < MarkChatUnreadOutlinedIcon className={`icon ${theme}`}/>
-                </IconButton>
-                <IconButton onClick={() =>{navigate('/my-profile')}}>
-                    <PersonRoundedIcon className={`icon ${theme}`}/>
-                </IconButton>
+                
+                    <Icons.IoNotificationsOutline className={`icon ${theme}`}/>
+                
+                    < Icons.IoChatbubblesOutline className={`icon ${theme}`}/>
+                
+                    <Icons.FaRegUser onClick={() =>{navigate('/my-profile')}} className={`icon ${theme}`}/>
+                
                 <div className={`switchButton ${theme}`}>
                     <IconButton className={`circle ${theme}`} style={{left: theme === 'dark' ? '38px' : '0px'}} onClick={toggleTheme}>
                         {theme === 'light' ? <LightMode className={`sun ${theme}`} /> : <Brightness2Icon className={`moon ${theme}`} />}

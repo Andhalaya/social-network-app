@@ -32,7 +32,6 @@ function LoginPage() {
                         <button>START SHARING</button>
                     </div>
                     <img src="/sloth-copy.png" alt="devImage" class="login-img" width={250}/>
-                    
                         <div class="d3-container"> 
                             <img src="/Black Clay Isometric Apple Devices.png" alt="" class="mac" width={400}/>
                             <img src="/Camera0003.png" alt="" class="camera" width={250}/>
@@ -40,10 +39,7 @@ function LoginPage() {
                             <img src="/Folder0003.png" alt="" class="folder" width={250}/>
                             <img src="/sloth.png" alt="devImage" class="sloth" width={250}/>
                             <img src="/Cursor_Small_Vertical0002.png" alt="" class="cursor" width={130}/>
-                        
                         </div>
-
-
                 </div>
             </div>
             <div className="form">

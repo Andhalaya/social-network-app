@@ -43,8 +43,10 @@ function ProfileBox() {
             formDataToSend.append('location', formData.location);
             formDataToSend.append('occupation', formData.occupation);
             formDataToSend.append('gitHub', formData.gitHub);
-            formDataToSend.append('profilePicture', selectedImage);
-
+            if(selectedImage) {
+              formDataToSend.append('profilePicture', selectedImage);  
+            }
+            
             const response = await axios.patch(`${API_DOMAIN}/users/profile`, formDataToSend, {
                 headers: {
                     Authorization: `Bearer ${token}`,

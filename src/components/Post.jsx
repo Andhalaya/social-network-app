@@ -83,7 +83,7 @@ function Post({ post, updatePostLikes }) {
         <div key={post._id} >
             <div className="space-between">
                 <div className="inline-left gap ">
-                    <img src={`${API_DOMAIN}/public/${post.user.profilePicture}`} alt={post.user.userName} style={{ borderRadius: 40, width: "40px" }} />
+                    <img src={`${API_DOMAIN}/public${post.user.profilePicture ? post.user.profilePicture : '/uploads/default.jpg'}`} alt={post.user.userName} style={{ borderRadius: 40, width: "40px" }} />
                     <div>
                         <p className={`poppins ${theme}`}>{post.user.fullName}</p>
                         <p className={`typography2 ${theme}`}>{post.user.occupation}</p>

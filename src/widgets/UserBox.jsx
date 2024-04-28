@@ -13,7 +13,7 @@ function UserBox() {
             <AnimatedBox >
                 <div className="inline-left gap">
                     <div style={{ borderRadius: '20px', }}>
-                        <img src={`${API_DOMAIN}/public/${user.profilePicture ? user.profilePicture : 'uploads/default-profile-picture.jpg'}`} alt="name" style={{ borderRadius: '40px', width: '70px' }} />
+                        <img src={`${API_DOMAIN}/public/${user.profilePicture ? user.profilePicture : 'uploads/default.jpg'}`} alt="name" style={{ borderRadius: '40px', width: '70px' }} />
                     </div>
                     <div style={{ textAlign: 'center' }}>
                         <p className={`poppins h4 bold ${theme}`}>{`${user.fullName}`}</p>
