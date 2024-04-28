@@ -91,10 +91,10 @@ function FriendsBox({ type }) {
                 {filteredUsers.map(filteredUser => (
                     <div className="space-between margin-top" key={filteredUser._id}>
                         <div className="inline-left gap">
-                            <img src={`${API_DOMAIN}/public/${filteredUser.profilePicture}`} alt="name" style={{ borderRadius: 40, width: "40px" }} />
+                            <img src={`${API_DOMAIN}/public${filteredUser.profilePicture ? filteredUser.profilePicture : '/uploads/default.jpg'}`} style={{ borderRadius: 40, width: "40px" }} />
                             <div className="column">
                                 <p className={`typography3 ${theme}`}>{filteredUser.fullName}</p>
-                                <p className={`typography4 ${theme}`}>{filteredUser.occupation}</p>
+                                <p className={`typography4 ${theme}`}>{filteredUser.occupation ? filteredUser.occupation : 'full-time lazyCoder'}</p>
                             </div>
                         </div>
                         <button className="follow-btn" onClick={() => toggleFollow(filteredUser)}>

@@ -1,17 +1,19 @@
 import { useState } from "react";
 import axios from "axios";
 import Alert from '@mui/material/Alert';
-import { Divider } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthProvider";
 import {API_DOMAIN} from "../../utils/api-domain" 
-import { CoPresentOutlined } from "@mui/icons-material";
+
 
 const initialForm = {
     fullName: "",
     userName: "",
     email: "",
-    password: ""
+    password: "",
+    location: "Anywhere",
+    gitHub: "www.github.com", 
+    occupation: "fulltime LazyCoder"
 }
 
 function Form() {
@@ -70,7 +72,7 @@ function Form() {
     };
  
     const guestCredentials = {
-        username: import.meta.env.VITE_GUEST_EMAIL,
+        email: import.meta.env.VITE_GUEST_EMAIL,
         password: import.meta.env.VITE_GUEST_PASSWORD
     };
 
