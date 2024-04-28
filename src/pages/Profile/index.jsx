@@ -89,9 +89,7 @@ function Profile() {
                 </div>
                 <div className="profile-container">
                     <div className="info-container">
-                        <div className="user-img">
-                        <img src={`${API_DOMAIN}/public/${user.profilePicture ? user.profilePicture : 'uploads/default-profile-picture.jpg'}`} alt="name" />
-                        </div>
+                        
                         <Suspense fallback={<div className={`loadingBox1 box ${theme}`}>Loading...<SpinningIcon /></div>}>
                             <ProfileBox />
                         </Suspense>
