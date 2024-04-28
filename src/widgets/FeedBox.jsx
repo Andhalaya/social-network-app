@@ -50,7 +50,7 @@ function FeedBox() {
             <div className="filters">
                 <div className="inline-left" style={{ gap: '30px' }}>
                     {filters.map(filter => (
-                        <p className={`tag ${theme}`}>{filter}</p>
+                        <p className={`filter ${theme}`}>{filter}</p>
                     ))}
                 </div>
                 <div style={{display:'flex', cursor:'pointer', gap:'5px'}}>

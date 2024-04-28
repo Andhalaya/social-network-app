@@ -48,5 +48,6 @@ export {
     IoSettingsOutline,
     AiOutlineUser ,
     IoChatbubblesOutline,
-    IoNotificationsOutline
+    IoNotificationsOutline,
+
   }

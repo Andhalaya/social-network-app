@@ -96,12 +96,12 @@
   }
 
   .post-elements:hover{
-    width: 130px;
+    width: 110px;
     color: #008cff;
   }
 
   .big:hover{
-    width: 170px;
+    width: 180px;
   }
 
   .medium:hover{
@@ -126,3 +126,6 @@
     font-size: 22px;
   }
   
+  .rti--container{
+    background-color: #163853;
+  }

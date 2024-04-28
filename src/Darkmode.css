@@ -91,5 +91,21 @@
   .thumbsUp.dark , .orange.dark {
     color: #fe754d;
   }
-  
-  
+
+ 
+.tags-box.dark{
+  background-color: #ffffff2a;
+} 
+.tags-box.dark input{
+  color: white;
+}
+
+.tag.dark{
+  background-color: #ff774d59;
+  color: #fa7e5a;
+  font-family: 'Roboto mono';
+}
+
+.tags-box.dark input::placeholder{
+  color: #ffffff42;
+}

@@ -185,3 +185,51 @@ input.dark{
   color: #6b05a3;
 }
 
+.tags-box{
+  background-color: #9e9e9e57;
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+
+.tags-box input{
+  background-color: transparent;
+  border: none;
+  font-family: 'Roboto mono';
+  width: 100%;
+}
+
+
+
+.tags-box input::placeholder{
+  font-family: 'Roboto mono'
+}
+
+
+
+.tag{
+  padding: 5px 10px;
+  border-radius: 15px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  background-color: #1e89e079;
+  color: #ffffff;
+  font-family: 'Roboto mono';
+}
+
+.tag span{
+  color: #252525;
+  cursor: pointer;
+  font-weight: 300;
+}
+
+.tag span:hover{
+  color: #ffffff;
+}
+
+
+
+
