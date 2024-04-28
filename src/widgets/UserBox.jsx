@@ -23,17 +23,17 @@ function UserBox() {
                 </div>
                 <div className="inline-left">
                     <div className="numbers">
-                        <h2 className=" ">10</h2>
+                        <h2 className=" ">0</h2>
                         <p className={`typography1 ${theme}`}>followers</p>
                     </div>
                     <div className="" style={{ fontSize: '25px' }}>|</div>
                     <div className="numbers">
-                        <h2 className="">6</h2>
+                        <h2 className="">{user.friends.length}</h2>
                         <p className={`typography1 ${theme}`}>following</p>
                     </div>
                     <div className="grey" style={{ fontSize: '25px' }}>|</div>
                     <div className="numbers">
-                        <h2 className="">4</h2>
+                        <h2 className="">{user.posts.length}</h2>
                         <p className={`typography1 ${theme}`}>posts</p>
                     </div>
                 </div>
@@ -61,7 +61,7 @@ function UserBox() {
                         <h4 className="">GITHUB</h4>
                     </div>
                     <div className="info-projects">
-                        <p className={`typography2 ${theme}`}>github.com/happylion175</p>
+                        <p className={`typography2 ${theme}`}>{user.gitHub}</p>
                     </div>
                 </div>
                 <div className="margin-bottom margin-top">
