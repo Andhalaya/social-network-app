@@ -68,9 +68,11 @@ function FeedBox() {
 
             <div className="posts">
                 {filteredPosts.map(post => (
+                    <div style={{position:'relative'}}>
                     <AnimatedBox >
                         <Post fetchPosts={fetchPosts} key={post._id} post={post} updatePostLikes={updatePostLikes} />
                     </AnimatedBox>
+                    </div>
                 ))}
             </div>
 

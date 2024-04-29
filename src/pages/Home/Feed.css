@@ -131,3 +131,18 @@
   gap: 20px;
   margin-bottom: 20px;
  }
+
+ .modal-container{
+  background-color: #040b1ae8;
+  color: #ffffff;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  border-radius: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+ }
+

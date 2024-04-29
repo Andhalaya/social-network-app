@@ -5,7 +5,6 @@ import { API_DOMAIN } from "../../utils/api-domain";
 import axios from "axios";
 import { useAuth } from "../../context/AuthProvider";
 import "./Profile.css";
-import { Divider } from "@mui/material";
 import AnimatedBox from "../../components/Box";
 import CustomModal from "../../components/Modal";
 import SpinningIcon from "../../components/SpinningIcon";

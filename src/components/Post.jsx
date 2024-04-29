@@ -11,6 +11,7 @@ import { useAuth } from "../context/AuthProvider";
 import { API_DOMAIN } from "../utils/api-domain";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import CustomModal from "./Modal";
 
 function calculateTimeAgo(timestamp) {
     return moment(timestamp).fromNow();
@@ -25,7 +26,6 @@ function Post({ post, updatePostLikes, fetchPosts }) {
     const [showComments, setShowComments] = useState(false);
 
     useEffect(() => {
-
         if (post.likes && user) {
             setLiked(post.likes.includes(user._id));
         }
@@ -46,7 +46,6 @@ function Post({ post, updatePostLikes, fetchPosts }) {
             console.error("Error liking post:", error);
         }
     };
-
     const handleComment = async () => {
         try {
             await axios.patch(`${API_DOMAIN}/posts/${post._id}/comment`, { userId: user._id, comment }, {
@@ -62,7 +61,6 @@ function Post({ post, updatePostLikes, fetchPosts }) {
             console.error("Error commenting:", error);
         }
     };
-
     const handleDeletePost = async () => {
         try {
             await axios.delete(`${API_DOMAIN}/posts/${post._id}`,
@@ -95,7 +93,7 @@ function Post({ post, updatePostLikes, fetchPosts }) {
     ];
 
     return (
-        <div key={post._id} >
+        <div className={`postBox ${theme}`} key={post._id} >
             <div className="space-between">
                 <div className="inline-left gap ">
                     <img src={`${API_DOMAIN}/public${post.user.profilePicture ? post.user.profilePicture : '/uploads/default.jpg'}`} alt={post.user.userName} style={{ borderRadius: 40, width: "40px" }} />
@@ -105,23 +103,38 @@ function Post({ post, updatePostLikes, fetchPosts }) {
                     </div>
                 </div>
                 <div className="inline-right gap">
-                   <p className={`typography2 ${theme}`}>{calculateTimeAgo(post.createdAt)}</p>
-                {post.user._id === user._id && 
-                <div onClick={handleDeletePost}>
-                    <Icons.DeleteOutlined className={`icon ${theme}`} />
-                </div> }
-
+                    <p className={`typography2 ${theme}`}>{calculateTimeAgo(post.createdAt)}</p>
+                    {post.user._id === user._id &&
+                    <div>
+                       <CustomModal trigger={(openModal) => (
+                            <div onClick={openModal}>
+                                <Icons.DeleteOutlined className={`icon ${theme}`} />
+                            </div>
+                        )}>
+                            {(closeModal) => (
+                                <div className={`modal-content ${theme}`}>
+                                    <p>¿Are you sure you want to delete this post?</p>
+                                    <div style={{ display: 'flex', gap:'10px', justifyContent:'center', marginTop:'20px'}}>
+                                        <button onClick={() => {
+                                            handleDeletePost();
+                                            closeModal();
+                                        }}>Delete</button>
+                                        <button onClick={closeModal} >Cancel</button>
+                                    </div>
+                            </div>
+                            )}
+                        </CustomModal> 
+                    </div>
+                        
+                    }
                 </div>
-                
             </div>
             <div className={`post-content ${theme}`} >
-
                 <p className="margin-top margin-bottom">{post.title}</p>
                 <div dangerouslySetInnerHTML={{ __html: post.description }} className="margin-bottom" />
                 {post.image && (
                     <img src={`${API_DOMAIN}/public/${post.image}`} alt="" width={'100%'} className="margin-bottom" />
                 )}
-
                 {post.codeSnippet && (
                     <SyntaxHighlighter
                         language="javascript"
@@ -161,7 +174,6 @@ function Post({ post, updatePostLikes, fetchPosts }) {
                     )}
 
                 </div>
-
                 {showComments && (
                     <div style={{ backgroundColor: '#EDEDED', padding: '15px', borderRadius: '10px', marginBottom: '10px', marginTop: '10px' }}>
                         <Divider />

@@ -11,6 +11,7 @@ const CustomModal = ({ trigger, children }) => {
         <>
             {trigger(openModal)}
             <motion.div
+                className="modal-container"
                 initial="closed"
                 animate={isOpen ? "open" : "closed"}
                 variants={{
