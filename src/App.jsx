@@ -5,10 +5,10 @@ import './Darkmode.css'
 import { ThemeProvider, useTheme } from './context/theme'
 import { AuthProvider } from './context/AuthProvider'
 import ProtectedRoute from './components/ProtectedRoute';
-import LoginPage from './pages/LoginPage/index'
-import Home from './pages/Home/index'
-import Profile from './pages/Profile/index'
-import Project from './pages/Project/index'
+import LoginPage from './pages/LoginPage/INDEX';
+import Home from './pages/Home/index';
+import Profile from './pages/Profile/index';
+import Project from './pages/Project/index';
 
 function App() {
   return (

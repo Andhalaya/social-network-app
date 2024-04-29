@@ -6,20 +6,19 @@ import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import { useState } from 'react';
 import { useNavigate } from 'react-router'
 import { useAuth } from '../context/AuthProvider';
+import DropdownMenu from './Menu';
 import * as Icons from "../utils/Icons"
 
 function Header() {
 
     const { theme, toggleTheme } = useTheme();
-    const [anchorEl, setAnchorEl] = useState(null);
     const [showMenu, setShowMenu] = useState(false);
     const [color, setColor] = useState(false);
-    const open = Boolean(anchorEl);
     const { logout } = useAuth();
     const navigate = useNavigate();
 
     const changeColor = () => {
-        if(window.scrollY >= 90) {
+        if (window.scrollY >= 90) {
             setColor(true)
         } else {
             setColor(false)
@@ -28,9 +27,6 @@ function Header() {
 
     window.addEventListener('scroll', changeColor)
 
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
     const handleLogout = () => {
         logout();
         handleClose();
@@ -40,10 +36,22 @@ function Header() {
         setShowMenu(!showMenu);
     }
 
+    const options = [
+        {
+            label: 'Logout',
+            onClick: handleLogout,
+            icon: Icons.IoIosLogOut
+        },
+        {
+            label: 'Option 1',
+            onClick: () => handleLogout,
+        },
+    ]
+
     return (
         <div className={color ? `header color ${theme}` : `header ${theme}`}>
             <div className={`logo ${theme}`} onClick={() => { navigate('/home') }}>
-                <img src="logo3.png" alt="" width='45px' />
+                <img src="logo.png" alt="" width='45px' />
                 LazyCoder
             </div>
             <div className='menu'>
@@ -53,34 +61,26 @@ function Header() {
             <div className={`nav ${showMenu ? 'nav-mobile' : 'hidden'}`}>
                 <Icons.AiOutlineUser onClick={() => { navigate('/my-profile') }} className={`icon ${theme}`} />
                 <Icons.IoNotificationsOutline className={`icon ${theme}`} />
-                <Icons.IoChatbubblesOutline className={`icon ${theme}`}/>
+                <Icons.IoChatbubblesOutline className={`icon ${theme}`} />
+                <DropdownMenu
+                    trigger={<Icons.IoSettingsOutline className={`icon ${theme}`} />}
+                >
+                    <li className='dropdown-item'>
+                        Change theme
+                        <div className={`switchButton ${theme}`}>
+                            <IconButton className={`circle ${theme}`} style={{ left: theme === 'dark' ? '38px' : '0px' }} onClick={toggleTheme}>
+                                {theme === 'light' ? <LightMode className={`sun ${theme}`} /> : <Brightness2Icon className={`moon ${theme}`} />}
+                            </IconButton>
+                        </div>
+                    </li>
+                    <li onClick={handleLogout} className='dropdown-item'>
+                        <Icons.IoIosLogOut className={`icon ${theme}`} />
+                        Logout
+                    </li>
 
-                <IconButton
-                    onClick={(e) => { setAnchorEl(e.currentTarget) }}
-                    aria-controls={open ? 'basic-menu' : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={open ? 'true' : undefined}
-                >
-                    <Icons.IoSettingsOutline className={`icon ${theme}`} />
-                </IconButton>
-                <Menu
-                    id="basic-menu"
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleClose}
-                    MenuListProps={{
-                        'aria-labelledby': 'basic-button',
-                    }}
-                >
-                    <MenuItem onClick={handleClose}>Profile</MenuItem>
-                    <MenuItem onClick={handleClose}>My account</MenuItem>
-                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
-                </Menu>
-                <div className={`switchButton ${theme}`}>
-                    <IconButton className={`circle ${theme}`} style={{ left: theme === 'dark' ? '38px' : '0px' }} onClick={toggleTheme}>
-                        {theme === 'light' ? <LightMode className={`sun ${theme}`} /> : <Brightness2Icon className={`moon ${theme}`} />}
-                    </IconButton>
-                </div>
+                </DropdownMenu>
+
+
             </div>
 
         </div>

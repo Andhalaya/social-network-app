@@ -22,6 +22,7 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { AiOutlineUser } from "react-icons/ai";
 import { IoChatbubblesOutline } from "react-icons/io5";
 import { IoNotificationsOutline } from "react-icons/io5";
+import { IoIosLogOut } from "react-icons/io";
 
 
 export {
@@ -49,5 +50,5 @@ export {
     AiOutlineUser ,
     IoChatbubblesOutline,
     IoNotificationsOutline,
-
+    IoIosLogOut
   }

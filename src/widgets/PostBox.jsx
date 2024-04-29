@@ -133,6 +133,8 @@ function PostBox({ fetchPosts }) {
                         anchorEl={anchorEl}
                         open={Boolean(anchorEl)}
                         onClose={handleMenuClose}
+                        
+                       
                     >
                         <MenuItem onClick={() => { handleFormSubmit(`${API_DOMAIN}/posts`); handleMenuClose(); }}>Share as Post</MenuItem>
                         <MenuItem onClick={() => { handleFormSubmit(`${API_DOMAIN}/projects`); handleMenuClose(); }}>Share as Project</MenuItem>

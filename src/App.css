@@ -16,6 +16,7 @@ body{
 
 .header {
   top: 0;
+  right: 0;
   text-align: center;
   background-color: #ffffff;
   color: rgb(0, 0, 0);
@@ -99,6 +100,42 @@ body{
 svg.MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium.icon.light.css-i4bv87-MuiSvgIcon-root {
   width: 2rem;
   height: 2rem;
+}
+
+.dropdown-menu {
+  position: relative;
+}
+
+.dropdown-toggle {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown-list {
+  position: absolute;
+  width: max-content;
+  top: 100%;
+  right: 0;
+  background-color: #ffffff25;
+  border-top: none;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  margin-top: 17px;
+}
+
+.dropdown-item {
+  padding: 8px 12px;
+  cursor: pointer;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-size: 16px;
+}
+
+.dropdown-item:hover {
+  background-color: #ffffff4f;
 }
 
 
