@@ -26,9 +26,9 @@ function Messages() {
 
     const fetchConversations = async () => {
         try {
-            const response = await axios.get(`${API_DOMAIN}/conversations/662e443bdedf82fea5f9ed60`);
-            setConversations(response);
-            console.log(response)
+            const response = await axios.get(`${API_DOMAIN}/conversations/6628389ac83d5d5bf9335b6a`);
+            setConversations(response.data);
+            console.log({conversations: response.data})
         } catch (error) {
             console.error("Error fetching conversations:", error);
         }
@@ -36,18 +36,18 @@ function Messages() {
     const sendMessage = async () => {
         try {
             
-            await axios.post(`${API_DOMAIN}/messages`, {
-                conversationId: '662e443bdedf82fea5f9ed60', 
+            const res = await axios.post(`${API_DOMAIN}/messages`, {
+                conversationId: '6631016e127b310c1c598452', 
                 sender: user._id,
                 text: messageText
             });
             setMessageText('');
+            console.log(res)
         } catch (error) {
             console.error('Error sending message:', error);
         }
     };
     
-
     return (
         <>
             <Header />
