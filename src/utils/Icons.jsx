@@ -23,6 +23,8 @@ import { AiOutlineUser } from "react-icons/ai";
 import { IoChatbubblesOutline } from "react-icons/io5";
 import { IoNotificationsOutline } from "react-icons/io5";
 import { IoIosLogOut } from "react-icons/io";
+import { BiMessageRoundedAdd } from "react-icons/bi";
+import { BsThreeDotsVertical } from "react-icons/bs";
 
 
 export {
@@ -50,5 +52,7 @@ export {
     AiOutlineUser ,
     IoChatbubblesOutline,
     IoNotificationsOutline,
-    IoIosLogOut
+    IoIosLogOut,
+    BiMessageRoundedAdd,
+    BsThreeDotsVertical
   }

@@ -6,152 +6,89 @@ import { useAuth } from "../../context/AuthProvider";
 import Header from "../../components/Header";
 import { io } from "socket.io-client";
 import "./Messages.css";
+import SpinningIcon from "../../components/SpinningIcon";
+import Message from "../../components/Message";
+import * as Icons from "../../utils/Icons";
+import { lazy, Suspense } from "react";
 
-
+const FriendsBox = lazy(() => import("../../widgets/FriendsBox"));
 
 function Messages() {
-    const [conversations, setConversations] = useState([]);
-    const [currentChat, setCurrentChat] = useState(null);
-    const [messages, setMessages] = useState([]);
-    const [newMessage, setNewMessage] = useState("");
-    const [arrivalMessage, setArrivalMessage] = useState(null);
-    // const [onlineUsers, setOnlineUsers] = useState([]);
-    // const socket = useRef();
+    const { theme } = useTheme();
     const { token, user } = useAuth();
-    const scrollRef = useRef();
     const socket = io('/');
-    useEffect(() => {
-        socket.on('connect', () => {
-          console.log('Connected to server');
-        });
-    
-        socket.on('disconnect', () => {
-          console.log('Disconnected from server');
-        });
-      }, []);
-    
+    const [conversations, setConversations] = useState(null)
+    const [messageText, setMessageText] = useState('');
 
     useEffect(() => {
-        // socket.current = io(`${API_DOMAIN}`);
-        // socket.current.on("getMessage", (data) => {
-        //   setArrivalMessage({
-        //     sender: data.senderId,
-        //     text: data.text,
-        //     createdAt: Date.now(),
-        //   });
-        // });
-      }, []);
-    
-      useEffect(() => {
-        // arrivalMessage &&
-        //   currentChat?.members.includes(arrivalMessage.sender) &&
-        //   setMessages((prev) => [...prev, arrivalMessage]);
-      }, [arrivalMessage, currentChat]);
-    
-      useEffect(() => {
-        // socket.current.emit("addUser", user._id);
-        // socket.current.on("getUsers", (users) => {
-        //   setOnlineUsers(
-        //     user.followings.filter((f) => users.some((u) => u.userId === f))
-        //   );
-        // });
-      }, [user]);
-    
-      useEffect(() => {
-        // const getConversations = async () => {
-        //   try {
-        //     const res = await axios.get("/conversations/" + user._id);
-        //     setConversations(res.data);
-        //   } catch (err) {
-        //     console.log(err);
-        //   }
-        // };
-        // getConversations();
-      }, [user._id]);
+        fetchConversations();
+    }, []);
 
-    const handleSubmit = async (e) => {
-        // e.preventDefault();
-        // const message = {
-        //   sender: user._id,
-        //   text: newMessage,
-        //   conversationId: currentChat._id,
-        // };
+    const fetchConversations = async () => {
+        try {
+            const response = await axios.get(`${API_DOMAIN}/conversations/662e443bdedf82fea5f9ed60`);
+            setConversations(response);
+            console.log(response)
+        } catch (error) {
+            console.error("Error fetching conversations:", error);
+        }
+    };
+    const sendMessage = async () => {
+        try {
+            
+            await axios.post(`${API_DOMAIN}/messages`, {
+                conversationId: '662e443bdedf82fea5f9ed60', 
+                sender: user._id,
+                text: messageText
+            });
+            setMessageText('');
+        } catch (error) {
+            console.error('Error sending message:', error);
+        }
+    };
     
-        // const receiverId = currentChat.members.find(
-        //   (member) => member !== user._id
-        // );
-    
-        // socket.current.emit("sendMessage", {
-        //   senderId: user._id,
-        //   receiverId,
-        //   text: newMessage,
-        // });
-    
-        // try {
-        //   const res = await axios.post("/messages", message);
-        //   setMessages([...messages, res.data]);
-        //   setNewMessage("");
-        // } catch (err) {
-        //   console.log(err);
-        // }
-      };
-
-      useEffect(() => {
-        // scrollRef.current?.scrollIntoView({ behavior: "smooth" });
-      }, [messages]);
 
     return (
         <>
             <Header />
-            <div className="messenger">
-                <div className="chatMenu">
-                    <div className="chatMenuWrapper">
-                        <input placeholder="Search for friends" className="chatMenuInput" />
-                        {/* {conversations.map((c) => (
-              <div onClick={() => setCurrentChat(c)}>
-                <Conversation conversation={c} currentUser={user} />
-              </div>
-            ))} */}
+            <div className={`main ${theme}`}>
+                <div className={`conversations ${theme}`}>
+                    <div className={`box ${theme}`}>
+                        <p className="inder h4 margin-bottom">CONVERSATIONS</p>
+                        <div className="conversation-box">
+                            <div className="inline-left gap">
+                                <img src={`${API_DOMAIN}/public/uploads/default.jpg`} style={{ borderRadius: 40, width: "40px" }} />
+                                <p>{user.fullName}</p>
+                            </div>
+                            <div className="roboto light small" style={{ marginLeft: '50px' }}>
+                                <p>hello? how are you? Long time no see. </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div className="chatBox">
-                    <div className="chatBoxWrapper">
-                        {currentChat ? (
-                            <>
-                                <div className="chatBoxTop">
-                                    {/* {messages.map((m) => (
-                    <div ref={scrollRef}>
-                      <Message message={m} own={m.sender === user._id} />
+                <div className={`messages ${theme}`}>
+                    <div className={`box1 ${theme}`}>
+                        <div className="receiver">
+                            <div className="inline-left gap">
+                                <img src={`${API_DOMAIN}/public/uploads/default.jpg`} style={{ borderRadius: 40, width: "40px" }} />
+                                <p>{user.fullName}</p>
+                            </div>
+                            <Icons.BsThreeDotsVertical className={`icon ${theme}`} />
+                        </div>
+                        <div></div>
+                        <Message />
                     </div>
-                  ))} */}
-                                </div>
-                                <div className="chatBoxBottom">
-                                    <textarea
-                                        className="chatMessageInput"
-                                        placeholder="write something..."
-                                        onChange={(e) => setNewMessage(e.target.value)}
-                                        value={newMessage}
-                                    ></textarea>
-                                    <button className="chatSubmitButton" onClick={handleSubmit}>
-                                        Send
-                                    </button>
-                                </div>
-                            </>
-                        ) : (
-                            <span className="noConversationText">
-                                Open a conversation to start a chat.
-                            </span>
-                        )}
+                    <div className={`box ${theme}`}>
+                        <div className="send-box">
+                            <input type="text" value={messageText} onChange={(e) => setMessageText(e.target.value)} />
+                            <div className="send-btn" onClick={sendMessage}>SEND</div >
+                        </div>
                     </div>
                 </div>
-                <div className="chatOnline">
-                    <div className="chatOnlineWrapper">
-                        {/* <ChatOnline
-              onlineUsers={onlineUsers}
-              currentId={user._id}
-              setCurrentChat={setCurrentChat}
-            /> */}
-                    </div>
+                <div className={`users ${theme}`}>
+                    <Suspense fallback={<div className={`loadingBox3 box ${theme}`}>Loading...<SpinningIcon /></div>}>
+                        <FriendsBox type="chat" />
+                    </Suspense>
                 </div>
             </div>
         </>

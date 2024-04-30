@@ -1,16 +1,13 @@
 import { useTheme } from "../context/theme";
-import PersonRemoveRoundedIcon from '@mui/icons-material/PersonRemoveRounded';
-import PersonAddAltOutlinedIcon from '@mui/icons-material/PersonAddAltOutlined';
 import { useAuth } from '../context/AuthProvider';
 import { useState, useEffect } from "react";
 import axios from 'axios';
-import { Divider } from "@mui/material";
 import { API_DOMAIN } from "../utils/api-domain";
 import SpinningIcon from "../components/SpinningIcon";
 import AnimatedBox from "../components/Box";
 import * as Icons from "../utils/Icons";
 
-function FriendsBox({ type }) {
+function FriendsBox({ type, onClick }) {
     const { theme } = useTheme();
     const { token, user, friends, setUser } = useAuth();
     const [users, setUsers] = useState([]);
@@ -27,7 +24,7 @@ function FriendsBox({ type }) {
                 { headers: { Authorization: `Bearer ${token}` } });
             if (type === 'home') {
                 setUsers(res.data)
-            } else if (type === 'profile') {
+            } else if (type === 'profile' || type === 'chat') {
                 setUsers(friends);
             }
 
@@ -54,11 +51,15 @@ function FriendsBox({ type }) {
         }
     };
 
+    const handleClick = (friendId) => {
+        onClick(friendId);
+    };
+
     let filteredUsers;
     if (type === 'home') {
         filteredUsers = users.filter(u => u.userName.toLowerCase().includes(searchTerm.toLowerCase()));
         filteredUsers = filteredUsers.sort(() => 0.5 - Math.random()).slice(0, 4);
-    } else if (type === 'profile') {
+    } else if (type === 'profile' || type === 'chat') {
         filteredUsers = users.filter(u => user.friends.includes(u._id) && u.userName.toLowerCase().includes(searchTerm.toLowerCase()));
     }
 
@@ -71,7 +72,7 @@ function FriendsBox({ type }) {
             <AnimatedBox >
                 <div className="space-between margin-bottom">
                     <div className="inline-left gap">
-                        <p className="inder h4">LAZY CODERS</p>
+                        <p className="inder h4">{type === 'home' ? 'LAZY CODERS' : 'FRIENDS'}</p>
                         {type === 'home' && (
                             <div onClick={handleShowMore}><SpinningIcon /></div>
                         )}
@@ -89,19 +90,25 @@ function FriendsBox({ type }) {
                     <Icons.IoSearch className={`icon white ${theme}`} />
                 </div>
                 {filteredUsers.length === 0 ?
-                    <div style={{textAlign:'center', padding:'15px 0px'}}> <p>No friends yet!</p> </div>
+                    <div style={{ textAlign: 'center', padding: '15px 0px' }}> <p>No friends yet!</p> </div>
                     : filteredUsers.map(filteredUser => (
                         <div className="space-between margin-top" key={filteredUser._id}>
                             <div className="inline-left gap">
                                 <img src={`${API_DOMAIN}/public${filteredUser.profilePicture ? filteredUser.profilePicture : '/uploads/default.jpg'}`} style={{ borderRadius: 40, width: "40px" }} />
                                 <div className="column">
-                                    <p className={`typography3 ${theme}`}>{filteredUser.fullName}</p>
+                                    <p className={`typography3 ${theme}`} style={{cursor:'pointer'}} >{filteredUser.fullName}</p>
                                     <p className={`typography4 ${theme}`}>{filteredUser.occupation}</p>
                                 </div>
                             </div>
-                            <button className="follow-btn" onClick={() => toggleFollow(filteredUser)}>
-                                {user.friends.includes(filteredUser._id) ? <Icons.HiUserRemove className={`icon orange ${theme}`} style={{ fontSize: '30px' }} /> : <Icons.HiOutlineUserAdd className={`icon ${theme}`} style={{ fontSize: '30px' }} />}
-                            </button>
+                            {(type === 'home' || type === 'profile') && (
+                                <button className="follow-btn" onClick={() => toggleFollow(filteredUser)}>
+                                    {user.friends.includes(filteredUser._id) ? <Icons.HiUserRemove className={`icon orange ${theme}`} style={{ fontSize: '30px' }} /> : <Icons.HiOutlineUserAdd className={`icon ${theme}`} style={{ fontSize: '30px' }} />}
+                                </button>
+                            )
+                            }
+                            {type === 'chat' && (
+                                <div><Icons.BiMessageRoundedAdd className={`icon ${theme}`} style={{ fontSize: '30px' }} /></div>
+                            )}
                         </div>
                     ))}
             </AnimatedBox>
