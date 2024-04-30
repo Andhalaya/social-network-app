@@ -46,11 +46,6 @@
   border-radius: 10px;
 }
 
-.friends{
-  background-color: rgba(0, 0, 255, 0.27);
-  padding: 30px;
-  flex: 20%;
-}
 
 .user:hover{
   background-color: rgb(17, 16, 29);

@@ -7,7 +7,9 @@ import Header from "../../components/Header";
 import io from 'socket.io-client';
 import "./Messages.css";
 import SpinningIcon from "../../components/SpinningIcon";
-import Message from "../../components/Message";
+import Message from "./Message";
+import Conversation from "./Conversation";
+import ChatOnline from "./ChatOnline"
 import * as Icons from "../../utils/Icons";
 import { lazy, Suspense } from "react";
 
@@ -16,162 +18,143 @@ const FriendsBox = lazy(() => import("../../widgets/FriendsBox"));
 function Messages() {
     const { theme } = useTheme();
     const { token, user } = useAuth();
-    const [chats, setChats] = useState([]);
-    const [messageText, setMessageText] = useState('');
+    const [conversations, setConversations] = useState([]);
+    const [currentChat, setCurrentChat] = useState(null);
     const [messages, setMessages] = useState([]);
-    const [selectedChat, setSelectedChat] = useState(null);
-    const [users, setUsers] = useState([])
-    const userId = user._id
+    const [newMessage, setNewMessage] = useState("");
+    const [arrivalMessage, setArrivalMessage] = useState(null);
+    const [onlineUsers, setOnlineUsers] = useState([]);
+    const scrollRef = useRef();
+
+    const socket = useRef(null);
 
     useEffect(() => {
-        const socket = io(`${API_DOMAIN}`);
-    
-        socket.on('connect', () => {
-            console.log('Connected to server');
-        });
-    
-        socket.on('newMessage', (message) => {
-          
-            setMessages(prevMessages => [...prevMessages, message]);
-        });
-    
-        return () => {
-            socket.disconnect();
-        };
-    }, []);
-    
-    const sendMessage = async () => {
-        if (!selectedChat || !messageText) return;
-    
-        try {
-           
-            const message = {
-                conversationId: selectedChat._id,
-                text: messageText,
-                sender: userId
-            };
-            socket.emit('sendMessage', message);
-        } catch (error) {
-            console.error('Error sending message:', error);
-            return;
-        }
-    
-        setMessageText('');
-    };
-
-    const fetchFriends = async () => {
-        try {
-            const res = await axios.get(`${API_DOMAIN}/users`)
-            setUsers(res.data)
-        } catch (error) {
-            console.error('Error fetching users:', error);
-        }
-    }
-
-    useEffect(() => {
-       const fetchChats = async () => {
-        try {
-            const response = await axios.get(`${API_DOMAIN}/conversations/${userId}`);
-            setChats(response.data);
-
-        } catch (error) {
-            console.error('Error fetching chats:', error);
-        }
-        fetchChats();
-    }; 
-    }, [userId])
-
-    
-
-    const fetchMessages = async (chatId) => {
-        try {
-            const response = await axios.get(`${API_DOMAIN}/messages/${chatId}`);
-            setMessages(response.data);
-            console.log(response.data)
-        } catch (error) {
-            console.error('Error fetching messages:', error);
-        }
-    };
-
-
-    const handleUserClick = async (friendId) => {
-        try {
-
-            const existingChat = chats.find(c => {
-                return c.members.includes(userId) && c.members.includes(friendId);
+        socket.current = io(`${API_DOMAIN}`);
+        socket.current.on("getMessage", (data) => {
+            setArrivalMessage({
+                sender: data.senderId,
+                text: data.text,
+                createdAt: Date.now(),
             });
-
-            if (existingChat) {
-                setSelectedChat(existingChat);
-                fetchMessages(existingChat._id);
-            } else {
-
-                const response = await axios.post(`${API_DOMAIN}/conversations`, {
-                    receiverId: friendId,
-                    senderId: userId
-                });
-                const newChat = response.data;
-                setChats([...chats, newChat]);
-                setSelectedChat(newChat);
-                fetchMessages(newChat._id);
-            }
-        } catch (error) {
-            console.error('Error handling user click:', error);
-        }
-    };
-
+        });
+    }, []);
 
     useEffect(() => {
-        if (selectedChat) {
-            fetchMessages(selectedChat._id);
+        arrivalMessage &&
+            currentChat?.members.includes(arrivalMessage.sender) &&
+            setMessages((prev) => [...prev, arrivalMessage]);
+    }, [arrivalMessage, currentChat]);
+
+    useEffect(() => {
+        socket.current.emit("addUser", user._id);
+        socket.current.on("getUsers", (users) => {
+            setOnlineUsers(
+                user.friends.filter((f) => users.some((u) => u.userId === f))
+            );
+            console.log("Current user:", user.fullName)
+        });
+    }, [user]);
+
+    useEffect(() => {
+        const getConversations = async () => {
+            try {
+                const res = await axios.get(`${API_DOMAIN}/conversations/${user._id}`);
+                setConversations(res.data);
+                console.log("getConversations", res.data)
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        getConversations();
+    }, [user._id]);
+    useEffect(() => {
+        const getMessages = async () => {
+            try {
+                const res = await axios.get(`${API_DOMAIN}/messages/` + currentChat?._id);
+                setMessages(res.data);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        getMessages();
+    }, [currentChat]);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const message = {
+            sender: user._id,
+            text: newMessage,
+            conversationId: currentChat._id,
+        };
+
+        const receiverId = currentChat.members.find(
+            (member) => member !== user._id
+        );
+
+        socket.current.emit("sendMessage", {
+            senderId: user._id,
+            receiverId,
+            text: newMessage,
+        });
+
+        try {
+            const res = await axios.post(`${API_DOMAIN}/messages`, message);
+            setMessages([...messages, res.data]);
+            setNewMessage("");
+        } catch (err) {
+            console.log(err);
         }
-    }, [selectedChat]);
+    };
+    useEffect(() => {
+        scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [messages]);
 
     return (
         <>
             <Header />
             <div className={`main ${theme}`}>
-                <div>
-                  <div className="friends">
-                    <h2>FRIENDS</h2>
-                    {users.map((user, index) => (
-                        <p onClick={() => handleUserClick(user._id)} key={index} className='user'>{user.fullName}</p>
-                    ))}
-                </div>
-                <FriendsBox type='chat' />  
-                </div>
-                
-                <div className='messages'>
-                    <h2>Mensajes</h2>  
-                    {selectedChat && (
-                        <div>
-                            <h3>Chat con {selectedChat.members[1]}</h3>
-                            <ul>
-                                {messages.map((message, index) => (
-                                    <li key={index} style={{backgroundColor:(message.sender === userId) ? 'red' : 'blue'}}>{message.text}</li>
-                                ))}
-                            </ul>
-
-                        </div>
-                    )}
-                    <div className="message-input">
-                        <input
-                            type="text"
-                            value={messageText}
-                            onChange={(e) => setMessageText(e.target.value)}
-                        />
-                        <button onClick={sendMessage}>Enviar</button>
-                    </div>
-                </div>
-                <div className='chats'>
-                    <h2>CHATS</h2>
-                    <ul>
-                        {chats.map((chat, index) => (
-                            <li key={index} onClick={() => setSelectedChat(chat)}>
-                                {chat.members[1]}
-                            </li>
+                <h2>{user.fullName}</h2>
+                <div style={{ display: 'flex' }}>
+                    <div className="conversations">
+                        {conversations.map((c) => (
+                            <div onClick={() => setCurrentChat(c)}>
+                               <div>{c._id}</div>
+                            </div>
                         ))}
-                    </ul>
+                    </div>
+                    <div className='messages'>
+                        {currentChat ? (
+                            <>
+                                <div className="chatBoxTop">
+                                    {messages.map((m) => (
+                                        <div ref={scrollRef}>
+                                            <Message message={m} own={m.sender === user._id} />
+                                        </div>
+                                    ))}
+                                </div>
+                                <div className="chatBoxBottom">
+                                    <textarea
+                                        className="chatMessageInput"
+                                        placeholder="write something..."
+                                        onChange={(e) => setNewMessage(e.target.value)}
+                                        value={newMessage}
+                                    ></textarea>
+                                    <button className="chatSubmitButton" onClick={handleSubmit}>
+                                        Send
+                                    </button>
+                                </div>
+                            </>
+                        ) : (
+                            <span className="noConversationText">
+                                Open a conversation to start a chat.
+                            </span>
+                        )}
+                    </div>
+                    <ChatOnline
+                        onlineUsers={onlineUsers}
+                        currentId={user._id}
+                        setCurrentChat={setCurrentChat}
+                    />
                 </div>
             </div>
         </>
