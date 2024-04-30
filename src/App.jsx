@@ -9,6 +9,7 @@ import LoginPage from './pages/LoginPage/INDEX';
 import Home from './pages/Home/index';
 import Profile from './pages/Profile/index';
 import Project from './pages/Project/index';
+import Messages from './pages/Messages/index';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ const AppContent = () => {
           <Route path='/home' element={<Home />} />
           <Route path='/my-profile' element={<Profile />} />
           <Route path='/projects/:projectId'element={<Project />} />
+          <Route path='/messages' element={<Messages />} />
         </Route>
       </Routes>
     </div>  

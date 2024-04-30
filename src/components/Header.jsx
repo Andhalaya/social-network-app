@@ -61,7 +61,7 @@ function Header() {
             <div className={`nav ${showMenu ? 'nav-mobile' : 'hidden'}`}>
                 <Icons.AiOutlineUser onClick={() => { navigate('/my-profile') }} className={`icon ${theme}`} />
                 <Icons.IoNotificationsOutline className={`icon ${theme}`} />
-                <Icons.IoChatbubblesOutline className={`icon ${theme}`} />
+                <Icons.IoChatbubblesOutline onClick={() => { navigate('/messages') }} className={`icon ${theme}`} />
                 <DropdownMenu
                     trigger={<Icons.IoSettingsOutline className={`icon ${theme}`} />}
                 >

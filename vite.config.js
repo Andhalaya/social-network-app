@@ -9,5 +9,14 @@ export default defineConfig({
 
   define: {
     'process.env': process.env
+  },
+  server: {
+    proxy: {
+      '/socket.io': {
+        target: 'http://localhost:8080',
+        ws: true,
+        changeOrigin: true,
+      },
+    }
   }
 });
