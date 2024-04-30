@@ -19,7 +19,7 @@ function Messages() {
     // const socket = useRef();
     const { token, user } = useAuth();
     const scrollRef = useRef();
-    const socket = io('http://localhost:8080');
+    const socket = io('/');
     useEffect(() => {
         socket.on('connect', () => {
           console.log('Connected to server');
