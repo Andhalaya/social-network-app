@@ -4,7 +4,7 @@ import { API_DOMAIN } from "../../utils/api-domain";
 import axios from "axios";
 import { useAuth } from "../../context/AuthProvider";
 import Header from "../../components/Header";
-import { io } from "socket.io-client";
+import io from 'socket.io-client';
 import "./Messages.css";
 import SpinningIcon from "../../components/SpinningIcon";
 import Message from "../../components/Message";
@@ -16,84 +16,166 @@ const FriendsBox = lazy(() => import("../../widgets/FriendsBox"));
 function Messages() {
     const { theme } = useTheme();
     const { token, user } = useAuth();
-    const socket = io('/');
-    const [conversations, setConversations] = useState(null)
+    const [chats, setChats] = useState([]);
     const [messageText, setMessageText] = useState('');
+    const [messages, setMessages] = useState([]);
+    const [selectedChat, setSelectedChat] = useState(null);
+    const [users, setUsers] = useState([])
+    const userId = user._id
 
     useEffect(() => {
-        fetchConversations();
+        const socket = io(`${API_DOMAIN}`);
+    
+        socket.on('connect', () => {
+            console.log('Connected to server');
+        });
+    
+        socket.on('newMessage', (message) => {
+          
+            setMessages(prevMessages => [...prevMessages, message]);
+        });
+    
+        return () => {
+            socket.disconnect();
+        };
     }, []);
-
-    const fetchConversations = async () => {
-        try {
-            const response = await axios.get(`${API_DOMAIN}/conversations/6628389ac83d5d5bf9335b6a`);
-            setConversations(response.data);
-            console.log({conversations: response.data})
-        } catch (error) {
-            console.error("Error fetching conversations:", error);
-        }
-    };
+    
     const sendMessage = async () => {
+        if (!selectedChat || !messageText) return;
+    
         try {
-            
-            const res = await axios.post(`${API_DOMAIN}/messages`, {
-                conversationId: '6631016e127b310c1c598452', 
-                sender: user._id,
-                text: messageText
-            });
-            setMessageText('');
-            console.log(res)
+           
+            const message = {
+                conversationId: selectedChat._id,
+                text: messageText,
+                sender: userId
+            };
+            socket.emit('sendMessage', message);
         } catch (error) {
             console.error('Error sending message:', error);
+            return;
+        }
+    
+        setMessageText('');
+    };
+
+    const fetchFriends = async () => {
+        try {
+            const res = await axios.get(`${API_DOMAIN}/users`)
+            setUsers(res.data)
+        } catch (error) {
+            console.error('Error fetching users:', error);
+        }
+    }
+
+    useEffect(() => {
+       const fetchChats = async () => {
+        try {
+            const response = await axios.get(`${API_DOMAIN}/conversations/${userId}`);
+            setChats(response.data);
+
+        } catch (error) {
+            console.error('Error fetching chats:', error);
+        }
+        fetchChats();
+    }; 
+    }, [userId])
+
+    
+
+    const fetchMessages = async (chatId) => {
+        try {
+            const response = await axios.get(`${API_DOMAIN}/messages/${chatId}`);
+            setMessages(response.data);
+            console.log(response.data)
+        } catch (error) {
+            console.error('Error fetching messages:', error);
         }
     };
-    
+
+
+    const handleUserClick = async (friendId) => {
+        try {
+
+            const existingChat = chats.find(c => {
+                return c.members.includes(userId) && c.members.includes(friendId);
+            });
+
+            if (existingChat) {
+                setSelectedChat(existingChat);
+                fetchMessages(existingChat._id);
+            } else {
+
+                const response = await axios.post(`${API_DOMAIN}/conversations`, {
+                    receiverId: friendId,
+                    senderId: userId
+                });
+                const newChat = response.data;
+                setChats([...chats, newChat]);
+                setSelectedChat(newChat);
+                fetchMessages(newChat._id);
+            }
+        } catch (error) {
+            console.error('Error handling user click:', error);
+        }
+    };
+
+
+    useEffect(() => {
+        if (selectedChat) {
+            fetchMessages(selectedChat._id);
+        }
+    }, [selectedChat]);
+
     return (
         <>
             <Header />
             <div className={`main ${theme}`}>
-                <div className={`conversations ${theme}`}>
-                    <div className={`box ${theme}`}>
-                        <p className="inder h4 margin-bottom">CONVERSATIONS</p>
-                        <div className="conversation-box">
-                            <div className="inline-left gap">
-                                <img src={`${API_DOMAIN}/public/uploads/default.jpg`} style={{ borderRadius: 40, width: "40px" }} />
-                                <p>{user.fullName}</p>
-                            </div>
-                            <div className="roboto light small" style={{ marginLeft: '50px' }}>
-                                <p>hello? how are you? Long time no see. </p>
-                            </div>
+                <div>
+                  <div className="friends">
+                    <h2>FRIENDS</h2>
+                    {users.map((user, index) => (
+                        <p onClick={() => handleUserClick(user._id)} key={index} className='user'>{user.fullName}</p>
+                    ))}
+                </div>
+                <FriendsBox type='chat' />  
+                </div>
+                
+                <div className='messages'>
+                    <h2>Mensajes</h2>  
+                    {selectedChat && (
+                        <div>
+                            <h3>Chat con {selectedChat.members[1]}</h3>
+                            <ul>
+                                {messages.map((message, index) => (
+                                    <li key={index} style={{backgroundColor:(message.sender === userId) ? 'red' : 'blue'}}>{message.text}</li>
+                                ))}
+                            </ul>
+
                         </div>
+                    )}
+                    <div className="message-input">
+                        <input
+                            type="text"
+                            value={messageText}
+                            onChange={(e) => setMessageText(e.target.value)}
+                        />
+                        <button onClick={sendMessage}>Enviar</button>
                     </div>
                 </div>
-                <div className={`messages ${theme}`}>
-                    <div className={`box1 ${theme}`}>
-                        <div className="receiver">
-                            <div className="inline-left gap">
-                                <img src={`${API_DOMAIN}/public/uploads/default.jpg`} style={{ borderRadius: 40, width: "40px" }} />
-                                <p>{user.fullName}</p>
-                            </div>
-                            <Icons.BsThreeDotsVertical className={`icon ${theme}`} />
-                        </div>
-                        <div></div>
-                        <Message />
-                    </div>
-                    <div className={`box ${theme}`}>
-                        <div className="send-box">
-                            <input type="text" value={messageText} onChange={(e) => setMessageText(e.target.value)} />
-                            <div className="send-btn" onClick={sendMessage}>SEND</div >
-                        </div>
-                    </div>
-                </div>
-                <div className={`users ${theme}`}>
-                    <Suspense fallback={<div className={`loadingBox3 box ${theme}`}>Loading...<SpinningIcon /></div>}>
-                        <FriendsBox type="chat" />
-                    </Suspense>
+                <div className='chats'>
+                    <h2>CHATS</h2>
+                    <ul>
+                        {chats.map((chat, index) => (
+                            <li key={index} onClick={() => setSelectedChat(chat)}>
+                                {chat.members[1]}
+                            </li>
+                        ))}
+                    </ul>
                 </div>
             </div>
         </>
-
-    )
+    );
 }
 
 export default Messages;

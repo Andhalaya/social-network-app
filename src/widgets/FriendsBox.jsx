@@ -56,10 +56,10 @@ function FriendsBox({ type, onClick }) {
     };
 
     let filteredUsers;
-    if (type === 'home') {
+    if (type === 'home'|| type === 'chat') {
         filteredUsers = users.filter(u => u.userName.toLowerCase().includes(searchTerm.toLowerCase()));
         filteredUsers = filteredUsers.sort(() => 0.5 - Math.random()).slice(0, 4);
-    } else if (type === 'profile' || type === 'chat') {
+    } else if (type === 'profile' ) {
         filteredUsers = users.filter(u => user.friends.includes(u._id) && u.userName.toLowerCase().includes(searchTerm.toLowerCase()));
     }
 
@@ -72,8 +72,8 @@ function FriendsBox({ type, onClick }) {
             <AnimatedBox >
                 <div className="space-between margin-bottom">
                     <div className="inline-left gap">
-                        <p className="inder h4">{type === 'home' ? 'LAZY CODERS' : 'FRIENDS'}</p>
-                        {type === 'home' && (
+                        <p className="inder h4">{(type === 'home'|| type === 'chat') ? 'LAZY CODERS' : 'FRIENDS'}</p>
+                        {(type === 'home'|| type === 'chat') && (
                             <div onClick={handleShowMore}><SpinningIcon /></div>
                         )}
                     </div>
