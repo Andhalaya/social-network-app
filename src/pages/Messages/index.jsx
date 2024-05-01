@@ -17,7 +17,7 @@ const FriendsBox = lazy(() => import("../../widgets/FriendsBox"));
 
 function Messages() {
     const { theme } = useTheme();
-    const { token, user } = useAuth();
+    const { token, user, friends } = useAuth();
     const [conversations, setConversations] = useState([]);
     const [currentChat, setCurrentChat] = useState(null);
     const [messages, setMessages] = useState([]);
@@ -59,6 +59,7 @@ function Messages() {
         const getConversations = async () => {
             try {
                 const res = await axios.get(`${API_DOMAIN}/conversations/${user._id}`);
+                console.log(res.data)
                 setConversations(res.data);
                 console.log("getConversations", res.data)
             } catch (err) {
@@ -78,7 +79,6 @@ function Messages() {
         };
         getMessages();
     }, [currentChat]);
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         const message = {
@@ -87,24 +87,44 @@ function Messages() {
             conversationId: currentChat._id,
         };
 
-        const receiverId = currentChat.members.find(
-            (member) => member !== user._id
-        );
+        const receiverId = currentChat.members.find((member) => member !== user._id);
 
-        socket.current.emit("sendMessage", {
-            senderId: user._id,
-            receiverId,
-            text: newMessage,
-        });
+        const sendMessage = async () => {
+            try {
+                const res = await axios.post(`${API_DOMAIN}/messages`, message);
+                setMessages([...messages, res.data]);
+                setNewMessage("");
+            } catch (err) {
+                console.log(err);
+            }
+        }
 
-        try {
-            const res = await axios.post(`${API_DOMAIN}/messages`, message);
-            setMessages([...messages, res.data]);
-            setNewMessage("");
-        } catch (err) {
-            console.log(err);
+        if (onlineUsers.includes(receiverId)) {
+            socket.current.emit("sendMessage", {
+                senderId: user._id,
+                receiverId,
+                text: newMessage,
+            });
+            sendMessage();
+
+        } else {
+            sendMessage();
         }
     };
+
+    const startChat = async (friendId) => {
+        try{
+            const res = await axios.post(`${API_DOMAIN}/conversations`, {
+                senderId: user._id,
+                receiverId: friendId
+            })
+            setCurrentChat(res.data)
+            console.log(res.data)
+        }catch(error){
+            console.log(error);
+        }
+    }
+
     useEffect(() => {
         scrollRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [messages]);
@@ -113,14 +133,19 @@ function Messages() {
         <>
             <Header />
             <div className={`main ${theme}`}>
-                <h2>{user.fullName}</h2>
+                <h2>{user.fullName} {user._id}</h2>
                 <div style={{ display: 'flex' }}>
                     <div className="conversations">
                         {conversations.map((c) => (
                             <div onClick={() => setCurrentChat(c)}>
-                               <div>{c._id}</div>
+                                <Conversation conversation={c} currentUser={user} />
                             </div>
                         ))}
+                        <div>
+                        {friends.map((f)=>(
+                            <div onClick={() => startChat(f._id)}>{f.fullName}</div>
+                        ))}
+                    </div>
                     </div>
                     <div className='messages'>
                         {currentChat ? (
