@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTheme } from "../../context/theme";
 import { API_DOMAIN } from "../../utils/api-domain";
 import axios from "axios";
@@ -6,15 +6,10 @@ import { useAuth } from "../../context/AuthProvider";
 import Header from "../../components/Header";
 import io from 'socket.io-client';
 import "./Messages.css";
-import SpinningIcon from "../../components/SpinningIcon";
 import Message from "./Message";
 import Conversation from "./Conversation";
 import ChatOnline from "./ChatOnline"
 import * as Icons from "../../utils/Icons";
-import { lazy, Suspense } from "react";
-import AnimatedBox from "../../components/Box";
-
-const FriendsBox = lazy(() => import("../../widgets/FriendsBox"));
 
 function Messages() {
     const { theme } = useTheme();
@@ -25,6 +20,7 @@ function Messages() {
     const [newMessage, setNewMessage] = useState("");
     const [arrivalMessage, setArrivalMessage] = useState(null);
     const [onlineUsers, setOnlineUsers] = useState([]);
+    const [receiverInfo, setReceiverInfo] = useState(null);
     const scrollRef = useRef();
 
     const socket = useRef(null);
@@ -80,6 +76,25 @@ function Messages() {
         };
         getMessages();
     }, [currentChat]);
+
+    useEffect(() => {
+        if (currentChat) {
+            const receiverId = currentChat.members.find(memberId => memberId !== user._id);
+            const fetchReceiverInfo = async () => {
+                try {
+                    const response = await axios.get(`${API_DOMAIN}/users/${receiverId}`, {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    });
+                    setReceiverInfo(response.data);
+                } catch (error) {
+                    console.error("Error al obtener la información del receptor:", error);
+                }
+            };
+            fetchReceiverInfo();
+        }
+    }, [currentChat, user._id, token]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -144,21 +159,24 @@ function Messages() {
                     <div className={`box3 ${theme}`}>
                         <p className="inder margin-bottom">CONVERSATIONS</p>
                         <div className="conversations-list">
-                            {conversations.map((c) => (
+                            {conversations.length > 0 ? conversations.map((c) => (
                                 <div key={c._id} onClick={() => setCurrentChat(c)}>
                                     <Conversation conversation={c} currentUser={user} />
                                 </div>
-                            ))}
+                            )) : 'no conversations yet'
+                        }
                         </div>
                     </div>
                 </div>
                 <div className={`chat ${theme}`}>
                     <div className={`box2 ${theme}`}>
                         <div className="receiver">
-                            <div className="inline-left gap">
-                                <img src={`${API_DOMAIN}/public${user.profilePicture}`} style={{ borderRadius: 40, width: "40px" }} />
-                                <p>{user.fullName}</p>
-                            </div>
+                            {receiverInfo && (
+                                <div className="inline-left gap">
+                                    <img src={`${API_DOMAIN}/public${receiverInfo.profilePicture}`} style={{ borderRadius: 40, width: "40px" }} />
+                                    <p>{receiverInfo.fullName}</p>
+                                </div>
+                            )}
                             <Icons.BsThreeDotsVertical className={`icon ${theme}`} />
                         </div>
                         <div >
@@ -201,7 +219,7 @@ function Messages() {
                                         <img src={`${API_DOMAIN}/public/${f.profilePicture}`} style={{ borderRadius: 40, width: "30px" }} />
                                         <div key={f._id} >{f.fullName}</div>
                                     </div>
-                                    <Icons.IoChatbubblesOutline className={`icon ${theme}`} onClick={() => startChat(f._id)}/>
+                                    <Icons.IoChatbubblesOutline className={`icon ${theme}`} onClick={() => startChat(f._id)} />
                                 </div>
                             ))}
                         </div>

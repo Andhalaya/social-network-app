@@ -114,6 +114,8 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  max-height: 530px;
+  overflow-y: scroll;
 }
 
 .noConversationText {
