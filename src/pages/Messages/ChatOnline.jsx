@@ -31,13 +31,14 @@ export default function ChatOnline({ onlineUsers, currentId, setCurrentChat }) {
         <div className={`chatOnline box3 ${theme}`}>
             <p className="inder margin-bottom">CONNECTED FRIENDS</p>
             {onlineFriends.length === 0
-                ? <div style={{ textAlign: 'center' }}>No friends connected</div>
+                ? <div style={{ textAlign: 'center', color:'rgba(254, 117, 77, 0.68)' }}>No friends connected</div>
                 : onlineFriends.map((o) => (
-                    <div style={{ cursor: 'pointer', backgroundColor: 'blue' }} onClick={() => handleClick(o)}>
-                        <div className="chatOnlineImgContainer">
-                            <div className="chatOnlineBadge"></div>
+                    <div className="connected-user" onClick={() => handleClick(o)}>
+                        <div className="inline-left gap">
+                            <img src={`${API_DOMAIN}/public${o.profilePicture}`} alt=""  style={{ borderRadius: 40, width: "30px" }}/>
+                            <p className="chatOnlineName">{o?.fullName}</p>
                         </div>
-                        <span className="chatOnlineName">{o?.fullName}</span>
+                        
                     </div>
                 ))}
         </div>

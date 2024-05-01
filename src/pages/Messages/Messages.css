@@ -1,27 +1,28 @@
-.conversations{
+.conversations {
   flex: 20%;
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
-.chat{
+
+.chat {
   flex: 50%;
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.chatOnline{
+.chatOnline {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.users{
+.users {
   flex: 20%;
 }
 
-.messages{
+.messages {
   overflow-y: scroll;
   max-height: 490px;
 }
@@ -32,35 +33,34 @@
   margin-top: 10px;
 }
 
-.messageTop{
-    display: flex;
+.messageTop {
+  display: flex;
 }
 
-.messageText{
-    padding: 10px;
-    border-radius: 10px 10px 10px 0px;
-    background-color: rgba(255, 255, 255, 0.405); 
-    color: white;
-    max-width: 300px;
+.messageText {
+  padding: 10px;
+  border-radius: 10px 10px 10px 0px;
+  background-color: rgba(255, 255, 255, 0.405);
+  color: white;
+  max-width: 300px;
 }
 
-.messageBottom{
-    font-size: 12px;
-    margin-top: 5px;
+.messageBottom {
+  font-size: 12px;
+  margin-top: 5px;
 }
 
-.message.own{
-    align-items: flex-end;
+.message.own {
+  align-items: flex-end;
 }
 
-.message.own .messageText{
+.message.own .messageText {
   background-color: #1877f2;
-    
-    color: rgba(255, 255, 255, 0.842);
-    border-radius: 10px 10px 0px 10px;
+  color: rgba(255, 255, 255, 0.842);
+  border-radius: 10px 10px 0px 10px;
 }
 
-.send-box{
+.send-box {
   display: flex;
   width: 100%;
   justify-content: space-between;
@@ -68,20 +68,21 @@
   max-height: 40px;
 }
 
-.box2, .box3{
+.box2,
+.box3 {
   background-color: rgba(5, 3, 19, 0.28);
-  border-radius: 20px; 
+  border-radius: 20px;
 }
 
-.box3{
+.box3 {
   padding: 20px;
 }
 
-.box2.dark{
+.box2.dark {
   height: 550px;
 }
 
-.receiver{
+.receiver {
   background-color: rgba(0, 0, 0, 0.377);
   display: flex;
   justify-content: space-between;
@@ -92,25 +93,25 @@
   top: -20px;
 }
 
-.send-box input{
+.send-box input {
   width: 100%;
   border-radius: 10px;
   padding: 5px;
 }
 
-.send-btn{
+.send-btn {
   background-color: #FE754D;
   padding: 10px 25px;
   border-radius: 10px;
 }
 
-.conversations-list{
+.conversations-list {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.noConversationText{
+.noConversationText {
   width: 100%;
   height: 500px;
   display: flex;
@@ -118,3 +119,31 @@
   align-items: center;
 }
 
+.conversation {
+  background-color: #ffffff10;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.conversation:hover {
+  background-color: #fe764d62;
+  cursor: pointer;
+}
+
+.lastMessage{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  margin-left: 40px;
+  color: rgba(255, 255, 255, 0.548);
+}
+
+.connected-user{
+  color: rgba(254, 117, 77, 0.68);
+  cursor: pointer;
+}
+
+.connected-user:hover{
+  color: rgb(216, 62, 16);
+}

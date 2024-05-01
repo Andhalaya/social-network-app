@@ -122,14 +122,6 @@ function Messages() {
             console.log(error);
         }
     }
-    
-    const getLastMessage = (conversation) => {
-        if (conversation.messages.length > 0) {
-            return conversation.messages[conversation.messages.length - 1];
-        } else {
-            return null;
-        }
-    };
 
     useEffect(() => {
         scrollRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -146,18 +138,14 @@ function Messages() {
                         setCurrentChat={setCurrentChat}
                     />
                     <div className={`box3 ${theme}`}>
-                        <p className="inder margin-bottom">CONVERSATIONS</p>
-                        <div className="conversations-list">
-                            {conversations.map((c) => {
-                                const lastMessage = getLastMessage(c); 
-                                return (
-                                    <div key={c._id} onClick={() => handleConversationClick(c)}>
-                                        <Conversation conversation={c} currentUser={user} lastMessage={lastMessage} />
-                                    </div>
-                                );
-                            })}
-                        </div>
-
+                    <p className="inder margin-bottom">CONVERSATIONS</p>
+                    <div className="conversations-list">
+                         {conversations.map((c) => (
+                            <div key={c._id} onClick={() => setCurrentChat(c)}>
+                                <Conversation conversation={c} currentUser={user} />
+                            </div>
+                        ))}
+                    </div>
                     </div>
                 </div>
                 <div className={`chat ${theme}`}>

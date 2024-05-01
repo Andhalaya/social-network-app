@@ -25,7 +25,7 @@ import { IoNotificationsOutline } from "react-icons/io5";
 import { IoIosLogOut } from "react-icons/io";
 import { BiMessageRoundedAdd } from "react-icons/bi";
 import { BsThreeDotsVertical } from "react-icons/bs";
-
+import { GrProjects } from "react-icons/gr";
 
 export {
     BiCodeBlock,
@@ -54,5 +54,6 @@ export {
     IoNotificationsOutline,
     IoIosLogOut,
     BiMessageRoundedAdd,
-    BsThreeDotsVertical
+    BsThreeDotsVertical,
+    GrProjects
   }
