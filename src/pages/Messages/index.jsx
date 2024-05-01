@@ -12,6 +12,7 @@ import Conversation from "./Conversation";
 import ChatOnline from "./ChatOnline"
 import * as Icons from "../../utils/Icons";
 import { lazy, Suspense } from "react";
+import AnimatedBox from "../../components/Box";
 
 const FriendsBox = lazy(() => import("../../widgets/FriendsBox"));
 
@@ -113,14 +114,14 @@ function Messages() {
     };
 
     const startChat = async (friendId) => {
-        try{
+        try {
             const res = await axios.post(`${API_DOMAIN}/conversations`, {
                 senderId: user._id,
                 receiverId: friendId
             })
             setCurrentChat(res.data)
             console.log(res.data)
-        }catch(error){
+        } catch (error) {
             console.log(error);
         }
     }
@@ -133,54 +134,75 @@ function Messages() {
         <>
             <Header />
             <div className={`main ${theme}`}>
-                <h2>{user.fullName} {user._id}</h2>
-                <div style={{ display: 'flex' }}>
-                    <div className="conversations">
-                        {conversations.map((c) => (
-                            <div onClick={() => setCurrentChat(c)}>
-                                <Conversation conversation={c} currentUser={user} />
-                            </div>
-                        ))}
-                        <div>
-                        {friends.map((f)=>(
-                            <div onClick={() => startChat(f._id)}>{f.fullName}</div>
-                        ))}
-                    </div>
-                    </div>
-                    <div className='messages'>
-                        {currentChat ? (
-                            <>
-                                <div className="chatBoxTop">
-                                    {messages.map((m) => (
-                                        <div ref={scrollRef}>
-                                            <Message message={m} own={m.sender === user._id} />
-                                        </div>
-                                    ))}
-                                </div>
-                                <div className="chatBoxBottom">
-                                    <textarea
-                                        className="chatMessageInput"
-                                        placeholder="write something..."
-                                        onChange={(e) => setNewMessage(e.target.value)}
-                                        value={newMessage}
-                                    ></textarea>
-                                    <button className="chatSubmitButton" onClick={handleSubmit}>
-                                        Send
-                                    </button>
-                                </div>
-                            </>
-                        ) : (
-                            <span className="noConversationText">
-                                Open a conversation to start a chat.
-                            </span>
-                        )}
-                    </div>
+                <div className="conversations">
                     <ChatOnline
                         onlineUsers={onlineUsers}
                         currentId={user._id}
                         setCurrentChat={setCurrentChat}
                     />
+                    <div className={`box3 ${theme}`}>
+                        {conversations.map((c) => (
+                            <div onClick={() => setCurrentChat(c)}>
+                                <Conversation conversation={c} currentUser={user} />
+                            </div>
+                        ))}
+                    </div>
+
+
                 </div>
+                <div className={`chat ${theme}`}>
+                    <div className={`box2 ${theme}`}>
+                        <div className="receiver">
+                            <div className="inline-left gap">
+                                <img src={`${API_DOMAIN}/public/uploads/default.jpg`} style={{ borderRadius: 40, width: "40px" }} />
+                                <p>{user.fullName}</p>
+                            </div>
+                            <Icons.BsThreeDotsVertical className={`icon ${theme}`} />
+                        </div>
+                        <div >
+                            {currentChat ? (
+                                <div className='messages' style={{ padding: '20px' }}>
+                                    {messages.map((m) => (
+                                        <div className="message-box" ref={scrollRef}>
+                                            <Message message={m} own={m.sender === user._id} />
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className="noConversationText">
+                                    Select a user to start a chat.
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                    <div className={`box3 ${theme}`}>
+                        <div className="send-box">
+                            <input
+                                className="chatMessageInput"
+                                placeholder="write something..."
+                                onChange={(e) => setNewMessage(e.target.value)}
+                                value={newMessage}
+                            />
+                            <div className="send-btn" onClick={handleSubmit}>
+                                Send
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="users">
+                    {friends.map((f) => (
+                        <div onClick={() => startChat(f._id)}>{f.fullName}</div>
+                    ))}
+                </div>
+                {/* <h2>{user.fullName} {user._id}</h2>
+                <div style={{ display: 'flex' }}>
+                    <div className="conversations">
+                        
+                    </div>
+                    </div>
+                   
+                   
+                </div> */}
             </div>
         </>
     );

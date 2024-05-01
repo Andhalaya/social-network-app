@@ -30,9 +30,9 @@ export default function Conversation({ conversation, currentUser }) {
   }, [currentUser, conversation]);
 
   return (
-    <div className="conversation">
-        {/* <img src={`${API_DOMAIN}/public${user.profilePicture}`} alt="" width='40px'/> */}
-      <span className="conversationName">{user ? user.fullName : ''}</span>
+    <div className="inline-left gap">
+        <img src={`${API_DOMAIN}/public/default.jpg`} style={{ borderRadius: 40, width: "40px" }}/>
+        <span className="conversationName">{user ? user.fullName : ''}</span>
     </div>
   );
 }
