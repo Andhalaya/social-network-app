@@ -42,7 +42,7 @@ export default function Conversation({ conversation, currentUser }) {
             </div>         
           <div className="lastMessage">
             <p style={{fontSize:'12px'}}>{conversation.messages.length > 0 ?  calculateTimeAgo(conversation.messages[conversation.messages.length - 1].createdAt) : ''}</p>
-            <p>{conversation.messages.length > 0 ? conversation.messages[conversation.messages.length - 1].text : 'No messages yet'}</p>
+            <p>{conversation.messages.length > 0 ? conversation.messages[conversation.messages.length - 1].text : <em style={{fontSize:'12px'}}>No messages yet</em>}</p>
           </div>
         </div>
       )}

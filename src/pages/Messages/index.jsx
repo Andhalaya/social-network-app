@@ -56,17 +56,19 @@ function Messages() {
         });
     }, [user]);
 
+    const getConversations = async () => {
+        try {
+            const res = await axios.get(`${API_DOMAIN}/conversations/${user._id}`);
+            setConversations(res.data);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
     useEffect(() => {
-        const getConversations = async () => {
-            try {
-                const res = await axios.get(`${API_DOMAIN}/conversations/${user._id}`);
-                setConversations(res.data);
-            } catch (err) {
-                console.log(err);
-            }
-        };
         getConversations();
     }, [user._id]);
+
     useEffect(() => {
         const getMessages = async () => {
             try {
@@ -78,6 +80,7 @@ function Messages() {
         };
         getMessages();
     }, [currentChat]);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const message = {
@@ -118,6 +121,7 @@ function Messages() {
                 receiverId: friendId
             })
             setCurrentChat(res.data)
+            getConversations();
         } catch (error) {
             console.log(error);
         }
@@ -138,14 +142,14 @@ function Messages() {
                         setCurrentChat={setCurrentChat}
                     />
                     <div className={`box3 ${theme}`}>
-                    <p className="inder margin-bottom">CONVERSATIONS</p>
-                    <div className="conversations-list">
-                         {conversations.map((c) => (
-                            <div key={c._id} onClick={() => setCurrentChat(c)}>
-                                <Conversation conversation={c} currentUser={user} />
-                            </div>
-                        ))}
-                    </div>
+                        <p className="inder margin-bottom">CONVERSATIONS</p>
+                        <div className="conversations-list">
+                            {conversations.map((c) => (
+                                <div key={c._id} onClick={() => setCurrentChat(c)}>
+                                    <Conversation conversation={c} currentUser={user} />
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
                 <div className={`chat ${theme}`}>
@@ -188,9 +192,22 @@ function Messages() {
                     </div>
                 </div>
                 <div className="users">
-                    {friends.map((f) => (
-                        <div key={f._id} onClick={() => startChat(f._id)}>{f.fullName}</div>
-                    ))}
+                    <div className="box3 column">
+                        <p className="inder margin-bottom">FRIENDS</p>
+                        <div className="friends-list">
+                            {friends.map((f) => (
+                                <div className="space-between">
+                                    <div className="inline-left gap">
+                                        <img src={`${API_DOMAIN}/public/${f.profilePicture}`} style={{ borderRadius: 40, width: "30px" }} />
+                                        <div key={f._id} >{f.fullName}</div>
+                                    </div>
+                                    <Icons.IoChatbubblesOutline className={`icon ${theme}`} onClick={() => startChat(f._id)}/>
+                                </div>
+                            ))}
+                        </div>
+
+                    </div>
+
                 </div>
             </div>
         </>

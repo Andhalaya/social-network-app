@@ -147,3 +147,10 @@
 .connected-user:hover{
   color: rgb(216, 62, 16);
 }
+
+.friends-list{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 10px;
+}
