@@ -26,26 +26,38 @@
   max-height: 490px;
 }
 
-.message{
+.message {
   display: flex;
-  justify-content: right;
+  flex-direction: column;
   margin-top: 10px;
-  width: 100%;
 }
 
-.message p{
-  background-color: rgba(240, 255, 255, 0.336);
-  border-radius: 10px 10px 0px 10px;
-  padding: 5px 10px;
+.messageTop{
+    display: flex;
 }
 
-.own{
-  display: flex;
-  justify-content: left;
+.messageText{
+    padding: 10px;
+    border-radius: 10px 10px 10px 0px;
+    background-color: rgba(255, 255, 255, 0.405); 
+    color: white;
+    max-width: 300px;
 }
 
-.own p{
-  background-color: #FE754D;
+.messageBottom{
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.message.own{
+    align-items: flex-end;
+}
+
+.message.own .messageText{
+  background-color: #1877f2;
+    
+    color: rgba(255, 255, 255, 0.842);
+    border-radius: 10px 10px 0px 10px;
 }
 
 .send-box{
@@ -92,5 +104,17 @@
   border-radius: 10px;
 }
 
+.conversations-list{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 
+.noConversationText{
+  width: 100%;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 

@@ -60,9 +60,7 @@ function Messages() {
         const getConversations = async () => {
             try {
                 const res = await axios.get(`${API_DOMAIN}/conversations/${user._id}`);
-                console.log(res.data)
                 setConversations(res.data);
-                console.log("getConversations", res.data)
             } catch (err) {
                 console.log(err);
             }
@@ -120,11 +118,18 @@ function Messages() {
                 receiverId: friendId
             })
             setCurrentChat(res.data)
-            console.log(res.data)
         } catch (error) {
             console.log(error);
         }
     }
+    
+    const getLastMessage = (conversation) => {
+        if (conversation.messages.length > 0) {
+            return conversation.messages[conversation.messages.length - 1];
+        } else {
+            return null;
+        }
+    };
 
     useEffect(() => {
         scrollRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -141,20 +146,25 @@ function Messages() {
                         setCurrentChat={setCurrentChat}
                     />
                     <div className={`box3 ${theme}`}>
-                        {conversations.map((c) => (
-                            <div onClick={() => setCurrentChat(c)}>
-                                <Conversation conversation={c} currentUser={user} />
-                            </div>
-                        ))}
+                        <p className="inder margin-bottom">CONVERSATIONS</p>
+                        <div className="conversations-list">
+                            {conversations.map((c) => {
+                                const lastMessage = getLastMessage(c); 
+                                return (
+                                    <div key={c._id} onClick={() => handleConversationClick(c)}>
+                                        <Conversation conversation={c} currentUser={user} lastMessage={lastMessage} />
+                                    </div>
+                                );
+                            })}
+                        </div>
+
                     </div>
-
-
                 </div>
                 <div className={`chat ${theme}`}>
                     <div className={`box2 ${theme}`}>
                         <div className="receiver">
                             <div className="inline-left gap">
-                                <img src={`${API_DOMAIN}/public/uploads/default.jpg`} style={{ borderRadius: 40, width: "40px" }} />
+                                <img src={`${API_DOMAIN}/public${user.profilePicture}`} style={{ borderRadius: 40, width: "40px" }} />
                                 <p>{user.fullName}</p>
                             </div>
                             <Icons.BsThreeDotsVertical className={`icon ${theme}`} />
@@ -191,18 +201,9 @@ function Messages() {
                 </div>
                 <div className="users">
                     {friends.map((f) => (
-                        <div onClick={() => startChat(f._id)}>{f.fullName}</div>
+                        <div key={f._id} onClick={() => startChat(f._id)}>{f.fullName}</div>
                     ))}
                 </div>
-                {/* <h2>{user.fullName} {user._id}</h2>
-                <div style={{ display: 'flex' }}>
-                    <div className="conversations">
-                        
-                    </div>
-                    </div>
-                   
-                   
-                </div> */}
             </div>
         </>
     );

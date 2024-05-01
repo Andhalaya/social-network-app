@@ -29,7 +29,7 @@ export default function ChatOnline({ onlineUsers, currentId, setCurrentChat }) {
 
     return (
         <div className={`chatOnline box3 ${theme}`}>
-            <p className="inder h4 margin-bottom">CONNECTED FRIENDS</p>
+            <p className="inder margin-bottom">CONNECTED FRIENDS</p>
             {onlineFriends.length === 0
                 ? <div style={{ textAlign: 'center' }}>No friends connected</div>
                 : onlineFriends.map((o) => (
