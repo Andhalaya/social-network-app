@@ -186,7 +186,7 @@ function Messages() {
                                 value={newMessage}
                             />
                             <div className="send-btn" onClick={handleSubmit}>
-                                Send
+                                SEND
                             </div>
                         </div>
                     </div>
