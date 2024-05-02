@@ -9,18 +9,19 @@ import SyntaxHighlighter from 'react-syntax-highlighter';
 import { anOldHope } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import { Divider } from '@mui/material';
+import './project.css'
 
 function Project() {
     const { theme } = useTheme();
     const { user, token } = useAuth();
-    const {projectId} = useParams();
+    const { projectId } = useParams();
     const [project, setProject] = useState();
 
     useEffect(() => {
         const fetchProject = async () => {
             try {
                 const res = await axios.get(`${API_DOMAIN}/projects/${projectId}`,
-                { headers: { Authorization: `Bearer ${token}` } });
+                    { headers: { Authorization: `Bearer ${token}` } });
                 setProject(res.data);
             } catch (error) {
                 console.error("Error fetching project:", error);
@@ -35,29 +36,29 @@ function Project() {
 
     return (
         <div>
-             <Header />
-            <div className={`home ${theme}`}>
-            <div className={`box ${theme}`} style={{ maxWidth: '1400px' }}>
+            <Header />
+            <div className={`main ${theme}`}>
                 <div className='space-between' >
                     <h2>{project.title} by {user.fullName}</h2>
                     <ModeEditIcon />
                 </div>
-                <Divider />
-                <div style={{marginTop:'20px'}}>
-               
-                <div dangerouslySetInnerHTML={{ __html: project.description }} />
-                 <img src={`${API_DOMAIN}/${project.image}`} alt={project.title} style={{width:'800px'}}/>
-                 <SyntaxHighlighter
-                    language="javascript"
-                    style={anOldHope}
-                    showLineNumbers={true}
-                >
-                    {project.codeSnippet}
-                </SyntaxHighlighter>
+                <div style={{ marginTop: '20px' }}>
+                    <img src={`${API_DOMAIN}/public/${project.image}`} alt={project.title} style={{ width: '800px' }} />
+                    <div className='project-text' dangerouslySetInnerHTML={{ __html: project.description }} />
+                    {project.codeSnippet && (
+                        <SyntaxHighlighter
+                            language="javascript"
+                            style={anOldHope}
+                            showLineNumbers={true}
+                        >
+                            {project.codeSnippet}
+                        </SyntaxHighlighter>
+
+                    )}
                 </div>
+
             </div>
-            </div>
-            
+
         </div>
     );
 }

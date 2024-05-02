@@ -24,9 +24,8 @@ function Header() {
             setColor(false)
         }
     }
-
     window.addEventListener('scroll', changeColor)
-
+    
     const handleLogout = () => {
         logout();
         handleClose();
