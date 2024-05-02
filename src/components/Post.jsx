@@ -9,8 +9,7 @@ import axios from 'axios'
 import * as Icons from "../utils/Icons";
 import { useAuth } from "../context/AuthProvider";
 import { API_DOMAIN } from "../utils/api-domain";
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+import CustomQuill from "./Quill";
 import CustomModal from "./Modal";
 
 function calculateTimeAgo(timestamp) {
@@ -48,7 +47,7 @@ function Post({ post, updatePostLikes, fetchPosts }) {
     };
     const handleComment = async () => {
         try {
-            await axios.patch(`${API_DOMAIN}/posts/${post._id}/comment`, { userId: user._id, comment }, {
+            const response = await axios.patch(`${API_DOMAIN}/posts/${post._id}/comment`, { userId: user._id, comment }, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -63,10 +62,14 @@ function Post({ post, updatePostLikes, fetchPosts }) {
     };
     const handleDeletePost = async () => {
         try {
+            const userId = post.user._id;
             await axios.delete(`${API_DOMAIN}/posts/${post._id}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
+                    },
+                    data: {
+                        userId: userId
                     }
                 }
             )
@@ -75,22 +78,7 @@ function Post({ post, updatePostLikes, fetchPosts }) {
             console.error("Error deleting post:", error);
         }
     }
-    const modules = {
-        toolbar: [
-            [{ 'header': [1, 2, false] }],
-            ['bold', 'italic', 'underline', 'strike'],
-            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-            [{ 'align': [] }],
-            [{ 'color': [] }, { 'background': [] }],
-            ['link', 'image', 'code-block'],
-            ['clean'],
-        ],
-
-    };
-    const formats = [
-        'header', 'bold', 'italic', 'underline', 'strike', 'blockquote',
-        'list', 'bullet', 'indent', 'link', 'image', 'code-block'
-    ];
+   
 
     return (
         <div className={`postBox ${theme}`} key={post._id} >
@@ -200,12 +188,9 @@ function Post({ post, updatePostLikes, fetchPosts }) {
                                 <img src={`${API_DOMAIN}/public/${user.profilePicture}`} alt="name" style={{ borderRadius: 40, width: "25px" }} />
                                 <p style={{ fontWeight: '500' }}>{user.fullName}</p>
                             </div>
-                            <ReactQuill
-                                theme="snow"
-                                modules={modules}
-                                formats={formats}
+                            <CustomQuill
                                 value={comment}
-                                onChange={(value) => setComment(value)}
+                                handleChange={(comment) => setComment(comment)}
                             />
                             <div style={{ width: '100%', display: 'flex', justifyContent: 'right', paddingRight: '20px' }}>
                                 <Button variant="contained" color="primary" onClick={handleComment}>
