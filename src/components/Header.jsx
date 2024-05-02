@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router'
 import { useAuth } from '../context/AuthProvider';
 import DropdownMenu from './Menu';
 import * as Icons from "../utils/Icons"
+import { API_DOMAIN } from '../utils/api-domain';
 function Header() {
 
     const { theme, toggleTheme } = useTheme();
@@ -50,7 +51,7 @@ function Header() {
     return (
         <div className={color ? `header color ${theme}` : `header ${theme}`}>
             <div className={`logo ${theme}`} onClick={() => { navigate('/home') }}>
-                <img src="logo.png" alt="" width='45px' />
+                <img src={`${API_DOMAIN}/public/logo.png`} alt="" width='45px' />
                 LazyCoder
             </div>
             <div className='menu'>

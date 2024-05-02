@@ -26,7 +26,6 @@ function ProfileBox({ userData }) {
 
     useEffect(() => {
         setProfileUser(userData || user);
-        console.log('current user:', profileUser.fullName)
     }, [userData, user]);
 
     useEffect(() => {

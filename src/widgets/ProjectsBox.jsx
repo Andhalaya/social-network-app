@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import axios from "axios";
 import { API_DOMAIN } from "../utils/api-domain";
-import { Divider } from "@mui/material";
 import AnimatedBox from "../components/Box";
 
 
@@ -28,8 +27,7 @@ function ProjectsBox() {
     return (
         <div className={`projects-box `}>
             <AnimatedBox>
-                <h4>MY PROJECTS</h4>
-                <Divider />
+                <h4>PROJECTS</h4>
                 <div className="project-container">
                     {projects.map(project => (
                         <div className="project" key={project._id}>

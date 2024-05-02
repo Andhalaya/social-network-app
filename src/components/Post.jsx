@@ -11,6 +11,7 @@ import { useAuth } from "../context/AuthProvider";
 import { API_DOMAIN } from "../utils/api-domain";
 import CustomQuill from "./Quill";
 import CustomModal from "./Modal";
+import { useNavigate } from "react-router"
 
 function calculateTimeAgo(timestamp) {
     return moment(timestamp).fromNow();
@@ -23,6 +24,7 @@ function Post({ post, updatePostLikes, fetchPosts }) {
     const [comment, setComment] = useState('');
     const [comments, setComments] = useState(post.comments);
     const [showComments, setShowComments] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (post.likes && user) {
@@ -86,7 +88,11 @@ function Post({ post, updatePostLikes, fetchPosts }) {
                 <div className="inline-left gap ">
                     <img src={`${API_DOMAIN}/public${post.user.profilePicture ? post.user.profilePicture : '/uploads/default.jpg'}`} alt={post.user.userName} style={{ borderRadius: 40, width: "40px" }} />
                     <div>
-                        <p className={`poppins ${theme}`}>{post.user.fullName}</p>
+                        <p
+                            style={{ cursor: 'pointer' }}
+                            onClick={() => { navigate(`/profile/${post.user._id}`) }}
+                            className={`poppins ${theme}`}
+                        >{post.user.fullName}</p>
                         <p className={`typography2 ${theme}`}>{post.user.occupation}</p>
                     </div>
                 </div>
@@ -169,42 +175,42 @@ function Post({ post, updatePostLikes, fetchPosts }) {
                 <div className={`comment-section ${theme}`}>
                     <h3 className="title">Comments</h3>
                     <div style={{ marginTop: '10px' }}>
-                        {comments.length === 0 ? 
-                        <div style={{width:'100%', textAlign:'center', }}>
-                            <em className={`noComments ${theme}`}>No comments yet</em> 
-                        </div>
+                        {comments.length === 0 ?
+                            <div style={{ width: '100%', textAlign: 'center', }}>
+                                <em className={`noComments ${theme}`}>No comments yet</em>
+                            </div>
                             : (comments.map((comment, index) => (
                                 <div key={index} style={{ marginBottom: '10px' }}>
                                     <div className="inline-left" style={{ gap: '10px', marginBottom: '5px' }}>
                                         <img src={`${API_DOMAIN}/public/${comment.profilePicture}`} alt="name" style={{ borderRadius: 40, width: "25px" }} />
                                         <div className="inline-left" style={{ gap: '10px' }}>
                                             <p className={`commentUser ${theme}`}>{comment.user}</p>
-                                            <p style={{fontSize:'12px'}}>({calculateTimeAgo(comment.time)})</p>
+                                            <p style={{ fontSize: '12px' }}>({calculateTimeAgo(comment.time)})</p>
                                         </div>
                                     </div>
-                                    <div style={{marginLeft:'35px'}} dangerouslySetInnerHTML={{ __html: comment.comment }} />
+                                    <div style={{ marginLeft: '35px' }} dangerouslySetInnerHTML={{ __html: comment.comment }} />
                                 </div>
                             ))
-                        )}
+                            )}
                     </div>
                     <div >
                         <div className="inline-left gap margin-bottom margin-top">
                             <img src={`${API_DOMAIN}/public/${user.profilePicture}`} alt="name" style={{ borderRadius: 40, width: "25px" }} />
                             <p style={{ fontWeight: '500' }}>{user.fullName}</p>
                         </div>
-                        <div style={{margin:'0px 35px'}}>
-                           <CustomQuill
-                            value={comment}
-                            handleChange={(comment) => setComment(comment)}
-                        />
-                        <div style={{ width: '100%', display: 'flex', justifyContent: 'right', marginTop:'10px' }}>
-                            <Button variant="contained" color="primary" onClick={handleComment}>
-                                <p style={{marginRight:'10px'}}>Comment</p>
-                                <Icons.IoSend />
-                            </Button>
-                        </div> 
+                        <div style={{ margin: '0px 35px' }}>
+                            <CustomQuill
+                                value={comment}
+                                handleChange={(comment) => setComment(comment)}
+                            />
+                            <div style={{ width: '100%', display: 'flex', justifyContent: 'right', marginTop: '10px' }}>
+                                <Button variant="contained" color="primary" onClick={handleComment}>
+                                    <p style={{ marginRight: '10px' }}>Comment</p>
+                                    <Icons.IoSend />
+                                </Button>
+                            </div>
                         </div>
-                        
+
 
                     </div>
                 </div>
