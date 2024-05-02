@@ -6,13 +6,14 @@ import { API_DOMAIN } from "../utils/api-domain";
 import AnimatedBox from "../components/Box";
 import * as Icons from "../utils/Icons"
 
-function ProfileBox({ userData, type }) {
+function ProfileBox({ userData }) {
+
     const { theme } = useTheme();
-    const { token, user } = useAuth();
+    const { user } = useAuth();
     const [profileUser, setProfileUser] = useState(user);
     const [editable, setEditable] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
-    const [profilePicture, setProfilePicture] = useState(user.profilePicture)
+    const [profilePicture, setProfilePicture] = useState(user.profilePicture);
     const [formData, setFormData] = useState({
         id: user._id,
         fullName: user.fullName,
@@ -23,15 +24,10 @@ function ProfileBox({ userData, type }) {
         gitHub: user.gitHub
     });
 
-
     useEffect(() => {
-        if (type === 'myProfile') {
-            setProfileUser(user);
-
-        } else {
-            setProfileUser(userData);
-        }
-    }, [userData, type, user]);
+        setProfileUser(userData || user);
+        console.log('current user:', profileUser.fullName)
+    }, [userData, user]);
 
     useEffect(() => {
         if (profileUser) {
@@ -40,12 +36,12 @@ function ProfileBox({ userData, type }) {
     }, [profileUser]);
 
     const handleToggleEdit = () => {
-        setEditable((prevEditable) => !prevEditable);
+        setEditable(prevEditable => !prevEditable);
     };
 
-    const handleChange = (e) => {
+    const handleChange = e => {
         const { name, value } = e.target;
-        setFormData((prevData) => ({
+        setFormData(prevData => ({
             ...prevData,
             [name]: value
         }));
@@ -64,100 +60,116 @@ function ProfileBox({ userData, type }) {
                 formDataToSend.append('profilePicture', selectedImage);
             }
 
-            const response = await axios.patch(`${API_DOMAIN}/users/profile`, formDataToSend, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    'Content-Type': 'multipart/form-data'
+            const response = await axios.patch(
+                `${API_DOMAIN}/users/profile`,
+                formDataToSend,
+                {
+                    headers: {
+                        Authorization: `Bearer ${user.token}`,
+                        'Content-Type': 'multipart/form-data'
+                    }
                 }
-            });
+            );
 
             setProfilePicture(response.data.profilePicture);
             setEditable(false);
-
         } catch (error) {
             console.error('Error updating profile:', error);
         }
     };
 
-
     const fields = [
-        { name: "fullName", label: "Full Name", type: "text" },
-        { name: "email", label: "Email", type: "email" },
-        { name: "location", label: "Location", type: "text" },
-        { name: "occupation", label: "Occupation", type: "text" },
-        { name: "gitHub", label: "GitHub", type: "text", link: true }
+        { name: 'fullName', label: 'Full Name', type: 'text' },
+        { name: 'email', label: 'Email', type: 'email' },
+        { name: 'location', label: 'Location', type: 'text' },
+        { name: 'occupation', label: 'Occupation', type: 'text' },
+        { name: 'gitHub', label: 'GitHub', type: 'text', link: true }
     ];
+
+    const fieldData = {
+        fullName: profileUser.fullName,
+        email: profileUser.email,
+        location: profileUser.location,
+        occupation: profileUser.occupation,
+        gitHub: profileUser.gitHub
+    };
 
     return (
         <AnimatedBox>
-            <div className={`profile-box }`}>
+            <div className={`profile-box ${theme}`}>
                 <div className="user-img">
-                    <img src={`${API_DOMAIN}/public/${profilePicture ? profilePicture : 'uploads/default.jpg'}`} alt="name" />
+                    <img
+                        src={`${API_DOMAIN}/public/${profilePicture ? profilePicture : 'uploads/default.jpg'
+                            }`}
+                        alt="name"
+                        width={'130px'}
+                    />
                 </div>
                 <div className="space-between margin-bottom">
-                    <p className={`poppins h4 bold ${theme}`}>@{`${profileUser ? profileUser.userName : ''}`}</p>
-                    {type === 'myProfile' && (
+                    <p className={`poppins h4 bold ${theme}`}>
+                        @{`${profileUser ? profileUser.userName : ''}`}
+                    </p>
+                    {profileUser._id === user._id && (
                         <div onClick={handleToggleEdit}>
-                            {editable ? <Icons.FaRegSave className={`icon ${theme}`} onClick={handleSave} /> : <Icons.FiEdit2 className={`icon ${theme}`} />}
+                            {editable ? (
+                                <Icons.FaRegSave
+                                    className={`icon ${theme}`}
+                                    onClick={handleSave}
+                                />
+                            ) : (
+                                <Icons.FiEdit2 className={`icon ${theme}`} />
+                            )}
                         </div>
                     )}
-                </div>
-                {(type !== 'myProfile') && profileUser && (
-                    <>
-                        <div style={{ marginBottom: '10px' }}>
-                            <p>Full Name:</p>
-                            <p className={`typography2 ${theme}`}>{profileUser.fullName}</p>
-                        </div>
-                        <div style={{ marginBottom: '10px' }}>
-                            <p>Email:</p>
-                            <p className={`typography2 ${theme}`}>{profileUser.email}</p>
-                        </div>
-                        <div style={{ marginBottom: '10px' }}>
-                            <p>Location:</p>
-                            <p className={`typography2 ${theme}`}>{profileUser.location}</p>
-                        </div>
-                        <div style={{ marginBottom: '10px' }}>
-                            <p>Occupation:</p>
-                            <p className={`typography2 ${theme}`}>{profileUser.occupation}</p>
-                        </div>
-                        <div style={{ marginBottom: '10px' }}>
-                            <p>GitHub:</p>
-                            <a href={profileUser.gitHub}>{profileUser.gitHub}</a>
-                        </div>
-                    </>
-                )}
-                {type === 'myProfile' && (
-                    <>
-                        {fields.map((field) => (
-                            <div style={{ marginBottom: '10px' }} key={field.name}>
-                                <p>{field.label}:</p>
-                                {editable ? (
-                                    field.link ? (
-                                        <input className="profile-input" type={field.type} name={field.name} value={formData[field.name]} onChange={handleChange} />
-                                    ) : (
-                                        <input className="profile-input" type={field.type} name={field.name} value={formData[field.name]} onChange={handleChange} />
-                                    )
-                                ) : (
-                                    field.link ? (
-                                        <a href={formData[field.name]}>{formData[field.name]}</a>
-                                    ) : (
-                                        <p className={`typography2 ${theme}`}>{formData[field.name]}</p>
-                                    )
-                                )}
-                            </div>
-                        ))}
-                        {editable && (
-                            <div>
-                                <p>Change Profile Picture</p>
-                                <input type="file" name="profilePicture" onChange={(e) => { setSelectedImage(e.target.files[0]) }} />
-                            </div>
 
-                        )}
-                    </>
+                </div>
+                {fields.map(field => (
+                    <div style={{ marginBottom: '10px' }} key={field.name}>
+                        <p>{field.label}:</p>
+                        {profileUser._id === user._id ? (
+                            <>
+                                {editable && profileUser._id === user._id ? (
+                                    <input
+                                        className="profile-input"
+                                        type={field.type}
+                                        name={field.name}
+                                        value={formData[field.name]}
+                                        onChange={handleChange}
+                                    />
+                                ) : field.link ? (
+                                    <a
+                                        href={formData[field.name]}
+                                        className={`typography2 ${theme}`}
+                                    >
+                                        {formData[field.name]}
+                                    </a>
+                                ) : (
+                                    <p className={`typography2 ${theme}`}>
+                                        {formData[field.name]}
+                                    </p>
+                                )}
+                            </>
+                        ) : ( <p>{fieldData[field.name]}</p>)}
+
+                    </div>
+                ))}
+                {editable && (
+                    <div>
+                        <p>Change Profile Picture</p>
+                        <input
+                            type="file"
+                            name="profilePicture"
+                            onChange={e => {
+                                setSelectedImage(e.target.files[0]);
+                            }}
+                        />
+                    </div>
                 )}
+
+
             </div>
         </AnimatedBox>
-    )
+    );
 }
 
 export default ProfileBox;

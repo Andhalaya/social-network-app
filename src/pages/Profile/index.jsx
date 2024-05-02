@@ -16,32 +16,26 @@ const Post = lazy(() => import("../../components/Post"));
 const FriendsBox = lazy(() => import("../../widgets/FriendsBox"));
 const ProjectsBox = lazy(() => import("../../widgets/ProjectsBox"))
 
-function Profile({ type }) {
+function Profile() {
     const { theme } = useTheme();
     const { token, user } = useAuth();
     const [posts, setPosts] = useState([]);
     const [userData, setUserData] = useState(null);
-    const [pageType, setPageType] = useState('')
     const { userId } = useParams();
     const [backgroundImage, setBackgroundImage] = useState(user.profileCover);
     const [isEditingCover, setIsEditingCover] = useState(false);
 
 
     useEffect(() => {
-        fetchPosts();
-        setPage()
-    }, []);
-
-    const setPage = () => {
-        if (type === 'myProfile') {
-            setPageType('myProfile')
+        if (userId) {
+            fetchUserData();
+            fetchPosts();
+        } else {
+            setUserData(user);
+            setBackgroundImage(user.profileCover);
         }
-    }
-
-    useEffect(() => {
-        fetchUserData();
         fetchPosts();
-    }, [userId]);
+    }, [userId, user, posts]);
 
     const fetchUserData = async () => {
         try {
@@ -49,7 +43,6 @@ function Profile({ type }) {
                 {
                     headers: { Authorization: `Bearer ${token}` },
                 });
-            console.log('user data:', res.data)
             setUserData(res.data);
             setBackgroundImage(res.data.profileCover);
         } catch (error) {
@@ -62,7 +55,14 @@ function Profile({ type }) {
             const res = await axios.get(`${API_DOMAIN}/posts`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
-            setPosts(res.data);
+
+            let filteredPosts;
+            if (userData && userData._id) {
+                filteredPosts = res.data.filter(post => post.user._id === userData._id);
+            } else {
+                filteredPosts = res.data.filter(post => post.user._id === user._id);
+            }
+            setPosts(filteredPosts);
         } catch (error) {
             console.error("Error fetching posts:", error);
         }
@@ -94,7 +94,7 @@ function Profile({ type }) {
             <Header />
             <div className={`profile ${theme}`}>
                 <div className="background" style={{ backgroundImage: `url(${API_DOMAIN}${backgroundImage ? backgroundImage : '/public/backgrounds/background5.jpg'})`, textAlign: 'right' }}>
-                    {type === 'myProfile' ?
+                    {userId === undefined && (
                         <CustomModal
                             trigger={(openModal) => (
                                 !isEditingCover && (
@@ -115,13 +115,13 @@ function Profile({ type }) {
                                 />
                             )}
                         </CustomModal>
-                        : ''}
-
+                    )
+                    }
                 </div>
                 <div className="profile-container">
                     <div className="info-container">
                         <Suspense fallback={<div className={`loadingBox1 box ${theme}`}>Loading...<SpinningIcon /></div>}>
-                            <ProfileBox type={pageType} userData={userData} />
+                            <ProfileBox userData={userData} />
                         </Suspense>
                         <Suspense fallback={<div className={`loadingBox1 box ${theme}`}>Loading...<SpinningIcon /></div>}>
                             <FriendsBox userData={userData} type="profile" />
@@ -129,12 +129,11 @@ function Profile({ type }) {
                     </div>
                     <div className="side-container">
                         <div className='box1'>
-
                             <div style={{ display: 'flex', flexDirection: 'column-reverse', gap: '20px' }}>
                                 {posts.map((post) => (
-                                    <Suspense fallback={<div className={`box ${theme}`}>Loading...<SpinningIcon /></div>}>
+                                    <Suspense key={post._id} fallback={<div className={`box ${theme}`}>Loading...<SpinningIcon /></div>}>
                                         <AnimatedBox >
-                                            <Post key={post._id} post={post} updatePostLikes={updatePostLikes} />
+                                            <Post post={post} updatePostLikes={updatePostLikes} />
                                         </AnimatedBox>
                                     </Suspense>
                                 ))}

@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router'
 import { useAuth } from '../context/AuthProvider';
 import DropdownMenu from './Menu';
 import * as Icons from "../utils/Icons"
-
 function Header() {
 
     const { theme, toggleTheme } = useTheme();

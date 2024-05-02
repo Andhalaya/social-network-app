@@ -32,7 +32,7 @@ const AppContent = () => {
         <Route path='/' element={<LoginPage />} />
         <Route element={<ProtectedRoute />} >
           <Route path='/home' element={<Home />} />
-          <Route path='/my-profile' element={<Profile type='myProfile'/>} />
+          <Route path='/my-profile' element={<Profile />} />
           <Route path='/profile/:userId' element={<Profile />} />
           <Route path='/projects/:projectId'element={<Project />} />
           <Route path='/messages' element={<Messages />} />
