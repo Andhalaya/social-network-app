@@ -13,6 +13,7 @@ function FriendsBox({ type, onClick }) {
     const [profileUser, setProfileUser] = useState(user)
     const [users, setUsers] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
+    const [showSearchInput, setShowSearchInput] = useState(false);
     const [updateUsers, setUpdateUsers] = useState(false);
 
     useEffect(() => {
@@ -78,7 +79,11 @@ function FriendsBox({ type, onClick }) {
                             <div onClick={handleShowMore}><SpinningIcon /></div>
                         )}
                     </div>
-                    {/* <div className="search-box">
+                    
+                    <Icons.IoSearch className={`icon white ${theme}`} onClick={() => setShowSearchInput(!showSearchInput)} />
+                </div>
+                {showSearchInput && (
+                        <div className="search-box">
                         <input
                             type="text"
                             placeholder="search user"
@@ -86,10 +91,8 @@ function FriendsBox({ type, onClick }) {
                             value={searchTerm}
                             onChange={handleSearch}
                         />
-                        <SearchIcon className={`icon ${theme}`} style={{ width: '20px', marginRight: '10px' }} />
-                    </div> */}
-                    <Icons.IoSearch className={`icon white ${theme}`} />
-                </div>
+                    </div> 
+                    )}
                 {filteredUsers.length === 0 ?
                     <div style={{ textAlign: 'center', padding: '15px 0px' }}> <p>No friends yet!</p> </div>
                     : filteredUsers.map(filteredUser => (

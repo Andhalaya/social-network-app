@@ -24,6 +24,17 @@
     flex-direction: column; 
   }
 
+  .filter{
+    cursor: pointer;
+  }
+
+  .filter.selected{
+    padding: 5px 10px;
+    border-radius: 20px;
+    background-color: #fe754d;
+    
+  }
+
   .share-btn {
     background-color: #008cff;
     color: white;
