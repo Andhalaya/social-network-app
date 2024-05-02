@@ -78,7 +78,7 @@ function Post({ post, updatePostLikes, fetchPosts }) {
             console.error("Error deleting post:", error);
         }
     }
-   
+
 
     return (
         <div className={`postBox ${theme}`} key={post._id} >
@@ -93,27 +93,27 @@ function Post({ post, updatePostLikes, fetchPosts }) {
                 <div className="inline-right gap">
                     <p className={`typography2 ${theme}`}>{calculateTimeAgo(post.createdAt)}</p>
                     {post.user._id === user._id &&
-                    <div>
-                       <CustomModal trigger={(openModal) => (
-                            <div onClick={openModal}>
-                                <Icons.DeleteOutlined className={`icon ${theme}`} />
-                            </div>
-                        )}>
-                            {(closeModal) => (
-                                <div className={`modal-content ${theme}`}>
-                                    <p>¿Are you sure you want to delete this post?</p>
-                                    <div style={{ display: 'flex', gap:'10px', justifyContent:'center', marginTop:'20px'}}>
-                                        <button onClick={() => {
-                                            handleDeletePost();
-                                            closeModal();
-                                        }}>Delete</button>
-                                        <button onClick={closeModal} >Cancel</button>
+                        <div>
+                            <CustomModal trigger={(openModal) => (
+                                <div onClick={openModal}>
+                                    <Icons.DeleteOutlined className={`icon ${theme}`} />
+                                </div>
+                            )}>
+                                {(closeModal) => (
+                                    <div className={`modal-content ${theme}`}>
+                                        <p>¿Are you sure you want to delete this post?</p>
+                                        <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', marginTop: '20px' }}>
+                                            <button onClick={() => {
+                                                handleDeletePost();
+                                                closeModal();
+                                            }}>Delete</button>
+                                            <button onClick={closeModal} >Cancel</button>
+                                        </div>
                                     </div>
-                            </div>
-                            )}
-                        </CustomModal> 
-                    </div>
-                        
+                                )}
+                            </CustomModal>
+                        </div>
+
                     }
                 </div>
             </div>
@@ -162,48 +162,53 @@ function Post({ post, updatePostLikes, fetchPosts }) {
                     )}
 
                 </div>
-                {showComments && (
-                    <div style={{ backgroundColor: '#EDEDED', padding: '15px', borderRadius: '10px', marginBottom: '10px', marginTop: '10px' }}>
-                        <Divider />
-                        <h5>Comments</h5>
-                        <Divider />
-                        <div style={{ marginTop: '10px' }}>
-                            {comments.length === 0 ? 'No comments yet' : (
-                                comments.map((comment, index) => (
-                                    <div key={index} style={{ marginBottom: '10px' }}>
-                                        <div className="inline-left" style={{ gap: '10px', marginBottom: '5px' }}>
-                                            <img src={`${API_DOMAIN}/public/${comment.profilePicture}`} alt="name" style={{ borderRadius: 40, width: "25px" }} />
-                                            <div className="inline-left" style={{ gap: '10px' }}>
-                                                <p style={{ fontWeight: '500' }}>{comment.user}</p>
-                                                ({calculateTimeAgo(comment.time)})
-                                            </div>
-                                        </div>
-                                        <div dangerouslySetInnerHTML={{ __html: comment.comment }} />
-                                    </div>
-                                ))
-                            )}
-                        </div>
-                        <div >
-                            <div className="inline-left margin-bottom margin-top">
-                                <img src={`${API_DOMAIN}/public/${user.profilePicture}`} alt="name" style={{ borderRadius: 40, width: "25px" }} />
-                                <p style={{ fontWeight: '500' }}>{user.fullName}</p>
-                            </div>
-                            <CustomQuill
-                                value={comment}
-                                handleChange={(comment) => setComment(comment)}
-                            />
-                            <div style={{ width: '100%', display: 'flex', justifyContent: 'right', paddingRight: '20px' }}>
-                                <Button variant="contained" color="primary" onClick={handleComment}>
-                                    <img style={{ marginRight: '10px' }} src="/icons8-send-24.png" />
-                                    <p>Comment</p>
-                                </Button>
-                            </div>
 
-                        </div>
-                    </div>
-                )}
 
             </div>
+            {showComments && (
+                <div className={`comment-section ${theme}`}>
+                    <h3 className="title">Comments</h3>
+                    <div style={{ marginTop: '10px' }}>
+                        {comments.length === 0 ? 
+                        <div style={{width:'100%', textAlign:'center', }}>
+                            <em className={`noComments ${theme}`}>No comments yet</em> 
+                        </div>
+                            : (comments.map((comment, index) => (
+                                <div key={index} style={{ marginBottom: '10px' }}>
+                                    <div className="inline-left" style={{ gap: '10px', marginBottom: '5px' }}>
+                                        <img src={`${API_DOMAIN}/public/${comment.profilePicture}`} alt="name" style={{ borderRadius: 40, width: "25px" }} />
+                                        <div className="inline-left" style={{ gap: '10px' }}>
+                                            <p className={`commentUser ${theme}`}>{comment.user}</p>
+                                            <p style={{fontSize:'12px'}}>({calculateTimeAgo(comment.time)})</p>
+                                        </div>
+                                    </div>
+                                    <div style={{marginLeft:'35px'}} dangerouslySetInnerHTML={{ __html: comment.comment }} />
+                                </div>
+                            ))
+                        )}
+                    </div>
+                    <div >
+                        <div className="inline-left gap margin-bottom margin-top">
+                            <img src={`${API_DOMAIN}/public/${user.profilePicture}`} alt="name" style={{ borderRadius: 40, width: "25px" }} />
+                            <p style={{ fontWeight: '500' }}>{user.fullName}</p>
+                        </div>
+                        <div style={{margin:'0px 35px'}}>
+                           <CustomQuill
+                            value={comment}
+                            handleChange={(comment) => setComment(comment)}
+                        />
+                        <div style={{ width: '100%', display: 'flex', justifyContent: 'right', marginTop:'10px' }}>
+                            <Button variant="contained" color="primary" onClick={handleComment}>
+                                <p style={{marginRight:'10px'}}>Comment</p>
+                                <Icons.IoSend />
+                            </Button>
+                        </div> 
+                        </div>
+                        
+
+                    </div>
+                </div>
+            )}
 
         </div>
     )

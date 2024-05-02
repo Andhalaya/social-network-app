@@ -26,6 +26,7 @@ import { IoIosLogOut } from "react-icons/io";
 import { BiMessageRoundedAdd } from "react-icons/bi";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { GrProjects } from "react-icons/gr";
+import { IoSend } from "react-icons/io5";
 
 export {
     BiCodeBlock,
@@ -55,5 +56,6 @@ export {
     IoIosLogOut,
     BiMessageRoundedAdd,
     BsThreeDotsVertical,
-    GrProjects
+    GrProjects,
+    IoSend
   }

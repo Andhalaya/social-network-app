@@ -157,3 +157,30 @@
   align-items: center;
  }
 
+.comment-section{
+  border-top: 1px solid rgb(192, 192, 192);
+  margin-top: 20px;
+  padding: 20px;
+ }
+
+ .comment-section.dark{
+  border-top: 1px solid #ffffff46;
+ }
+
+ .title{
+  margin-bottom: 15px;
+ }
+
+ .noComments.dark{
+  color: rgba(173, 173, 173, 0.268)
+ }
+
+ .commentUser{
+  color: black;
+ }
+
+ .commentUser.dark{
+  color:#fe764d7e;
+ }
+
+ 

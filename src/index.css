@@ -151,17 +151,21 @@ input.dark{
 }
 
 .ql-toolbar.ql-snow {
-  background-color: rgb(186, 186, 186);
-  
+  background-color: rgb(148, 179, 226);
+  border-radius: 10px 10px 0px 0px;
+  border: none;
+}
+
+.quill{
+  color: black;
 }
 
 .ql-container.ql-snow {
   background-color: white;
+  border-radius: 0px 0px 10px 10px;
+  border: none;
 }
 
-.quill{
-  margin: 20px;
-}
 
 .margin-bottom{
   margin-bottom: 10px;

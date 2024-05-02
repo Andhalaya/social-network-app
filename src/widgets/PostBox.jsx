@@ -164,16 +164,7 @@ function PostBox({ fetchPosts }) {
                     <p>Add tags</p>
                 </div>
             </div>
-            <div className="column gap">
-                {isFieldActive("description") && (
-                    <ReactQuill
-                        theme="snow"
-                        modules={modules}
-                        formats={formats}
-                        value={formData.description}
-                        onChange={(value) => handleChange("description", value)}
-                    />
-                )}
+            <div style={{gap:'20px'}} className="column">
                 {isFieldActive("image") && (
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
                         <Dropzone
@@ -206,8 +197,18 @@ function PostBox({ fetchPosts }) {
                         </Dropzone>
                     </div>
                 )}
+                {isFieldActive("description") && (
+                    <ReactQuill
+                        theme="snow"
+                        modules={modules}
+                        formats={formats}
+                        value={formData.description}
+                        onChange={(value) => handleChange("description", value)}
+                    />
+                )}
                 {isFieldActive("codeSnippet") && (
                     <textarea
+                        className="active-input"
                         placeholder="Enter code snippet"
                         value={formData.codeSnippet}
                         onChange={(e) => handleChange("codeSnippet", e.target.value)}
@@ -215,6 +216,7 @@ function PostBox({ fetchPosts }) {
                 )}
                 {isFieldActive("link") && (
                     <input
+                        className="active-input"
                         type="url"
                         placeholder="Enter link URL"
                         value={formData.link}
