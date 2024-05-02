@@ -10,6 +10,7 @@ import * as Icons from "../utils/Icons";
 function FriendsBox({ type, onClick }) {
     const { theme } = useTheme();
     const { token, user, friends, setUser } = useAuth();
+    const [profileUser, setProfileUser] = useState(user)
     const [users, setUsers] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [updateUsers, setUpdateUsers] = useState(false);
@@ -24,7 +25,7 @@ function FriendsBox({ type, onClick }) {
                 { headers: { Authorization: `Bearer ${token}` } });
             if (type === 'home') {
                 setUsers(res.data)
-            } else if (type === 'profile' || type === 'chat') {
+            } else if (type === 'profile') {
                 setUsers(friends);
             }
 
@@ -56,10 +57,10 @@ function FriendsBox({ type, onClick }) {
     };
 
     let filteredUsers;
-    if (type === 'home'|| type === 'chat') {
+    if (type === 'home') {
         filteredUsers = users.filter(u => u.userName.toLowerCase().includes(searchTerm.toLowerCase()));
         filteredUsers = filteredUsers.sort(() => 0.5 - Math.random()).slice(0, 4);
-    } else if (type === 'profile' ) {
+    } else if (type === 'profile') {
         filteredUsers = users.filter(u => user.friends.includes(u._id) && u.userName.toLowerCase().includes(searchTerm.toLowerCase()));
     }
 
@@ -72,8 +73,8 @@ function FriendsBox({ type, onClick }) {
             <AnimatedBox >
                 <div className="space-between margin-bottom">
                     <div className="inline-left gap">
-                        <p className="inder h4">{(type === 'home'|| type === 'chat') ? 'LAZY CODERS' : 'FRIENDS'}</p>
-                        {(type === 'home'|| type === 'chat') && (
+                        <p className="inder h4">{(type === 'home') ? 'LAZY CODERS' : 'FRIENDS'}</p>
+                        {(type === 'home') && (
                             <div onClick={handleShowMore}><SpinningIcon /></div>
                         )}
                     </div>
@@ -96,19 +97,16 @@ function FriendsBox({ type, onClick }) {
                             <div className="inline-left gap">
                                 <img src={`${API_DOMAIN}/public${filteredUser.profilePicture ? filteredUser.profilePicture : '/uploads/default.jpg'}`} style={{ borderRadius: 40, width: "40px" }} />
                                 <div className="column">
-                                    <p className={`typography3 ${theme}`} style={{cursor:'pointer'}} >{filteredUser.fullName}</p>
+                                    <p className={`typography3 ${theme}`} style={{ cursor: 'pointer' }} >{filteredUser.fullName}</p>
                                     <p className={`typography4 ${theme}`}>{filteredUser.occupation}</p>
                                 </div>
                             </div>
-                            {(type === 'home' || type === 'profile') && (
+                            {type === 'myProfile' && (
                                 <button className="follow-btn" onClick={() => toggleFollow(filteredUser)}>
-                                    {user.friends.includes(filteredUser._id) ? <Icons.HiUserRemove className={`icon orange ${theme}`} style={{ fontSize: '30px' }} /> : <Icons.HiOutlineUserAdd className={`icon ${theme}`} style={{ fontSize: '30px' }} />}
+                                {user.friends.includes(filteredUser._id) ? <Icons.HiUserRemove className={`icon orange ${theme}`} style={{ fontSize: '30px' }} /> : <Icons.HiOutlineUserAdd className={`icon ${theme}`} style={{ fontSize: '30px' }} />}
                                 </button>
-                            )
-                            }
-                            {type === 'chat' && (
-                                <div><Icons.BiMessageRoundedAdd className={`icon ${theme}`} style={{ fontSize: '30px' }} /></div>
                             )}
+                            
                         </div>
                     ))}
             </AnimatedBox>
