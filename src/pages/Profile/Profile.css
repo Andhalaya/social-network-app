@@ -112,6 +112,8 @@
 .projects-box{
     height: fit-content;
     flex: 50%;
+    display: flex;
+    align-items: center;
 }
 
 .project-img{

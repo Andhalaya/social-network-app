@@ -11,7 +11,7 @@ function AllProjects() {
     return (
         <>
             <Header />
-            <div className={`main ${theme}`} style={{ height: '100%' }}>
+            <div className={`main ${theme}`} >
                 <Suspense fallback={<div className="loadingBox3">Loading...<SpinningIcon /></div>}>
                     <ProjectsBox />
                 </Suspense>

@@ -35,7 +35,7 @@ function Profile() {
             setBackgroundImage(user.profileCover);
         }
         fetchPosts();
-    }, [userId, user, posts]);
+    }, [userId, user]);
 
     const fetchUserData = async () => {
         try {
