@@ -3,9 +3,7 @@ import { useTheme } from "../../context/theme";
 import { lazy, Suspense } from "react";
 import SpinningIcon from "../../components/SpinningIcon";
 
-const UserBox = lazy(() => import("../../widgets/UserBox"));
-const FeedBox = lazy(() => import("../../widgets/FeedBox"));
-const FriendsBox = lazy(() => import("../../widgets/FriendsBox"));
+const ProjectsBox = lazy(() => import("../../widgets/ProjectsBox"));
 
 function AllProjects() {
     const { theme } = useTheme();
@@ -13,11 +11,10 @@ function AllProjects() {
     return (
         <>
             <Header />
-            <div className={`main ${theme}`}>
-                Under construction...
-                {/* <Suspense fallback={<div className={`loadingBox1 box ${theme}`}>Loading...<SpinningIcon /></div>}>
-                    <UserBox />  
-                </Suspense> */}
+            <div className={`main ${theme}`} style={{ height: '100%' }}>
+                <Suspense fallback={<div className="loadingBox3">Loading...<SpinningIcon /></div>}>
+                    <ProjectsBox />
+                </Suspense>
             </div>
         </>
     );

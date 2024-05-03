@@ -188,7 +188,7 @@ function Post({ post, updatePostLikes, fetchPosts }) {
                                             <p style={{ fontSize: '12px' }}>({calculateTimeAgo(comment.time)})</p>
                                         </div>
                                     </div>
-                                    <div style={{ marginLeft: '35px' }} dangerouslySetInnerHTML={{ __html: comment.comment }} />
+                                    <div className="innerHtml" style={{ marginLeft: '35px' }} dangerouslySetInnerHTML={{ __html: comment.comment }} />
                                 </div>
                             ))
                             )}
