@@ -9,7 +9,7 @@ pre.ql-syntax {
 .page-container{
     display: flex;
     gap: 3rem;
-    padding: 100px;
+    padding: 120px;
     background: radial-gradient(circle, #3f5efb 50%, #291a3b 90%);
     padding-top: 120px;
     color: white;

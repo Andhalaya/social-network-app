@@ -25,7 +25,7 @@ function Header() {
         }
     }
     window.addEventListener('scroll', changeColor)
-    
+
     const handleLogout = () => {
         logout();
         handleClose();
@@ -59,7 +59,7 @@ function Header() {
 
             <div className={`nav ${showMenu ? 'nav-mobile' : 'hidden'}`}>
                 <Icons.AiOutlineUser onClick={() => { navigate('/my-profile') }} className={`icon ${theme}`} />
-                <Icons.GrProjects onClick={() => { navigate('/messages') }} className={`icon ${theme}`} />
+                <Icons.GrProjects onClick={() => { navigate('/projects') }} className={`icon ${theme}`} />
                 <Icons.IoNotificationsOutline className={`icon ${theme}`} />
                 <Icons.IoChatbubblesOutline onClick={() => { navigate('/messages') }} className={`icon ${theme}`} />
                 <DropdownMenu
@@ -77,7 +77,6 @@ function Header() {
                         <Icons.IoIosLogOut className={`icon ${theme}`} />
                         Logout
                     </li>
-
                 </DropdownMenu>
 
 

@@ -121,6 +121,7 @@ function PostBox({ fetchPosts }) {
                             value={formData.title}
                             onChange={(e) => handleChange("title", e.target.value)}
                             className="roboto"
+                            style={{width:'100%'}}
                         />
                     </div>
                 </div>

@@ -40,8 +40,16 @@ function Project() {
             
                 <div className={`page-container ${theme}`}>
                     <div className='left-column'>
-                        <div className={`box ${theme}`}></div>
-                        <div className={`box ${theme}`}></div>
+                        <div className={`box ${theme}`}>
+                            <p>Published by:</p>
+                            <p>{project.user.fullName}</p>
+                            <p>Github repository:</p>
+                            <p>{project.link}</p>
+                        </div>
+                        <div className={`box ${theme}`}>
+                            <p>Comments</p>
+                            
+                        </div>
                     </div>
                     <div className="right-column">
                         <div className='space-between' >
