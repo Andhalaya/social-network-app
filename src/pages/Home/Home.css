@@ -11,6 +11,7 @@
     padding: 150px;
     background-image: radial-gradient(circle, #3f5efb 50%, #291a3b 90%);
     padding-top: 120px;
+    height: 100%;
   }
 
   .loadingBox1{

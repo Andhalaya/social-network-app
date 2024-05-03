@@ -81,7 +81,6 @@ function Post({ post, updatePostLikes, fetchPosts }) {
         }
     }
 
-
     return (
         <div className={`postBox ${theme}`} key={post._id} >
             <div className="space-between">
@@ -137,7 +136,14 @@ function Post({ post, updatePostLikes, fetchPosts }) {
                     >
                         {post.codeSnippet}
                     </SyntaxHighlighter>
-                )}
+                )}{post.link && (
+                        <div className="inline-left" >
+                            <LinkSharpIcon />
+                            <a href={post.link} target="_blank" rel="noopener noreferrer" style={{ width: '600px' }}>
+                                {post.link}
+                            </a>
+                        </div>
+                    )}
                 {post.tags && (
                     <div className="post-tags">
                         {post.tags.map((tag, index) => (
@@ -157,19 +163,11 @@ function Post({ post, updatePostLikes, fetchPosts }) {
                             <p>{comments.length}</p>
                             <Icons.FaRegComment className={`icon ${theme}`} />
                         </div>
+                        
                     </div>
-                    {post.link && (
-                        <div >
-                            <LinkSharpIcon />
-                            <a href={post.link} target="_blank" rel="noopener noreferrer" style={{ width: '600px' }}>
-                                {post.link}
-                            </a>
-                        </div>
-                    )}
+                    
 
                 </div>
-
-
             </div>
             {showComments && (
                 <div className={`comment-section ${theme}`}>

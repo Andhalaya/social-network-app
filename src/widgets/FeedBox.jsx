@@ -25,6 +25,7 @@ function FeedBox() {
         try {
             const res = await axios.get(`${API_DOMAIN}/posts`,
                 { headers: { Authorization: `Bearer ${token}` } })
+
             setPosts(res.data);
         } catch (error) {
             console.error("Error fetching posts:", error);
