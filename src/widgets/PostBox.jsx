@@ -5,12 +5,11 @@ import { IconButton, Menu, MenuItem } from "@mui/material";
 import Dropzone from "react-dropzone";
 import { useAuth } from '../context/AuthProvider';
 import { API_DOMAIN } from "../utils/api-domain";
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
 import AnimatedBox from "../components/Box";
 import * as Icons from "../utils/Icons";
 import TagsInput from "../components/TagsInput";
 import CustomSnackbar from "../components/SnackBar";
+import CustomQuill from "../components/Quill";
 
 function PostBox({ fetchPosts }) {
     const { user, token } = useAuth();
@@ -19,6 +18,7 @@ function PostBox({ fetchPosts }) {
     const [imageURL, setImageURL] = useState(null);
     const [activeFields, setActiveFields] = useState([]);
     const [openSnackbar, setOpenSnackbar] = useState(false);
+    const [openOtherSnackbar, setOpenOtherSnackbar] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
     const [selected, setSelected] = useState([]);
     const initialState = {
@@ -94,21 +94,6 @@ function PostBox({ fetchPosts }) {
         reader.readAsDataURL(file);
     };
 
-    const modules = {
-        toolbar: [
-            [{ 'header': [1, 2, false] }],
-            ['bold', 'italic', 'underline', 'strike'],
-            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-            [{ 'align': [] }],
-            [{ 'color': [] }, { 'background': [] }],
-            ['link', 'image', 'code-block'],
-            ['clean']
-        ]
-    };
-    const formats = [
-        'header', 'bold', 'italic', 'underline', 'strike', 'blockquote',
-        'list', 'bullet', 'indent', 'link', 'image', 'code-block'
-    ];
 
     return (
         <AnimatedBox >
@@ -121,7 +106,7 @@ function PostBox({ fetchPosts }) {
                             value={formData.title}
                             onChange={(e) => handleChange("title", e.target.value)}
                             className="roboto"
-                            style={{width:'100%'}}
+                            style={{ width: '100%' }}
                         />
                     </div>
                 </div>
@@ -134,14 +119,16 @@ function PostBox({ fetchPosts }) {
                         anchorEl={anchorEl}
                         open={Boolean(anchorEl)}
                         onClose={handleMenuClose}
-                        
-                       
                     >
                         <MenuItem onClick={() => { handleFormSubmit(`${API_DOMAIN}/posts`); handleMenuClose(); }}>Share as Post</MenuItem>
-                        <MenuItem onClick={() => { handleFormSubmit(`${API_DOMAIN}/projects`); handleMenuClose(); }}>Share as Project</MenuItem>
+                        <MenuItem onClick={() => { handleFormSubmit(`${API_DOMAIN}/projects`); handleMenuClose(); setOpenOtherSnackbar(true) }}>Share as Project</MenuItem>
                     </Menu>
                 </div>
-                <CustomSnackbar openSnackbar={openSnackbar} setOpenSnackbar={setOpenSnackbar} />
+                <CustomSnackbar openSnackbar={openSnackbar} setOpenSnackbar={setOpenSnackbar} message={'Please add some content before sharing'}/>
+                <CustomSnackbar 
+                openSnackbar={openOtherSnackbar} 
+                setOpenSnackbar={setOpenOtherSnackbar} 
+                message={<div>✅Project successfully created! <br/>Check it out in your profile</div>}/>
             </div>
             <div className="inline-left" style={{ gap: '20px', marginTop: '10px', marginLeft: '15px' }}>
                 <div className="post-elements medium" onClick={() => handleToggleField("image")}>
@@ -165,7 +152,7 @@ function PostBox({ fetchPosts }) {
                     <p>Add tags</p>
                 </div>
             </div>
-            <div style={{gap:'20px'}} className="column">
+            <div style={{ gap: '20px' }} className="column">
                 {isFieldActive("image") && (
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
                         <Dropzone
@@ -199,12 +186,9 @@ function PostBox({ fetchPosts }) {
                     </div>
                 )}
                 {isFieldActive("description") && (
-                    <ReactQuill
-                        theme="snow"
-                        modules={modules}
-                        formats={formats}
+                    <CustomQuill
                         value={formData.description}
-                        onChange={(value) => handleChange("description", value)}
+                        handleChange={(value) => handleChange("description", value)}
                     />
                 )}
                 {isFieldActive("codeSnippet") && (
@@ -231,7 +215,7 @@ function PostBox({ fetchPosts }) {
                             onChange={setSelected}
                             name="tags"
                             placeholder="press enter to add tag"
-                            
+
                         />
                     </div>
                 )}

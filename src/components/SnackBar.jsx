@@ -1,7 +1,7 @@
 import React from "react";
 import { Snackbar } from "@mui/material";
 
-function CustomSnackbar({ openSnackbar, setOpenSnackbar }) {
+function CustomSnackbar({ openSnackbar, setOpenSnackbar, message }) {
   return (
     <Snackbar
       open={openSnackbar}
@@ -15,7 +15,7 @@ function CustomSnackbar({ openSnackbar, setOpenSnackbar }) {
         vertical: 'bottom',
         horizontal: 'right'
       }}
-      message="Please add some content before sharing"
+      message={message}
     />
   );
 }

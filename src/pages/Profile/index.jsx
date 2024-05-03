@@ -130,13 +130,13 @@ function Profile() {
                     <div className="side-container">
                         <div className='box1'>
                             <div style={{ display: 'flex', flexDirection: 'column-reverse', gap: '20px' }}>
-                                {posts.map((post) => (
+                                {posts ? posts.map((post) => (
                                     <Suspense key={post._id} fallback={<div className={`box ${theme}`}>Loading...<SpinningIcon /></div>}>
                                         <AnimatedBox >
                                             <Post post={post} updatePostLikes={updatePostLikes} />
                                         </AnimatedBox>
                                     </Suspense>
-                                ))}
+                                )) : <div style={{widht:'100%', textAlign:'center'}}><em>No posts yet</em></div>}
                             </div>
                         </div>
                         <Suspense fallback={<div className="loadingBox3">Loading...<SpinningIcon /></div>}>

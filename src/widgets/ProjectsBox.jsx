@@ -31,14 +31,13 @@ function ProjectsBox() {
                 <div className="project-container">
                     {projects.map(project => (
                         <div className="project" key={project._id}>
-                            <h5>{project.title}</h5>
-
-                            <img src={`${API_DOMAIN}/public/${project.image}`} alt="project-img" className="project-img" />
-
-
-                            <button className="share-btn">
+                            <p className="margin-bottom">{project.title}</p>
+                            {project.image && (
+                                <img src={`${API_DOMAIN}/public/${project.image}`} alt="project-img" className="project-img" />
+                            )}
+                            <div className={`share-btn ${theme} margin-top`}>
                                 <Link to={`/projects/${project._id}`} style={{ color: 'white' }}>view project</Link>
-                            </button>
+                            </div>
                         </div>
                     ))}
                 </div>
