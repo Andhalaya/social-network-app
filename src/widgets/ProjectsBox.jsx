@@ -9,7 +9,7 @@ import AnimatedBox from "../components/Box";
 
 function ProjectsBox() {
     const { theme } = useTheme();
-    const { token, user, setUser } = useAuth();
+    const { token } = useAuth();
     const [projects, setProjects] = useState([]);
 
     useEffect(() => {
