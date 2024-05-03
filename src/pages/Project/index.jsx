@@ -48,7 +48,13 @@ function Project() {
                         </div>
                         <div className={`box ${theme}`}>
                             <p>Comments</p>
-                            
+                            <div className='comment'>
+                                <div>
+                                    <img src="" alt="" />
+                                    <p>Arnaud</p>
+                                </div>
+                                <div className='comment-content'></div>
+                            </div>
                         </div>
                     </div>
                     <div className="right-column">

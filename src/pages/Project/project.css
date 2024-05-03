@@ -22,7 +22,6 @@ pre.ql-syntax {
     background-position: top;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    
 }
 
 .left-column{
@@ -35,4 +34,5 @@ pre.ql-syntax {
 .right-column{
     flex: 70%;
 }
+
 
