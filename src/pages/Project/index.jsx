@@ -7,14 +7,20 @@ import { useTheme } from "../../context/theme";
 import { useAuth } from '../../context/AuthProvider';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { anOldHope } from 'react-syntax-highlighter/dist/esm/styles/hljs';
-import ModeEditIcon from '@mui/icons-material/ModeEdit';
+
 import './project.css'
+import moment from 'moment';
+import * as Icons from "../../utils/Icons";
 
 function Project() {
     const { theme } = useTheme();
     const { token } = useAuth();
     const { projectId } = useParams();
     const [project, setProject] = useState();
+
+    function calculateTimeAgo(timestamp) {
+        return moment(timestamp).format(" dddd D MMMM YYYY");
+    }
 
     useEffect(() => {
         const fetchProject = async () => {
@@ -37,49 +43,66 @@ function Project() {
     return (
         <>
             <Header />
-            
-                <div className={`page-container ${theme}`}>
-                    <div className='left-column'>
-                        <div className={`box ${theme}`}>
-                            <p>Published by:</p>
-                            <p>{project.user.fullName}</p>
-                            <p>Github repository:</p>
-                            <p>{project.link}</p>
+
+            <div className={`page-container ${theme}`}>
+                <div className='left-column'>
+                <img src={`${API_DOMAIN}/public/${project.image}`} alt={project.title} style={{width:'100%' }} />
+                    <div className={`box ${theme}`} >
+                        <div style={{ marginBottom: '20px' }}>
+                            <p className='label'>Published by:</p>
+                            <p className='label-content'>{project.user.fullName}</p>
                         </div>
-                        <div className={`box ${theme}`}>
-                            <p>Comments</p>
+                        <div>
+                            <p className='label'>Github repository:</p>
+                            <p className='label-content'>{project.link}</p>
+                        </div>
+                    </div>
+                    <div className={`box ${theme}`}>
+                        <p className='inder h4'>Comments</p>
+                        <div className='comment-container'>
                             <div className='comment'>
-                                <div>
-                                    <img src="" alt="" />
-                                    <p>Arnaud</p>
+                                <div className='inline-left gap'>
+                                    <img src={`${API_DOMAIN}/public/uploads/default.jpg`} alt="" style={{ width: '40px', borderRadius: '30px' }} />
+                                    <p>Guest User</p>
                                 </div>
-                                <div className='comment-content'></div>
+                                <div className='comment-content'>
+                                    Looks good!
+                                </div>
                             </div>
+
+                        </div>
+                        <div className='comment-input'>
+                            <input type="text" />
+                            <div className='send-btn'>comment</div>
                         </div>
                     </div>
-                    <div className="right-column">
-                        <div className='space-between' >
-                            <h2>{project.title} by {project.user.fullName}</h2>
-                            <ModeEditIcon />
-                        </div>
-                        <div style={{ marginTop: '20px' }}>
-                            <img src={`${API_DOMAIN}/public/${project.image}`} alt={project.title} style={{ width: '800px' }} />
-                            <div className='project-text' dangerouslySetInnerHTML={{ __html: project.description }} />
-                            {project.codeSnippet && (
-                                <SyntaxHighlighter
-                                    language="javascript"
-                                    style={anOldHope}
-                                    showLineNumbers={true}
-                                >
-                                    {project.codeSnippet}
-                                </SyntaxHighlighter>
-
-                            )}
-                        </div>
-                    </div>
-
                 </div>
-            
+                <div className="right-column">
+                        <div className='inline-left gap '>
+                            <img src={`${API_DOMAIN}/public/uploads/default.jpg`} alt="" style={{ width: '40px', borderRadius: '30px' }} />
+                            <h1 className='project-title'>{project.title}</h1>
+                            <Icons.FiEdit2 className={`icon ${theme}`}/>
+                        </div>
+                        <div style={{marginLeft:'50px', fontSize:'13px', marginBottom:'40px'}}>
+                            <em>{calculateTimeAgo(project.createdAt)}</em>
+                        </div>
+                    <div style={{ marginTop: '20px' }}>
+                        <div className='project-text' dangerouslySetInnerHTML={{ __html: project.description }} />
+                        {project.codeSnippet && (
+                            <SyntaxHighlighter
+                                language="javascript"
+                                style={anOldHope}
+                                showLineNumbers={true}
+                            >
+                                {project.codeSnippet}
+                            </SyntaxHighlighter>
+
+                        )}
+                    </div>
+                </div>
+
+            </div>
+
         </>
     );
 }
