@@ -54,7 +54,12 @@ function Messages() {
 
     const getConversations = async () => {
         try {
-            const res = await axios.get(`${API_DOMAIN}/conversations/${user._id}`);
+            const res = await axios.get(`${API_DOMAIN}/conversations/${user._id}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
             setConversations(res.data);
         } catch (err) {
             console.log(err);
@@ -68,7 +73,12 @@ function Messages() {
     useEffect(() => {
         const getMessages = async () => {
             try {
-                const res = await axios.get(`${API_DOMAIN}/messages/` + currentChat?._id);
+                const res = await axios.get(`${API_DOMAIN}/messages/` + currentChat?._id,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
                 setMessages(res.data);
             } catch (err) {
                 console.log(err);
@@ -108,7 +118,12 @@ function Messages() {
 
         const sendMessage = async () => {
             try {
-                const res = await axios.post(`${API_DOMAIN}/messages`, message);
+                const res = await axios.post(`${API_DOMAIN}/messages`, message,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
                 setMessages([...messages, res.data]);
                 setNewMessage("");
             } catch (err) {
@@ -131,7 +146,8 @@ function Messages() {
 
     const startChat = async (friendId) => {
         try {
-            const res = await axios.post(`${API_DOMAIN}/conversations`, {
+            const res = await axios.post(`${API_DOMAIN}/conversations`,
+             {
                 senderId: user._id,
                 receiverId: friendId
             })

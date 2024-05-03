@@ -19,7 +19,12 @@ export default function ChatOnline({ onlineUsers, currentId, setCurrentChat }) {
     const handleClick = async (user) => {
         try {
             const res = await axios.get(
-                `${API_DOMAIN}/conversations/find/${currentId}/${user._id}`
+                `${API_DOMAIN}/conversations/find/${currentId}/${user._id}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
             );
             setCurrentChat(res.data);
         } catch (err) {
