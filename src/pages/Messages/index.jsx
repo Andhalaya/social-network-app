@@ -68,7 +68,7 @@ function Messages() {
 
     useEffect(() => {
         getConversations();
-    }, [user._id]);
+    }, [user._id, currentChat]);
 
     useEffect(() => {
         const getMessages = async () => {

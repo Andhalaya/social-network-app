@@ -6,6 +6,7 @@ import moment from 'moment';
 
 export default function Conversation({ conversation, currentUser }) {
   const [user, setUser] = useState(null);
+  
   const { token } = useAuth();
 
   function calculateTimeAgo(timestamp) {
