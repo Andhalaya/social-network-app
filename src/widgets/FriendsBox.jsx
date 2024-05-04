@@ -45,7 +45,6 @@ function FriendsBox({ type, userData }) {
                     Authorization: `Bearer ${token}`
                 }
             });
-            console.log(profileUser)
             setUsers(res.data);
         } catch (error) {
             console.error("Error fetching friends:", error);

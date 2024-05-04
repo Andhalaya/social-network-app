@@ -45,6 +45,23 @@ export const AuthProvider = ({ children }) => {
     checkToken();
   }, [token]);
 
+  const fetchFriends = async () => {
+    try {
+      const res = await axios.get(`${API_DOMAIN}/users/${user._id}/friends`, {
+          headers: {
+              Authorization: `Bearer ${token}`
+          }
+      });
+      setFriends(res.data);
+  } catch (error) {
+      console.error("Error fetching friends:", error);
+  }
+  }
+
+  useEffect(() => {
+    fetchFriends();
+  }, [user])
+
   const login = (newToken) => {
     localStorage.setItem('token', newToken);
     setToken(newToken);

@@ -126,6 +126,7 @@ function Messages() {
                 });
                 setMessages([...messages, res.data]);
                 setNewMessage("");
+                getConversations();
             } catch (err) {
                 console.log(err);
             }
@@ -229,11 +230,11 @@ function Messages() {
                     <div className="box3 column">
                         <p className="inder margin-bottom">FRIENDS</p>
                         <div className="friends-list">
-                            {friends.map((f) => (
-                                <div className="space-between">
+                            {friends.map((f, index) => (
+                                <div key={f._id} className="space-between">
                                     <div className="inline-left gap">
                                         <img src={`${API_DOMAIN}/public/${f.profilePicture}`} style={{ borderRadius: 40, width: "30px" }} />
-                                        <div key={f._id} >{f.fullName}</div>
+                                        <div>{f.fullName}</div>
                                     </div>
                                     <Icons.IoChatbubblesOutline className={`icon ${theme}`} onClick={() => startChat(f._id)} />
                                 </div>
