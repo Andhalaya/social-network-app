@@ -24,7 +24,7 @@
   }
 
   .loadingBox2{
-    width: 950px;
+    width: 800px;
     height: 1000px;
     display: flex;
     justify-content: center;
@@ -34,7 +34,7 @@
   }
 
   .loadingBox3{
-    width: 420px;
+    width: 350px;
     height: 480px;
     display: flex;
     justify-content: center;

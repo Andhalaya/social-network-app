@@ -1,12 +1,15 @@
 import { useTheme } from "../context/theme";
 import * as Icons from "../utils/Icons";
-import Post from "../components/Post";
-import PostBox from "./PostBox";
+import SpinningIcon from "../components/SpinningIcon";
 import { useState, useEffect } from "react";
 import { useAuth } from '../context/AuthProvider';
 import axios from 'axios';
 import { API_DOMAIN } from "../utils/api-domain";
 import AnimatedBox from "../components/Box";
+import { lazy, Suspense } from "react";
+
+const Post = lazy(() => import("../components/Post"));
+const PostBox = lazy(() => import("../widgets/PostBox"))
 
 function FeedBox() {
     const { theme } = useTheme();
@@ -64,7 +67,9 @@ function FeedBox() {
 
     return (
         <div className="feed">
-            <PostBox fetchPosts={fetchPosts} />
+            <Suspense fallback={<div className={`loadingBox3 ${theme}`}>Loading...<SpinningIcon /></div>}>     
+                <PostBox fetchPosts={fetchPosts} />       
+            </Suspense>
             <div className="filters">
                 <div className="inline-left" style={{ gap: '30px' }}>
                     {['All users', 'Friends', 'Most recent', 'Oldest'].map(filter => (
@@ -93,9 +98,11 @@ function FeedBox() {
             <div className="posts">
                 {filteredAndSortedPosts().map(post => (
                     <div key={post._id} style={{ position: 'relative' }}>
+                         <Suspense key={post._id} fallback={<div className={`box ${theme}`}>Loading...<SpinningIcon /></div>}>
                         <AnimatedBox>
                             <Post fetchPosts={fetchPosts} post={post} updatePostLikes={updatePostLikes} />
                         </AnimatedBox>
+                        </Suspense>
                     </div>
                 ))}
             </div>

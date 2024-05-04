@@ -6,7 +6,11 @@ import './Feed.css';
 import SpinningIcon from "../../components/SpinningIcon";
 
 const UserBox = lazy(() => import("../../widgets/UserBox"));
-const FeedBox = lazy(() => import("../../widgets/FeedBox"));
+const FeedBox = lazy(() => {
+    return new Promise(resolve => {
+        setTimeout(() => resolve(import("../../widgets/FeedBox")), 2000); 
+    });
+});
 const FriendsBox = lazy(() => import("../../widgets/FriendsBox"));
 
 function Home() {
