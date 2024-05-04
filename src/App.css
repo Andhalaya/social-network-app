@@ -8,6 +8,7 @@
 
 body{
   margin: 0;
+  background: radial-gradient(circle farthest-corner at 37% 18%, #1a79a53b 0%, #19b3b000 63%), radial-gradient(circle farthest-corner at 100% 100%, #370c20ff 2%, #ffffff00 43%), linear-gradient(to top, #0b0a20ff 0% 100%, #ffffff00 100%), radial-gradient(farthest-corner at 50% 50%, #ff0000ff 0%, #0000ff00 100%) ;
 }
 
 

@@ -10,7 +10,7 @@ import { useNavigate } from "react-router"
 
 function FriendsBox({ type, userData }) {
     const { theme } = useTheme();
-    const { token, user, friends, setUser } = useAuth();
+    const { token, user, setUser } = useAuth();
     const [users, setUsers] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [showSearchInput, setShowSearchInput] = useState(false);
@@ -22,27 +22,33 @@ function FriendsBox({ type, userData }) {
     }, [userData, user]);
 
     useEffect(() => {
-        fetchUsers();
-    }, [])
-
-    useEffect(() => {
-        if (type === 'profile') {
+        if (type === 'home') {
             fetchUsers();
+        } else if (type === 'profile') {
+            fetchFriends();
         }
-    }, [type, userData, user]);
+    }, [type, profileUser]);
 
     const fetchUsers = async () => {
         try {
-            const res = await axios.get(`${API_DOMAIN}/users`,
-                { headers: { Authorization: `Bearer ${token}` } });
-            if (type === 'home') {
-                setUsers(res.data)
-            } else if (type === 'profile') {
-                setUsers(friends);
-            }
-
+            const res = await axios.get(`${API_DOMAIN}/users`);
+            setUsers(res.data);
         } catch (error) {
             console.error("Error fetching users:", error);
+        }
+    };
+
+    const fetchFriends = async () => {
+        try {
+            const res = await axios.get(`${API_DOMAIN}/users/${profileUser._id}/friends`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            console.log(profileUser)
+            setUsers(res.data);
+        } catch (error) {
+            console.error("Error fetching friends:", error);
         }
     };
 
