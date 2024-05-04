@@ -71,16 +71,16 @@ Ha sido construida con un diseño sencillo a la vez que intuitivo.
 
 Aquí hay algunas capturas de pantalla de la página web Lazy Coder:
 
-![Captura de pantalla 1](login-page.png)
+![Captura de pantalla 1](/public/login-page.png)
 _Captura de pantalla de la página login._
 
-![Captura de pantalla 2](home-page.png)
+![Captura de pantalla 2](/public/home-page.png)
 _Captura de pantalla de la página home._
 
-![Captura de pantalla 3](profile-page.png)
+![Captura de pantalla 3](/public/profile-page.png)
 _Captura de pantalla de la página profile._
 
-![Captura de pantalla 3](chat.png)
+![Captura de pantalla 3](/public/chat.png)
 _Captura de pantalla de la página chat._
 
 ## Dependencias frontend
