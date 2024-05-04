@@ -24,7 +24,7 @@ export const AuthProvider = ({ children }) => {
           if (response.data.user) {
             setIsLoggedIn(true);
             setUser(response.data.user.user);
-
+            setFriends(response.data.user.friendsData)
           } else {
             setIsLoggedIn(false);
             setUser(null);
