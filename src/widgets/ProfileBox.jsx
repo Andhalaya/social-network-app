@@ -98,7 +98,7 @@ function ProfileBox({ userData }) {
             <div className={`profile-box ${theme}`}>
                 <div className="user-img">
                     <img
-                        src={`${API_DOMAIN}/public/${profilePicture ? profilePicture : 'uploads/default.jpg'
+                        src={`${API_DOMAIN}/public${profilePicture ? profilePicture : '/uploads/default.jpg'
                             }`}
                         alt="name"
                         width={'130px'}

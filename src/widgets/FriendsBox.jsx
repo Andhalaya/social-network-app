@@ -6,6 +6,7 @@ import { API_DOMAIN } from "../utils/api-domain";
 import SpinningIcon from "../components/SpinningIcon";
 import AnimatedBox from "../components/Box";
 import * as Icons from "../utils/Icons";
+import { useNavigate } from "react-router"
 
 function FriendsBox({ type, userData }) {
     const { theme } = useTheme();
@@ -14,6 +15,7 @@ function FriendsBox({ type, userData }) {
     const [searchTerm, setSearchTerm] = useState('');
     const [showSearchInput, setShowSearchInput] = useState(false);
     const [profileUser, setProfileUser] = useState(user);
+    const navigate = useNavigate();
 
     useEffect(() => {
         setProfileUser(userData || user);
@@ -68,7 +70,7 @@ function FriendsBox({ type, userData }) {
     } else if (type === 'profile') {
         filteredUsers = users.filter(u => userData && userData.friends.includes(u._id) && u.fullName.toLowerCase().includes(searchTerm.toLowerCase()));
     }
-    
+
 
     const handleShowMore = () => {
         fetchUsers();
@@ -105,7 +107,13 @@ function FriendsBox({ type, userData }) {
                             <div className="inline-left gap">
                                 <img src={`${API_DOMAIN}/public${filteredUser.profilePicture ? filteredUser.profilePicture : '/uploads/default.jpg'}`} style={{ borderRadius: 40, width: "40px" }} />
                                 <div className="column">
-                                    <p className={`typography3 ${theme}`}>{filteredUser.fullName}</p>
+                                    <p
+                                        style={{ cursor: 'pointer' }}
+                                        onClick={() => { navigate(`/profile/${filteredUser._id}`) }}
+                                        className={`typography3 ${theme}`}
+                                    >
+                                        {filteredUser.fullName}
+                                    </p>
                                     <p className={`typography4 ${theme}`}>{filteredUser.occupation}</p>
                                 </div>
                             </div>

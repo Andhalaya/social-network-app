@@ -180,7 +180,7 @@ function Post({ post, updatePostLikes, fetchPosts }) {
                             : (comments.map((comment, index) => (
                                 <div key={index} style={{ marginBottom: '10px' }}>
                                     <div className="inline-left" style={{ gap: '10px', marginBottom: '5px' }}>
-                                        <img src={`${API_DOMAIN}/public/${comment.profilePicture}`} alt="name" style={{ borderRadius: 40, width: "25px" }} />
+                                        <img src={`${API_DOMAIN}/public${comment.profilePicture}`} alt="name" style={{ borderRadius: 40, width: "25px" }} />
                                         <div className="inline-left" style={{ gap: '10px' }}>
                                             <p className={`commentUser ${theme}`}>{comment.user}</p>
                                             <p style={{ fontSize: '12px' }}>({calculateTimeAgo(comment.time)})</p>
