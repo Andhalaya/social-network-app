@@ -126,7 +126,7 @@ function Profile() {
                     <div className="side-container">
                         <div className='box1'>
                             <div style={{ display: 'flex', flexDirection: 'column-reverse', gap: '20px' }}>
-                                {posts ? posts.map((post) => (
+                                {posts.length > 0 ? posts.map((post) => (
                                     <Suspense key={post._id} fallback={<div className={`box ${theme}`}>Loading...<SpinningIcon /></div>}>
                                         <AnimatedBox >
                                             <Post post={post} updatePostLikes={updatePostLikes} />
