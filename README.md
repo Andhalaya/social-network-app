@@ -71,16 +71,16 @@ Ha sido construida con un diseño sencillo a la vez que intuitivo.
 
 Aquí hay algunas capturas de pantalla de la página web Lazy Coder:
 
-![Captura de pantalla 1](public\login-page.png)
+![Captura de pantalla 1](/public/login-page.png)
 _Captura de pantalla de la página login._
 
-![Captura de pantalla 2](public\home-page.png)
+![Captura de pantalla 2](/public/home-page.png)
 _Captura de pantalla de la página home._
 
-![Captura de pantalla 3](public\profile-page.png)
+![Captura de pantalla 3](/public/profile-page.png)
 _Captura de pantalla de la página profile._
 
-![Captura de pantalla 3](public\chat.png)
+![Captura de pantalla 3](/public/chat.png)
 _Captura de pantalla de la página chat._
 
 ## Dependencias frontend
@@ -150,6 +150,13 @@ Tambien puedes consumir la API directamente [aqui](https://app-server-production
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+## En construcción 🚧
+
+Estos son algunos de los features pendientes por añadir:
+* Sección de notificaciones en el icono del header
+* Enlaces a los ultimos proyectos del usuario en el userBox de la página home
+* Project box en la página Profile con los projectos del usuario. Actualmente aparecen los de todos los usuarios a falta de contenido suficiente.
+* Notificación de mensaje recibido en la zona de chat.
 
 <!-- CONTRIBUTING -->
 ## Contribución
