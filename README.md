@@ -157,6 +157,7 @@ Estos son algunos de los features pendientes por añadir:
 * Enlaces a los ultimos proyectos del usuario en el userBox de la página home
 * Project box en la página Profile con los projectos del usuario. Actualmente aparecen los de todos los usuarios a falta de contenido suficiente.
 * Notificación de mensaje recibido en la zona de chat.
+* Añadir sección About me editable.
 
 <!-- CONTRIBUTING -->
 ## Contribución
