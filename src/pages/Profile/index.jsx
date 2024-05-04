@@ -52,16 +52,12 @@ function Profile() {
 
     const fetchPosts = async () => {
         try {
+            let targetUserId = userId ? userId : user._id; 
             const res = await axios.get(`${API_DOMAIN}/posts`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
-
-            let filteredPosts;
-            if (userData && userData._id) {
-                filteredPosts = res.data.filter(post => post.user._id === userData._id);
-            } else {
-                filteredPosts = res.data.filter(post => post.user._id === user._id);
-            }
+    
+            let filteredPosts = res.data.filter(post => post.user._id === targetUserId);
             setPosts(filteredPosts);
         } catch (error) {
             console.error("Error fetching posts:", error);
