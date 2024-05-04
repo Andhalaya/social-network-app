@@ -37,7 +37,7 @@ export default function Conversation({ conversation, currentUser }) {
        {user && (
         <div className="conversation">
             <div className="inline-left gap">
-               <img src={`${API_DOMAIN}/public/${user.profilePicture}`} style={{ borderRadius: 40, width: "30px" }}/>
+               <img src={`${API_DOMAIN}/public${user.profilePicture ? user.profilePicture : '/uploads/default.jpg'}`} style={{ borderRadius: 40, width: "30px" }}/>
                 <p>{user.fullName}</p>  
             </div>         
           <div className="lastMessage">

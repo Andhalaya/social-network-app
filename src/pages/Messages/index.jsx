@@ -233,7 +233,7 @@ function Messages() {
                             {friends.map((f, index) => (
                                 <div key={f._id} className="space-between">
                                     <div className="inline-left gap">
-                                        <img src={`${API_DOMAIN}/public/${f.profilePicture}`} style={{ borderRadius: 40, width: "30px" }} />
+                                    <img src={`${API_DOMAIN}/public${f.profilePicture ? f.profilePicture : '/uploads/default.jpg'}`} style={{ borderRadius: 40, width: "30px" }}/>
                                         <div>{f.fullName}</div>
                                     </div>
                                     <Icons.IoChatbubblesOutline className={`icon ${theme}`} onClick={() => startChat(f._id)} />

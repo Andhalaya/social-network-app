@@ -6,7 +6,7 @@ import { useTheme } from "../../context/theme"
 
 
 export default function ChatOnline({ onlineUsers, currentId, setCurrentChat }) {
-    const { friends } = useAuth();
+    const { token, friends } = useAuth();
     const { theme } = useTheme();
     const [onlineFriends, setOnlineFriends] = useState([]);
 
@@ -38,10 +38,10 @@ export default function ChatOnline({ onlineUsers, currentId, setCurrentChat }) {
             {onlineFriends.length === 0
                 ? <div style={{ textAlign: 'center', color:'rgba(254, 117, 77, 0.68)' }}>No friends connected</div>
                 : onlineFriends.map((o) => (
-                    <div className="connected-user" onClick={() => handleClick(o)}>
+                    <div className="connected-user" key={o._id} onClick={() => handleClick(o)}>
                         <div className="inline-left gap" style={{position:'relative'}}>
                             <div className="green-dot"></div>
-                            <img src={`${API_DOMAIN}/public${o.profilePicture}`} alt=""  style={{ borderRadius: 40, width: "30px" }}/>
+                            <img src={`${API_DOMAIN}/public${o.profilePicture ? o.profilePicture : '/uploads/default.jpg'}`} alt=""  style={{ borderRadius: 40, width: "30px" }}/>
                             <p className="chatOnlineName">{o?.fullName}</p>
                         </div>
                         
