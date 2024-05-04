@@ -33,8 +33,8 @@ function Profile() {
         } else {
             setUserData(user);
             setBackgroundImage(user.profileCover);
+            fetchPosts();
         }
-        fetchPosts();
     }, [userId, user]);
 
     const fetchUserData = async () => {
