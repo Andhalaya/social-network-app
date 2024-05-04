@@ -46,7 +46,7 @@ function Project() {
 
             <div className={`page-container ${theme}`}>
                 <div className='left-column'>
-                <img src={`${API_DOMAIN}/public/${project.image}`} alt={project.title} style={{width:'100%' }} />
+                    <img src={`${API_DOMAIN}/public/${project.image}`} alt={project.title} style={{ width: '100%' }} />
                     <div className={`box ${theme}`} >
                         <div style={{ marginBottom: '20px' }}>
                             <p className='label'>Published by:</p>
@@ -54,7 +54,7 @@ function Project() {
                         </div>
                         <div>
                             <p className='label'>Github repository:</p>
-                            <p className='label-content'>{project.link}</p>
+                            <p className='label-content'><a href={project.link} target='_blank' >{project.link}</a></p>
                         </div>
                     </div>
                     <div className={`box ${theme}`}>
@@ -78,14 +78,17 @@ function Project() {
                     </div>
                 </div>
                 <div className="right-column">
-                        <div className='inline-left gap '>
-                            <img src={`${API_DOMAIN}/public/uploads/default.jpg`} alt="" style={{ width: '40px', borderRadius: '30px' }} />
-                            <h1 className='project-title'>{project.title}</h1>
-                            <Icons.FiEdit2 className={`icon ${theme}`}/>
-                        </div>
-                        <div style={{marginLeft:'50px', fontSize:'13px', marginBottom:'40px'}}>
-                            <em>{calculateTimeAgo(project.createdAt)}</em>
-                        </div>
+                    <div className='inline-left gap '>
+                        <img src={`${API_DOMAIN}/public/uploads/default.jpg`} alt="" style={{ width: '40px', borderRadius: '30px' }} />
+                        <h1 className='project-title'>{project.title}</h1>
+                        <Icons.FiEdit2 className={`icon ${theme}`} />
+                    </div>
+                    <div style={{ marginLeft: '50px', fontSize: '13px', marginBottom: '40px' }}>
+                        <em>{calculateTimeAgo(project.createdAt)}</em>
+                    </div>
+                    <div className='inline-left gap'>{project.tags.map((tag, index) => (
+                        <div className={`tag ${theme}`} key={index}>#{tag}</div>))}
+                    </div>
                     <div style={{ marginTop: '20px' }}>
                         <div className='project-text' dangerouslySetInnerHTML={{ __html: project.description }} />
                         {project.codeSnippet && (

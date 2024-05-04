@@ -14,7 +14,6 @@ function FriendsBox({ type, userData }) {
     const [searchTerm, setSearchTerm] = useState('');
     const [showSearchInput, setShowSearchInput] = useState(false);
     const [profileUser, setProfileUser] = useState(user);
-    const [updateUsers, setUpdateUsers] = useState(false);
 
     useEffect(() => {
         setProfileUser(userData || user);
@@ -22,7 +21,13 @@ function FriendsBox({ type, userData }) {
 
     useEffect(() => {
         fetchUsers();
-    }, [updateUsers]);
+    }, [])
+
+    useEffect(() => {
+        if (type === 'profile') {
+            fetchUsers();
+        }
+    }, [type, userData, user]);
 
     const fetchUsers = async () => {
         try {
@@ -59,15 +64,14 @@ function FriendsBox({ type, userData }) {
 
     let filteredUsers;
     if (type === 'home') {
-        filteredUsers = users.filter(u => u.userName.toLowerCase().includes(searchTerm.toLowerCase()));
-        filteredUsers = filteredUsers.sort(() => 0.5 - Math.random()).slice(0, 4);
+        filteredUsers = users.filter(u => u.fullName.toLowerCase().includes(searchTerm.toLowerCase()));
     } else if (type === 'profile') {
-        filteredUsers = users.filter(u => userData && userData.friends.includes(u._id) && u.userName.toLowerCase().includes(searchTerm.toLowerCase()));
+        filteredUsers = users.filter(u => userData && userData.friends.includes(u._id) && u.fullName.toLowerCase().includes(searchTerm.toLowerCase()));
     }
     
 
     const handleShowMore = () => {
-        setUpdateUsers(!updateUsers);
+        fetchUsers();
     };
 
     return (
