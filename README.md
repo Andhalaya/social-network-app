@@ -71,16 +71,16 @@ Ha sido construida con un diseño sencillo a la vez que intuitivo.
 
 Aquí hay algunas capturas de pantalla de la página web Lazy Coder:
 
-![Captura de pantalla 1](https://app-server-production-1cf6.up.railway.app//public/login-page.png)
+![Captura de pantalla 1](https://app-server-production-1cf6.up.railway.app/public/login-page.png)
 _Captura de pantalla de la página login._
 
-![Captura de pantalla 2](https://app-server-production-1cf6.up.railway.app//public/home-page.png)
+![Captura de pantalla 2](https://app-server-production-1cf6.up.railway.app/public/home-page.png)
 _Captura de pantalla de la página home._
 
-![Captura de pantalla 3](https://app-server-production-1cf6.up.railway.app//public/profile-page.png)
+![Captura de pantalla 3](https://app-server-production-1cf6.up.railway.app/public/profile-page.png)
 _Captura de pantalla de la página profile._
 
-![Captura de pantalla 3](https://app-server-production-1cf6.up.railway.app//public/chat.png)
+![Captura de pantalla 3](https://app-server-production-1cf6.up.railway.app/public/chat.png)
 _Captura de pantalla de la página chat._
 
 ## Dependencias frontend
