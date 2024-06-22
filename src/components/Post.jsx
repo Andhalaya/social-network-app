@@ -5,13 +5,13 @@ import moment from 'moment';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { anOldHope } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { useState, useEffect } from "react";
-import axios from 'axios'
+import axios from 'axios';
 import * as Icons from "../utils/Icons";
 import { useAuth } from "../context/AuthProvider";
 import { API_DOMAIN } from "../utils/api-domain";
 import CustomQuill from "./Quill";
 import CustomModal from "./Modal";
-import { useNavigate } from "react-router"
+import { useNavigate } from "react-router";
 
 function calculateTimeAgo(timestamp) {
     return moment(timestamp).fromNow();
@@ -22,7 +22,7 @@ function Post({ post, updatePostLikes, fetchPosts }) {
     const { user, token } = useAuth();
     const [liked, setLiked] = useState(false);
     const [comment, setComment] = useState('');
-    const [comments, setComments] = useState(post.comments);
+    const [comments, setComments] = useState(post.comments || []);
     const [showComments, setShowComments] = useState(false);
     const navigate = useNavigate();
 
@@ -47,6 +47,7 @@ function Post({ post, updatePostLikes, fetchPosts }) {
             console.error("Error liking post:", error);
         }
     };
+
     const handleComment = async () => {
         try {
             const response = await axios.patch(`${API_DOMAIN}/posts/${post._id}/comment`, { userId: user._id, comment }, {
@@ -62,37 +63,46 @@ function Post({ post, updatePostLikes, fetchPosts }) {
             console.error("Error commenting:", error);
         }
     };
+
     const handleDeletePost = async () => {
         try {
             const userId = post.user._id;
-            await axios.delete(`${API_DOMAIN}/posts/${post._id}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    },
-                    data: {
-                        userId: userId
-                    }
+            await axios.delete(`${API_DOMAIN}/posts/${post._id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+                data: {
+                    userId: userId
                 }
-            )
+            });
             fetchPosts();
-        } catch {
+        } catch (error) {
             console.error("Error deleting post:", error);
         }
+    };
+
+    if (!post.user) {
+        return <div>Información del usuario no disponible</div>;
     }
 
     return (
-        <div className={`postBox ${theme}`} key={post._id} >
+        <div className={`postBox ${theme}`} key={post._id}>
             <div className="space-between">
-                <div className="inline-left gap ">
-                    <img src={`${API_DOMAIN}/public${post.user.profilePicture ? post.user.profilePicture : '/uploads/default.jpg'}`} alt={post.user.userName} style={{ borderRadius: 40, width: "40px" }} />
+                <div className="inline-left gap">
+                    <img 
+                        src={`${API_DOMAIN}/public${post.user.profilePicture ? post.user.profilePicture : '/uploads/default.jpg'}`} 
+                        alt={post.user.userName || 'User'} 
+                        style={{ borderRadius: 40, width: "40px" }} 
+                    />
                     <div>
                         <p
                             style={{ cursor: 'pointer' }}
                             onClick={() => { navigate(`/profile/${post.user._id}`) }}
                             className={`poppins ${theme}`}
-                        >{post.user.fullName}</p>
-                        <p className={`typography2 ${theme}`}>{post.user.occupation}</p>
+                        >
+                            {post.user.fullName || 'Nombre desconocido'}
+                        </p>
+                        <p className={`typography2 ${theme}`}>{post.user.occupation || 'Ocupación desconocida'}</p>
                     </div>
                 </div>
                 <div className="inline-right gap">
@@ -112,17 +122,16 @@ function Post({ post, updatePostLikes, fetchPosts }) {
                                                 handleDeletePost();
                                                 closeModal();
                                             }}>Delete</button>
-                                            <button onClick={closeModal} >Cancel</button>
+                                            <button onClick={closeModal}>Cancel</button>
                                         </div>
                                     </div>
                                 )}
                             </CustomModal>
                         </div>
-
                     }
                 </div>
             </div>
-            <div className={`post-content ${theme}`} >
+            <div className={`post-content ${theme}`}>
                 <p className="margin-top margin-bottom">{post.title}</p>
                 <div dangerouslySetInnerHTML={{ __html: post.description }} className="margin-bottom" />
                 {post.image && (
@@ -136,14 +145,15 @@ function Post({ post, updatePostLikes, fetchPosts }) {
                     >
                         {post.codeSnippet}
                     </SyntaxHighlighter>
-                )}{post.link && (
-                        <div className="inline-left" >
-                            <LinkSharpIcon />
-                            <a href={post.link} target="_blank" rel="noopener noreferrer" style={{ width: '600px' }}>
-                                {post.link}
-                            </a>
-                        </div>
-                    )}
+                )}
+                {post.link && (
+                    <div className="inline-left">
+                        <LinkSharpIcon />
+                        <a href={post.link} target="_blank" rel="noopener noreferrer" style={{ width: '600px' }}>
+                            {post.link}
+                        </a>
+                    </div>
+                )}
                 {post.tags && (
                     <div className="post-tags">
                         {post.tags.map((tag, index) => (
@@ -152,7 +162,7 @@ function Post({ post, updatePostLikes, fetchPosts }) {
                     </div>
                 )}
                 <div className='space-between'>
-                    <div className="inline-left gap ">
+                    <div className="inline-left gap">
                         <div className="inline-left gap">
                             <p>{post.likes ? post.likes.length : 0}</p>
                             <div style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }} onClick={handleLike}>
@@ -163,21 +173,19 @@ function Post({ post, updatePostLikes, fetchPosts }) {
                             <p>{comments.length}</p>
                             <Icons.FaRegComment className={`icon ${theme}`} />
                         </div>
-                        
                     </div>
-                    
-
                 </div>
             </div>
             {showComments && (
                 <div className={`comment-section ${theme}`}>
                     <h3 className="title">Comments</h3>
                     <div style={{ marginTop: '10px' }}>
-                        {comments.length === 0 ?
-                            <div style={{ width: '100%', textAlign: 'center', }}>
+                        {comments.length === 0 ? (
+                            <div style={{ width: '100%', textAlign: 'center' }}>
                                 <em className={`noComments ${theme}`}>No comments yet</em>
                             </div>
-                            : (comments.map((comment, index) => (
+                        ) : (
+                            comments.map((comment, index) => (
                                 <div key={index} style={{ marginBottom: '10px' }}>
                                     <div className="inline-left" style={{ gap: '10px', marginBottom: '5px' }}>
                                         <img src={`${API_DOMAIN}/public${comment.profilePicture}`} alt="name" style={{ borderRadius: 40, width: "25px" }} />
@@ -189,9 +197,9 @@ function Post({ post, updatePostLikes, fetchPosts }) {
                                     <div className="innerHtml" style={{ marginLeft: '35px' }} dangerouslySetInnerHTML={{ __html: comment.comment }} />
                                 </div>
                             ))
-                            )}
+                        )}
                     </div>
-                    <div >
+                    <div>
                         <div className="inline-left gap margin-bottom margin-top">
                             <img src={`${API_DOMAIN}/public/${user.profilePicture}`} alt="name" style={{ borderRadius: 40, width: "25px" }} />
                             <p style={{ fontWeight: '500' }}>{user.fullName}</p>
@@ -208,14 +216,11 @@ function Post({ post, updatePostLikes, fetchPosts }) {
                                 </Button>
                             </div>
                         </div>
-
-
                     </div>
                 </div>
             )}
-
         </div>
-    )
+    );
 }
 
 export default Post;
